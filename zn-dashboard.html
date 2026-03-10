@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZN Enterprises — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#07080d;--bg2:#0c0e17;--bg3:#10131f;
+  --card:#13172a;--card2:#181d30;
+  --border:rgba(99,102,241,0.18);--border2:rgba(99,102,241,0.35);
+  --primary:#6366f1;--primary2:#818cf8;
+  --accent:#f59e0b;--accent2:#fbbf24;
+  --green:#10b981;--red:#ef4444;--cyan:#06b6d4;--pink:#ec4899;--orange:#f97316;
+  --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
+  --sidebar:220px;--radius:12px;--radius2:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);display:flex;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:2px;}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;height:100vh;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.sb-logo{
+  display:flex;align-items:center;gap:10px;
+  padding:1.4rem 1.2rem;border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.logo-hex{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:800;color:#fff;
+  font-family:'JetBrains Mono',monospace;
+}
+.sb-brand{font-size:0.82rem;font-weight:700;line-height:1.2;}
+.sb-brand span{color:var(--accent);}
+.sb-sub{font-size:0.6rem;color:var(--text3);letter-spacing:2px;display:block;}
+.sb-section{padding:0.8rem 1rem 0.3rem;font-size:0.62rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;}
+.sb-nav{list-style:none;flex:1;}
+.sb-nav li a{
+  display:flex;align-items:center;gap:10px;
+  padding:0.7rem 1.2rem;
+  color:var(--text2);text-decoration:none;font-size:0.82rem;font-weight:500;
+  border-left:2px solid transparent;
+  transition:all 0.2s;cursor:pointer;
+}
+.sb-nav li a i{width:16px;text-align:center;font-size:0.82rem;color:var(--text3);}
+.sb-nav li a:hover{background:rgba(99,102,241,0.06);color:var(--text);border-left-color:var(--border2);}
+.sb-nav li a.active{background:rgba(99,102,241,0.1);color:var(--primary2);border-left-color:var(--primary);}
+.sb-nav li a.active i{color:var(--primary);}
+.sb-badge{
+  margin-left:auto;padding:0.1rem 0.45rem;
+  border-radius:100px;font-size:0.62rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+.sb-badge.red{background:rgba(239,68,68,0.15);color:var(--red);}
+.sb-badge.green{background:rgba(16,185,129,0.15);color:var(--green);}
+.sb-bottom{padding:1rem 1.2rem;border-top:1px solid var(--border);flex-shrink:0;}
+.sb-admin{display:flex;align-items:center;gap:8px;}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#fff;}
+.sb-admin-name{font-size:0.78rem;font-weight:600;}
+.sb-admin-role{font-size:0.65rem;color:var(--text3);}
+
+/* ===== MAIN ===== */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;height:58px;
+  background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;
+}
+.topbar-left{display:flex;align-items:center;gap:0.8rem;}
+.page-title{font-size:0.95rem;font-weight:700;}
+.page-breadcrumb{font-size:0.75rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.topbar-right{display:flex;align-items:center;gap:0.8rem;}
+.topbar-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:0.45rem 1rem;border-radius:var(--radius2);
+  font-size:0.78rem;font-weight:600;cursor:pointer;
+  font-family:'Sora',sans-serif;transition:all 0.2s;border:none;
+}
+.btn-save{background:var(--green);color:#fff;}
+.btn-save:hover{background:#059669;}
+.btn-preview{background:rgba(99,102,241,0.15);color:var(--primary2);border:1px solid var(--border2);}
+.btn-preview:hover{background:var(--primary);color:#fff;}
+.btn-danger{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
+.btn-danger:hover{background:var(--red);color:#fff;}
+.content{flex:1;overflow-y:auto;padding:1.5rem;}
+
+/* ===== PANELS ===== */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ===== STATS CARDS ===== */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.stat-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.2rem 1.4rem;
+  display:flex;align-items:flex-start;gap:1rem;
+  transition:all 0.25s;
+}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.stat-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+}
+.stat-info{flex:1;}
+.stat-val{font-size:1.5rem;font-weight:800;font-family:'JetBrains Mono',monospace;display:block;line-height:1.1;}
+.stat-label{font-size:0.72rem;color:var(--text2);margin-top:3px;display:block;}
+.stat-change{font-size:0.68rem;margin-top:4px;display:flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;}
+.up{color:var(--green);}
+.down{color:var(--red);}
+
+/* ===== SECTION HEADER ===== */
+.section-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.2rem;flex-wrap:wrap;gap:0.8rem;
+}
+.section-hdr h3{font-size:0.92rem;font-weight:700;display:flex;align-items:center;gap:7px;}
+.section-hdr h3 i{color:var(--primary);font-size:0.88rem;}
+.action-btns{display:flex;gap:0.5rem;}
+.btn-sm{
+  display:flex;align-items:center;gap:5px;
+  padding:0.4rem 0.9rem;border-radius:6px;
+  font-size:0.75rem;font-weight:600;cursor:pointer;
+  font-family:'Sora',sans-serif;transition:all 0.2s;border:none;
+}
+.btn-add-item{background:var(--primary);color:#fff;}
+.btn-add-item:hover{background:var(--primary2);}
+.btn-outline-sm{background:transparent;border:1px solid var(--border2);color:var(--text2);}
+.btn-outline-sm:hover{background:rgba(99,102,241,0.08);color:var(--primary2);}
+
+/* ===== TABLE ===== */
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.table-search{
+  padding:0.8rem 1rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.table-search i{color:var(--text3);font-size:0.8rem;}
+.table-search input{background:none;border:none;outline:none;color:var(--text);font-family:'Sora',sans-serif;font-size:0.82rem;flex:1;}
+.table-search input::placeholder{color:var(--text3);}
+table{width:100%;border-collapse:collapse;}
+th{
+  padding:0.75rem 1rem;text-align:left;
+  font-size:0.68rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;
+  border-bottom:1px solid var(--border);background:var(--bg3);
+}
+td{padding:0.85rem 1rem;font-size:0.82rem;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(99,102,241,0.03);}
+.td-name{font-weight:600;}
+.td-price{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:700;}
+.td-cat{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:0.2rem 0.6rem;border-radius:100px;
+  font-size:0.68rem;font-weight:600;
+  background:rgba(99,102,241,0.1);color:var(--primary2);
+  border:1px solid rgba(99,102,241,0.2);
+}
+.td-badge{
+  display:inline-flex;padding:0.18rem 0.5rem;border-radius:4px;
+  font-size:0.65rem;font-weight:700;letter-spacing:1px;
+  font-family:'JetBrains Mono',monospace;
+}
+.td-new{background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2);}
+.td-hot{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);}
+.td-sale{background:rgba(245,158,11,0.1);color:var(--accent);border:1px solid rgba(245,158,11,0.2);}
+.td-actions{display:flex;gap:5px;}
+.tac-btn{
+  width:28px;height:28px;border-radius:6px;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;cursor:pointer;transition:all 0.2s;
+}
+.tac-edit{background:rgba(99,102,241,0.1);color:var(--primary2);}
+.tac-edit:hover{background:var(--primary);color:#fff;}
+.tac-del{background:rgba(239,68,68,0.1);color:var(--red);}
+.tac-del:hover{background:var(--red);color:#fff;}
+.tac-view{background:rgba(6,182,212,0.1);color:var(--cyan);}
+.tac-view:hover{background:var(--cyan);color:#000;}
+.status-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:0.2rem 0.6rem;border-radius:6px;
+  font-size:0.68rem;font-weight:600;
+}
+.status-new{background:rgba(99,102,241,0.1);color:var(--primary2);}
+.status-confirmed{background:rgba(16,185,129,0.1);color:var(--green);}
+.status-shipped{background:rgba(245,158,11,0.1);color:var(--accent);}
+.status-delivered{background:rgba(6,182,212,0.1);color:var(--cyan);}
+.status-cancelled{background:rgba(239,68,68,0.1);color:var(--red);}
+
+/* ===== EDIT MODAL ===== */
+.edit-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.edit-overlay.open{display:flex;}
+.edit-box{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:16px;width:100%;max-width:560px;
+  max-height:88vh;overflow-y:auto;
+  animation:scaleIn 0.25s ease;
+}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+.edit-hdr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.3rem 1.5rem;border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--card);z-index:1;
+}
+.edit-hdr h3{font-size:0.95rem;font-weight:700;display:flex;align-items:center;gap:7px;}
+.edit-hdr h3 i{color:var(--primary);}
+.edit-body{padding:1.5rem;}
+.edit-footer{
+  display:flex;justify-content:flex-end;gap:0.6rem;
+  padding:1rem 1.5rem;border-top:1px solid var(--border);
+  position:sticky;bottom:0;background:var(--card);
+}
+.form-group{margin-bottom:1.1rem;}
+.form-label{display:flex;align-items:center;gap:6px;font-size:0.78rem;font-weight:600;color:var(--text2);margin-bottom:0.4rem;}
+.form-label i{font-size:0.7rem;color:var(--primary);}
+.form-input,.form-textarea,.form-select{
+  width:100%;padding:0.7rem 0.9rem;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);border-radius:var(--radius2);
+  font-family:'Sora',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.2s;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,0.1);}
+.form-textarea{resize:vertical;min-height:70px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+.form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;}
+
+/* ===== SETTINGS ===== */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+.settings-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.settings-card h4{font-size:0.88rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:7px;padding-bottom:0.8rem;border-bottom:1px solid var(--border);}
+.settings-card h4 i{color:var(--primary);}
+
+/* ===== CHART PLACEHOLDER ===== */
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.2rem;}
+.chart-card h4{font-size:0.88rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:7px;}
+.chart-card h4 i{color:var(--primary);}
+.mini-bars{display:flex;align-items:flex-end;gap:6px;height:80px;}
+.mini-bar{
+  flex:1;background:var(--primary);border-radius:3px 3px 0 0;
+  transition:height 0.6s ease;min-width:8px;position:relative;
+  cursor:pointer;opacity:0.7;
+}
+.mini-bar:hover{opacity:1;}
+.mini-bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:0.58rem;color:var(--text3);white-space:nowrap;}
+.chart-legend{display:flex;gap:1.2rem;margin-top:1.5rem;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.75rem;color:var(--text2);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+
+/* ===== ACTIVITY ===== */
+.activity-list{display:flex;flex-direction:column;gap:0;}
+.act-item{
+  display:flex;align-items:flex-start;gap:0.8rem;
+  padding:0.75rem 0;border-bottom:1px solid var(--border);
+}
+.act-item:last-child{border-bottom:none;}
+.act-icon{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0;margin-top:2px;
+}
+.act-text{flex:1;font-size:0.8rem;line-height:1.4;}
+.act-text strong{color:var(--text);}
+.act-time{font-size:0.68rem;color:var(--text3);font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+
+/* ===== TOGGLE ===== */
+.toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);}
+.toggle-wrap:last-child{border-bottom:none;}
+.toggle-info{flex:1;}
+.toggle-title{font-size:0.82rem;font-weight:600;margin-bottom:2px;}
+.toggle-sub{font-size:0.72rem;color:var(--text3);}
+.toggle{
+  width:40px;height:22px;background:var(--bg3);
+  border-radius:100px;position:relative;cursor:pointer;
+  border:1px solid var(--border);transition:all 0.3s;flex-shrink:0;
+}
+.toggle.on{background:var(--primary);border-color:var(--primary);}
+.toggle::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:14px;height:14px;background:#fff;border-radius:50%;
+  transition:transform 0.3s;
+}
+.toggle.on::after{transform:translateX(18px);}
+
+/* ===== GOOGLE SHEET SETUP ===== */
+.sheet-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);padding:1.2rem;margin-bottom:1rem;}
+.sheet-box h4{font-size:0.85rem;font-weight:700;margin-bottom:0.7rem;display:flex;align-items:center;gap:6px;}
+.sheet-box h4 i{color:var(--green);}
+.sheet-step{display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.7rem;}
+.step-num{
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(99,102,241,0.15);color:var(--primary2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;
+}
+.step-text{font-size:0.78rem;color:var(--text2);line-height:1.5;}
+.code-block{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:0.7rem 0.9rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;
+  color:var(--cyan);margin:0.5rem 0;white-space:pre-wrap;word-break:break-all;
+  max-height:120px;overflow-y:auto;
+}
+.copy-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:0.3rem 0.7rem;border-radius:5px;
+  background:rgba(99,102,241,0.1);color:var(--primary2);
+  border:1px solid var(--border2);font-size:0.72rem;cursor:pointer;transition:all 0.2s;
+  font-family:'Sora',sans-serif;
+}
+.copy-btn:hover{background:var(--primary);color:#fff;}
+
+/* ===== CLOSE BTN ===== */
+.close-x{width:30px;height:30px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-size:0.8rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.close-x:hover{background:rgba(239,68,68,0.15);border-color:var(--red);color:var(--red);}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:2000;background:var(--card2);border:1px solid var(--border2);padding:0.8rem 1.2rem;border-radius:10px;font-size:0.8rem;color:var(--text);display:flex;align-items:center;gap:8px;transform:translateY(60px);opacity:0;transition:all 0.35s;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* ===== EMPTY STATE ===== */
+.empty-state{text-align:center;padding:3rem;color:var(--text3);}
+.empty-state i{font-size:2.5rem;color:var(--border);display:block;margin-bottom:0.8rem;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .sidebar{display:none;}
+  .settings-grid{grid-template-columns:1fr;}
+  .form-row,.form-row3{grid-template-columns:1fr;}
+}
+
+/* ===== LOGIN GATE ===== */
+#loginGate{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#07080d 0%,#0c0e17 50%,#07080d 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Sora',sans-serif;
+}
+#loginGate::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(99,102,241,0.08) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.login-card{
+  background:rgba(19,23,42,0.95);
+  border:1px solid rgba(99,102,241,0.3);
+  border-radius:20px;padding:2.5rem 2.2rem;
+  width:100%;max-width:400px;
+  position:relative;z-index:1;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(99,102,241,0.1);
+}
+.login-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#6366f1,#f59e0b,#06b6d4);
+  border-radius:20px 20px 0 0;
+}
+.login-logo{text-align:center;margin-bottom:1.8rem;}
+.login-logo svg{width:52px;height:52px;display:block;margin:0 auto 0.7rem;}
+.login-logo h2{font-size:1.2rem;font-weight:800;color:#f1f5f9;}
+.login-logo h2 span{color:#f59e0b;}
+.login-logo p{font-size:0.72rem;color:#64748b;letter-spacing:2px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-top:3px;}
+.login-field{margin-bottom:1.1rem;}
+.login-field label{display:flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;color:#94a3b8;margin-bottom:0.4rem;}
+.login-field label i{font-size:0.7rem;color:#6366f1;}
+.login-input-wrap{position:relative;}
+.login-input{
+  width:100%;padding:0.78rem 2.5rem 0.78rem 1rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(99,102,241,0.25);
+  border-radius:10px;color:#f1f5f9;
+  font-family:'Sora',sans-serif;font-size:0.85rem;outline:none;
+  transition:all 0.2s;
+}
+.login-input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
+.login-input.shake{animation:lshake 0.4s ease;}
+@keyframes lshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.eye-toggle{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:0.82rem;transition:color 0.2s;}
+.eye-toggle:hover{color:#6366f1;}
+.login-error{
+  background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);
+  border-radius:8px;padding:0.6rem 0.85rem;
+  font-size:0.78rem;color:#fca5a5;
+  display:none;align-items:center;gap:6px;margin-bottom:1rem;
+}
+.login-error.show{display:flex;}
+.login-attempts{font-size:0.7rem;color:#64748b;text-align:center;margin-top:0.6rem;font-family:'JetBrains Mono',monospace;}
+.btn-login{
+  width:100%;padding:0.88rem;
+  background:linear-gradient(135deg,#6366f1,#818cf8);
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Sora',sans-serif;font-size:0.9rem;font-weight:700;
+  cursor:pointer;transition:all 0.28s;
+  box-shadow:0 6px 20px rgba(99,102,241,0.35);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(99,102,241,0.5);}
+.btn-login:disabled{opacity:0.55;cursor:not-allowed;transform:none;}
+.login-hint{
+  margin-top:1.3rem;padding:0.7rem 0.9rem;
+  background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);
+  border-radius:8px;font-size:0.72rem;color:#67e8f9;
+  display:flex;align-items:center;gap:6px;
+  font-family:'JetBrains Mono',monospace;
+}
+.logout-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:0.4rem 0.8rem;border-radius:7px;
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+  color:#fca5a5;font-size:0.75rem;cursor:pointer;
+  transition:all 0.2s;font-family:'Sora',sans-serif;
+  margin-left:auto;
+}
+.logout-btn:hover{background:rgba(239,68,68,0.2);color:#fff;}
+
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="flex-shrink:0;">
+      <defs>
+        <linearGradient id="sbHexG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+      </defs>
+      <polygon points="22,5 38,13.5 38,30.5 22,39 6,30.5 6,13.5" fill="url(#sbHexG)"/>
+      <polygon points="22,8.5 35,16 35,28 22,35.5 9,28 9,16" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+      <text x="22" y="26" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle">Z</text>
+      <text x="32" y="32" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="rgba(255,255,255,0.8)" text-anchor="middle" dominant-baseline="middle">N</text>
+    </svg>
+    <div>
+      <div class="sb-brand">ZN <span>Enterprises</span></div>
+      <span class="sb-sub">Admin Panel</span>
+    </div>
+  </div>
+  <div class="sb-section">Main</div>
+  <ul class="sb-nav">
+    <li><a onclick="showPanel('dashboard')" class="active"><i class="fas fa-gauge-high"></i> Dashboard</a></li>
+    <li><a onclick="showPanel('orders')"><i class="fas fa-bag-shopping"></i> Orders <span class="sb-badge red" id="sbOrderBadge">0</span></a></li>
+    <li><a onclick="showPanel('products')"><i class="fas fa-boxes-stacked"></i> Products</a></li>
+    <li><a onclick="showPanel('categories')"><i class="fas fa-folder-open"></i> Categories</a></li>
+    <div class="sb-section">Store</div>
+    <li><a onclick="showPanel('brands')"><i class="fas fa-star"></i> Brands</a></li>
+    <li><a onclick="showPanel('reviews')"><i class="fas fa-comments"></i> Reviews</a></li>
+    <li><a onclick="showPanel('features')"><i class="fas fa-shield-check"></i> Features</a></li>
+    <div class="sb-section">Config</div>
+    <li><a onclick="showPanel('siteinfo')"><i class="fas fa-circle-info"></i> Site Info</a></li>
+    <li><a onclick="showPanel('payments')"><i class="fas fa-wallet"></i> Payment Accounts</a></li>
+    <li><a onclick="showPanel('notifications')"><i class="fas fa-envelope"></i> Email Alerts</a></li>
+    <li><a onclick="showPanel('googlesheet')"><i class="fas fa-table"></i> Google Sheet <span class="sb-badge green">Setup</span></a></li>
+    <li><a onclick="showPanel('settings')"><i class="fas fa-gear"></i> Settings</a></li>
+  </ul>
+  <div class="sb-bottom">
+    <div class="sb-admin">
+      <div class="sb-avatar">ZN</div>
+      <div>
+        <div class="sb-admin-name">Admin</div>
+        <div class="sb-admin-role">ZN Enterprises</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="page-title" id="pageTitle"><i class="fas fa-gauge-high"></i> Dashboard</span>
+      <span class="page-breadcrumb" id="pageBreadcrumb">ZN Enterprises / Overview</span>
+    </div>
+    <div class="topbar-right" style="display:flex;align-items:center;gap:0.7rem;">
+    <button class="logout-btn" onclick="doLogout()"><i class="fas fa-right-from-bracket"></i> Logout</button>
+      <button class="topbar-btn btn-preview" onclick="openStore()"><i class="fas fa-eye"></i> View Store</button>
+      <button class="topbar-btn btn-save" onclick="saveAllData()"><i class="fas fa-floppy-disk"></i> Save Changes</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row" id="statsRow"></div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.2rem;">
+        <div>
+          <div class="chart-card">
+            <h4><i class="fas fa-chart-bar"></i> Sales Overview — Last 7 Days</h4>
+            <div class="mini-bars" id="salesChart"></div>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fas fa-list-check"></i> Recent Orders</h4>
+            <div id="recentOrdersTable"></div>
+          </div>
+        </div>
+        <div>
+          <div class="chart-card">
+            <h4><i class="fas fa-clock-rotate-left"></i> Recent Activity</h4>
+            <div class="activity-list" id="activityList"></div>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fas fa-chart-pie"></i> Products by Category</h4>
+            <div id="catStats" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ORDERS ===== -->
+    <div class="panel" id="panel-orders">
+      <div class="section-hdr">
+        <h3><i class="fas fa-bag-shopping"></i> All Orders</h3>
+        <div class="action-btns">
+          <button class="btn-sm btn-outline-sm" onclick="exportOrders()"><i class="fas fa-download"></i> Export CSV</button>
+          <button class="btn-sm btn-outline-sm" onclick="clearOrders()" style="color:var(--red);border-color:rgba(239,68,68,0.3);"><i class="fas fa-trash"></i> Clear All</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search orders by name, phone, ID..." id="orderSearch" oninput="filterOrders()">
+        </div>
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Order ID</th><th>Customer</th><th>Phone</th><th>City</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th>
+        </tr></thead><tbody id="ordersTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="panel" id="panel-products">
+      <div class="section-hdr">
+        <h3><i class="fas fa-boxes-stacked"></i> Products Management</h3>
+        <div class="action-btns">
+          <button class="btn-sm btn-add-item" onclick="openEditProduct(null)"><i class="fas fa-plus"></i> Add Product</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search products..." id="productSearch" oninput="filterProducts()">
+        </div>
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Icon</th><th>Name</th><th>Category</th><th>Price</th><th>Old Price</th><th>Badge</th><th>Rating</th><th>Brand</th><th>Actions</th>
+        </tr></thead><tbody id="productsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== CATEGORIES ===== -->
+    <div class="panel" id="panel-categories">
+      <div class="section-hdr">
+        <h3><i class="fas fa-folder-open"></i> Categories</h3>
+        <button class="btn-sm btn-add-item" onclick="openEditCat(null)"><i class="fas fa-plus"></i> Add Category</button>
+      </div>
+      <div class="table-wrap">
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Icon Class</th><th>Name</th><th>Color</th><th>Count</th><th>Actions</th>
+        </tr></thead><tbody id="catsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== BRANDS ===== -->
+    <div class="panel" id="panel-brands">
+      <div class="section-hdr">
+        <h3><i class="fas fa-star"></i> Brands</h3>
+        <button class="btn-sm btn-add-item" onclick="openEditBrand(null)"><i class="fas fa-plus"></i> Add Brand</button>
+      </div>
+      <div class="table-wrap">
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Emoji</th><th>Brand Name</th><th>Tag</th><th>Actions</th>
+        </tr></thead><tbody id="brandsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== REVIEWS ===== -->
+    <div class="panel" id="panel-reviews">
+      <div class="section-hdr">
+        <h3><i class="fas fa-comments"></i> Customer Reviews</h3>
+        <button class="btn-sm btn-add-item" onclick="openEditReview(null)"><i class="fas fa-plus"></i> Add Review</button>
+      </div>
+      <div class="table-wrap">
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Name</th><th>Role</th><th>Stars</th><th>Review Text</th><th>Color</th><th>Actions</th>
+        </tr></thead><tbody id="revsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== FEATURES ===== -->
+    <div class="panel" id="panel-features">
+      <div class="section-hdr">
+        <h3><i class="fas fa-shield-check"></i> Store Features / Why Choose Us</h3>
+        <button class="btn-sm btn-add-item" onclick="openEditFeat(null)"><i class="fas fa-plus"></i> Add Feature</button>
+      </div>
+      <div class="table-wrap">
+        <div style="overflow-x:auto;"><table><thead><tr>
+          <th>Icon</th><th>Color</th><th>Title</th><th>Description</th><th>Number</th><th>Actions</th>
+        </tr></thead><tbody id="featsTableBody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ===== SITE INFO ===== -->
+    <div class="panel" id="panel-siteinfo">
+      <div class="section-hdr"><h3><i class="fas fa-circle-info"></i> Site Information</h3></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h4><i class="fas fa-building"></i> Business Info</h4>
+          <div class="form-group"><label class="form-label"><i class="fas fa-signature"></i> Store Name</label><input class="form-input" id="si-name"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> Phone Number (Displayed on Website)</label><input class="form-input" id="si-phone" placeholder="0343-3194763"></div>
+          <div class="form-group">
+            <label class="form-label"><i class="fab fa-whatsapp" style="color:#25d366;"></i> Helpline / WhatsApp Number
+              <span style="font-size:0.65rem;background:rgba(37,211,102,0.1);color:#25d366;padding:2px 8px;border-radius:4px;margin-left:6px;">📍 Displayed site-wide</span>
+            </label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <input class="form-input" id="si-helpline" placeholder="0343-3194763" style="flex:1;">
+              <a id="si-helpline-test" href="#" target="_blank" onclick="testWaNumber()" style="display:flex;align-items:center;gap:5px;padding:0.5rem 0.85rem;background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.3);border-radius:8px;font-size:0.75rem;font-weight:700;text-decoration:none;white-space:nowrap;cursor:pointer;"><i class="fab fa-whatsapp"></i> Test</a>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text3);margin-top:5px;background:rgba(37,211,102,0.05);border:1px solid rgba(37,211,102,0.15);padding:0.45rem 0.7rem;border-radius:7px;">
+              <i class="fab fa-whatsapp" style="color:#25d366;"></i> This number appears on: <strong>Announcement Bar · Helpline Bar · WhatsApp Popup · Order Form · Footer</strong><br>
+              Changing it here instantly updates the entire website.
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label"><i class="fab fa-whatsapp"></i> WhatsApp Number (with country code, no +)</label><input class="form-input" id="si-whatsapp" placeholder="923433194763"><div style="font-size:0.7rem;color:var(--text3);margin-top:4px;"><i class="fas fa-circle-info"></i> Format: 923XXXXXXXXX (for wa.me links)</div></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-envelope"></i> Business Email</label><input class="form-input" id="si-email" type="email" placeholder="info@znenterprises.pk"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-envelope-open-text"></i> Admin Email (receives order alerts)</label><input class="form-input" id="si-adminEmail" type="email" placeholder="admin@znenterprises.pk"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-location-dot"></i> Address</label><input class="form-input" id="si-address"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-clock"></i> Business Hours</label><input class="form-input" id="si-timing"></div>
+        </div>
+        <div class="settings-card">
+          <h4><i class="fas fa-heading"></i> Hero Section</h4>
+          <div class="form-group"><label class="form-label"><i class="fas fa-h"></i> Hero Title</label><input class="form-input" id="si-heroTitle"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-text"></i> Hero Subtitle</label><textarea class="form-textarea" id="si-heroSub"></textarea></div>
+          <h4 style="margin-top:1rem;"><i class="fas fa-truck"></i> Delivery Settings</h4>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label"><i class="fas fa-rupee-sign"></i> Delivery Charge (Rs.)</label><input class="form-input" id="si-delivery" type="number"></div>
+            <div class="form-group"><label class="form-label"><i class="fas fa-check"></i> Free Delivery Above (Rs.)</label><input class="form-input" id="si-freeMin" type="number"></div>
+          </div>
+          <button class="btn-sm btn-add-item" style="margin-top:0.5rem;" onclick="saveSiteInfo()"><i class="fas fa-floppy-disk"></i> Save Site Info</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ===== PAYMENT ACCOUNTS ===== -->
+    <div class="panel" id="panel-payments">
+      <div class="section-hdr"><h3><i class="fas fa-wallet"></i> Payment Account Settings</h3><p class="section-sub">These account details are shown to customers at checkout when they select a payment method.</p></div>
+      <div class="settings-grid">
+
+        <!-- JazzCash -->
+        <div class="settings-card">
+          <h4><i class="fas fa-mobile-screen-button" style="color:#d32d2d;"></i> JazzCash Account</h4>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-jc-name" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> JazzCash Number</label><input class="form-input" id="pay-jc-number" placeholder="0343-3194763"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-jc-instructions" placeholder="Transfer amount to this JazzCash number, then send screenshot to our WhatsApp."></textarea></div>
+        </div>
+
+        <!-- EasyPaisa -->
+        <div class="settings-card">
+          <h4><i class="fas fa-mobile-screen-button" style="color:#1b9e3e;"></i> EasyPaisa Account</h4>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-ep-name" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> EasyPaisa Number</label><input class="form-input" id="pay-ep-number" placeholder="0343-3194763"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-ep-instructions" placeholder="Transfer amount to this EasyPaisa number, then send screenshot to our WhatsApp."></textarea></div>
+        </div>
+
+        <!-- Bank Transfer -->
+        <div class="settings-card">
+          <h4><i class="fas fa-building-columns" style="color:#1a56db;"></i> Bank Transfer Account</h4>
+          <div class="form-group"><label class="form-label"><i class="fas fa-university"></i> Bank Name</label><input class="form-input" id="pay-bank-name" placeholder="HBL Pakistan"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Title</label><input class="form-input" id="pay-bank-title" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Account Number</label><input class="form-input" id="pay-bank-number" placeholder="0123-456789-001"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-code"></i> IBAN (optional)</label><input class="form-input" id="pay-bank-iban" placeholder="PK36HABB0000123456789001"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-bank-instructions" placeholder="Transfer to above account and email the transaction slip."></textarea></div>
+        </div>
+
+        <!-- Save button card -->
+        <div class="settings-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(6,182,212,0.06));border:1px dashed var(--border2);">
+          <i class="fas fa-wallet" style="font-size:2.5rem;color:var(--primary);opacity:0.5;"></i>
+          <div style="text-align:center;">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Save Payment Settings</div>
+            <div style="font-size:0.75rem;color:var(--text3);">These details appear instantly on the checkout page when customers select a payment method.</div>
+          </div>
+          <button class="btn-sm btn-add-item" style="width:100%;justify-content:center;" onclick="savePaymentAccounts()"><i class="fas fa-floppy-disk"></i> Save All Payment Accounts</button>
+          <div id="payMsg" style="display:none;font-size:0.78rem;padding:0.5rem 0.8rem;border-radius:6px;width:100%;text-align:center;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EMAIL NOTIFICATIONS ===== -->
+    <div class="panel" id="panel-notifications">
+      <div class="section-hdr"><h3><i class="fas fa-envelope"></i> Email Notification System</h3><p class="section-sub">Configure automatic order confirmation emails for both admin and customers using EmailJS (free service).</p></div>
+      <div style="max-width:780px;">
+
+        <!-- How it works -->
+        <div class="sheet-box" style="margin-bottom:1.5rem;">
+          <div class="sheet-box-header"><i class="fas fa-circle-question"></i> How Email Alerts Work</div>
+          <div style="padding:1.2rem;">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem;">
+              <div style="background:var(--bg3);border-radius:8px;padding:1rem;text-align:center;">
+                <div style="font-size:1.5rem;margin-bottom:0.5rem;">🛒</div>
+                <div style="font-size:0.78rem;font-weight:700;margin-bottom:3px;">Customer Places Order</div>
+                <div style="font-size:0.7rem;color:var(--text3);">Order submitted on store</div>
+              </div>
+              <div style="background:var(--bg3);border-radius:8px;padding:1rem;text-align:center;">
+                <div style="font-size:1.5rem;margin-bottom:0.5rem;">📧</div>
+                <div style="font-size:0.78rem;font-weight:700;margin-bottom:3px;">You Receive Alert Email</div>
+                <div style="font-size:0.7rem;color:var(--text3);">Full order details sent to admin email</div>
+              </div>
+              <div style="background:var(--bg3);border-radius:8px;padding:1rem;text-align:center;">
+                <div style="font-size:1.5rem;margin-bottom:0.5rem;">✅</div>
+                <div style="font-size:0.78rem;font-weight:700;margin-bottom:3px;">Customer Gets Confirmation</div>
+                <div style="font-size:0.7rem;color:var(--text3);">Auto-confirmation sent to customer</div>
+              </div>
+            </div>
+            <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.2);border-radius:8px;padding:0.9rem;font-size:0.78rem;color:var(--text2);line-height:1.6;">
+              <strong style="color:var(--cyan);">Setup Instructions:</strong><br>
+              1. Go to <a href="https://emailjs.com" target="_blank" style="color:var(--primary2);">emailjs.com</a> and create a free account<br>
+              2. Add an Email Service (Gmail recommended) — copy the <strong>Service ID</strong><br>
+              3. Create two Email Templates (one for admin, one for customer) — copy both <strong>Template IDs</strong><br>
+              4. Go to Account → copy your <strong>Public Key</strong><br>
+              5. Paste all four values below and click Save
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-grid" style="grid-template-columns:1fr 1fr;">
+          <div class="settings-card">
+            <h4><i class="fas fa-key"></i> EmailJS Configuration</h4>
+            <div class="form-group"><label class="form-label"><i class="fas fa-server"></i> Service ID</label><input class="form-input" id="ejs-serviceId" placeholder="service_xxxxxxx"></div>
+            <div class="form-group"><label class="form-label"><i class="fas fa-key"></i> Public Key</label><input class="form-input" id="ejs-publicKey" placeholder="xxxxxxxxxxxxxxxx"></div>
+            <div class="form-group"><label class="form-label"><i class="fas fa-envelope-circle-check" style="color:var(--red);"></i> Admin Template ID <span style="font-size:0.65rem;color:var(--text3);">(sent to you)</span></label><input class="form-input" id="ejs-templateAdmin" placeholder="template_xxxxxxx"></div>
+            <div class="form-group"><label class="form-label"><i class="fas fa-envelope-circle-check" style="color:var(--green);"></i> Customer Template ID <span style="font-size:0.65rem;color:var(--text3);">(sent to customer)</span></label><input class="form-input" id="ejs-templateCustomer" placeholder="template_xxxxxxx"></div>
+            <button class="btn-sm btn-add-item" onclick="saveEmailJS()"><i class="fas fa-floppy-disk"></i> Save Email Settings</button>
+            <div id="ejsMsg" style="display:none;font-size:0.78rem;padding:0.5rem 0.8rem;border-radius:6px;margin-top:0.6rem;"></div>
+          </div>
+          <div class="settings-card">
+            <h4><i class="fas fa-flask"></i> Test & Status</h4>
+            <div id="ejsStatus" style="margin-bottom:1rem;"></div>
+            <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-bottom:1rem;">
+              <div style="font-size:0.75rem;font-weight:700;margin-bottom:0.6rem;color:var(--text2);">Template Variables Available</div>
+              <div style="font-size:0.7rem;color:var(--text3);line-height:2;font-family:'JetBrains Mono',monospace;">
+                {{order_id}} — {{customer_name}}<br>
+                {{customer_email}} — {{customer_phone}}<br>
+                {{delivery_address}} — {{items}}<br>
+                {{total}} — {{payment}} — {{note}}<br>
+                {{store_name}} — {{store_phone}}<br>
+                {{whatsapp_link}}
+              </div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--text3);background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:0.8rem;line-height:1.6;">
+              <i class="fas fa-circle-info" style="color:var(--accent);"></i> <strong>Free Plan:</strong> EmailJS free tier allows 200 emails/month. For higher volume, upgrade your EmailJS plan.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GOOGLE SHEET ===== -->
+    <div class="panel" id="panel-googlesheet">
+      <div class="section-hdr"><h3><i class="fas fa-table"></i> Google Sheets Integration</h3></div>
+      <div style="max-width:700px;">
+        <div class="sheet-box">
+          <h4><i class="fab fa-google"></i> Step 1: Google Sheet Setup</h4>
+          <div class="sheet-step"><div class="step-num">1</div><div class="step-text">Create a new Google Sheet and name it "ZN Orders". Add the following headers in the first row:</div></div>
+          <div class="code-block">Order ID | Timestamp | Name | Phone | Email | City | Address | Payment | Items | Subtotal | Delivery | Total | Note | Status</div>
+          <button class="copy-btn" onclick="copyText('Order ID\tTimestamp\tName\tPhone\tEmail\tCity\tAddress\tPayment\tItems\tSubtotal\tDelivery\tTotal\tNote\tStatus')"><i class="fas fa-copy"></i> Copy Headers</button>
+        </div>
+        <div class="sheet-box">
+          <h4><i class="fas fa-code"></i> Step 2: Apps Script Deploy (Gmail Emails Included)</h4>
+          <div style="background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.2);border-radius:8px;padding:0.7rem 0.9rem;margin-bottom:0.8rem;">
+            <div style="font-size:0.72rem;font-weight:800;color:#059669;margin-bottom:3px;"><i class="fab fa-google"></i> Gmail — No EmailJS Needed!</div>
+            <div style="font-size:0.71rem;color:var(--text2);">This script uses <strong>MailApp</strong> (Google's built-in Gmail) to send emails automatically. No external service needed. Edit <code style="background:var(--bg);padding:1px 5px;border-radius:3px;">ADMIN_EMAIL</code> at the top of the script before deploying.</div>
+          </div>
+          <div class="sheet-step"><div class="step-num">1</div><div class="step-text">Open your Google Sheet → <strong>Extensions → Apps Script</strong></div></div>
+          <div class="sheet-step"><div class="step-num">2</div><div class="step-text">Change <strong>ADMIN_EMAIL</strong> to your Gmail address (line 6 of the script)</div></div>
+          <div class="sheet-step"><div class="step-num">3</div><div class="step-text">Click <strong>Deploy → New Deployment → Web App</strong>. Set "Execute as: Me" and "Who has access: Anyone". Copy the URL.</div></div>
+          <div class="sheet-step"><div class="step-num">4</div><div class="step-text">First time: Google will ask for permissions — click "Allow" for Gmail and Sheets access.</div></div>
+          <div class="code-block" id="scriptCode"></div>
+          <button class="copy-btn" onclick="copyScript()"><i class="fas fa-copy"></i> Copy Full Script</button>
+        </div>
+        <div class="sheet-box">
+          <h4><i class="fas fa-link"></i> Step 3: Paste Web App URL</h4>
+          <div class="sheet-step"><div class="step-num">1</div><div class="step-text">After deployment, copy the generated Web App URL and paste it below, then click "Save URL".</div></div>
+          <div class="form-group" style="margin-top:0.8rem;">
+            <label class="form-label"><i class="fas fa-globe"></i> Google Apps Script Web App URL</label>
+            <input class="form-input" id="sheetUrl" placeholder="https://script.google.com/macros/s/...../exec">
+          </div>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <button class="btn-sm btn-add-item" onclick="saveSheetUrl()"><i class="fas fa-floppy-disk"></i> Save URL</button>
+            <button class="btn-sm btn-outline-sm" onclick="testSheet()"><i class="fas fa-vial"></i> Test Connection</button>
+          </div>
+          <div id="sheetStatus" style="margin-top:0.8rem;font-size:0.78rem;display:none;padding:0.6rem;border-radius:6px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="panel" id="panel-settings">
+      <div class="section-hdr"><h3><i class="fas fa-gear"></i> Settings</h3></div>
+      <div class="settings-grid">
+        <div class="settings-card">
+          <h4><i class="fas fa-toggle-on"></i> Store Features</h4>
+          <div class="toggle-wrap"><div class="toggle-info"><div class="toggle-title">Wishlist Feature</div><div class="toggle-sub">Show wishlist heart button on products</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="toggle-wrap"><div class="toggle-info"><div class="toggle-title">Product Zoom</div><div class="toggle-sub">Enable image zoom on product detail page</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="toggle-wrap"><div class="toggle-info"><div class="toggle-title">Deal of Week</div><div class="toggle-sub">Show flash deal section on homepage</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="toggle-wrap"><div class="toggle-info"><div class="toggle-title">WhatsApp Button</div><div class="toggle-sub">Show floating WhatsApp support button</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="toggle-wrap"><div class="toggle-info"><div class="toggle-title">Stock Badge</div><div class="toggle-sub">"In Stock" badge on products</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+        <div class="settings-card">
+          <h4><i class="fas fa-shield-halved"></i> Admin Security & Password</h4>
+          
+          <!-- Current Credentials -->
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem 1rem;margin-bottom:1.2rem;">
+            <div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem;font-family:'JetBrains Mono',monospace;">Current Login</div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+              <span style="font-size:0.78rem;display:flex;align-items:center;gap:5px;color:var(--text2);"><i class="fas fa-user" style="color:var(--primary);font-size:0.72rem;"></i> <span id="currentUserDisplay">admin</span></span>
+              <span style="font-size:0.78rem;display:flex;align-items:center;gap:5px;color:var(--text2);"><i class="fas fa-circle-dot" style="color:var(--green);font-size:0.72rem;"></i> Password Set</span>
+            </div>
+          </div>
+
+          <!-- Change Username -->
+          <div class="form-group">
+            <label class="form-label"><i class="fas fa-user"></i> New Username</label>
+            <input class="form-input" id="adminUser" placeholder="Enter new username">
+          </div>
+
+          <!-- Password Change Section -->
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1.1rem;">
+            <div style="font-size:0.72rem;font-weight:700;color:var(--text2);margin-bottom:0.8rem;display:flex;align-items:center;gap:6px;"><i class="fas fa-key" style="color:var(--accent);"></i> Change Password</div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+              <label class="form-label"><i class="fas fa-lock-open"></i> Current Password</label>
+              <div style="position:relative;">
+                <input class="form-input" type="password" id="currentPass" placeholder="Current password">
+                <button onclick="togglePassVis('currentPass','eyeIcon1')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);font-size:0.85rem;" id="eyeIcon1"><i class="fas fa-eye"></i></button>
+              </div>
+              <div id="currentPassErr" style="font-size:0.7rem;color:var(--red);margin-top:3px;display:none;"><i class="fas fa-exclamation-circle"></i> Incorrect password!</div>
+            </div>
+            <div class="form-group" style="margin-bottom:0.8rem;">
+              <label class="form-label"><i class="fas fa-lock"></i> New Password</label>
+              <div style="position:relative;">
+                <input class="form-input" type="password" id="newPass" placeholder="New password (min 6 characters)">
+                <button onclick="togglePassVis('newPass','eyeIcon2')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);font-size:0.85rem;" id="eyeIcon2"><i class="fas fa-eye"></i></button>
+              </div>
+              <!-- Password strength meter -->
+              <div style="margin-top:6px;">
+                <div style="height:3px;background:var(--bg);border-radius:2px;overflow:hidden;">
+                  <div id="passStrengthBar" style="height:100%;width:0%;background:var(--red);transition:all 0.3s;border-radius:2px;"></div>
+                </div>
+                <div id="passStrengthText" style="font-size:0.65rem;color:var(--text3);margin-top:2px;font-family:'JetBrains Mono',monospace;"></div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label"><i class="fas fa-lock"></i> Confirm New Password</label>
+              <div style="position:relative;">
+                <input class="form-input" type="password" id="confirmPass" placeholder="Confirm new password">
+                <button onclick="togglePassVis('confirmPass','eyeIcon3')" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text3);font-size:0.85rem;" id="eyeIcon3"><i class="fas fa-eye"></i></button>
+              </div>
+              <div id="confirmPassErr" style="font-size:0.7rem;color:var(--red);margin-top:3px;display:none;"><i class="fas fa-exclamation-circle"></i> Passwords do not match!</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.2rem;">
+            <button class="btn-sm btn-add-item" onclick="saveAdmin()"><i class="fas fa-floppy-disk"></i> Update Credentials</button>
+            <button class="btn-sm btn-outline-sm" onclick="resetPassFields()"><i class="fas fa-xmark"></i> Cancel</button>
+          </div>
+
+          <hr style="border-color:var(--border);margin:1.2rem 0;">
+          <h4 style="border:none;padding:0;margin-bottom:1rem;"><i class="fas fa-database"></i> Data Management</h4>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <button class="btn-sm btn-outline-sm" onclick="exportData()"><i class="fas fa-download"></i> Export All Data</button>
+            <button class="btn-sm btn-outline-sm" onclick="importData()"><i class="fas fa-upload"></i> Import Data</button>
+            <button class="btn-sm" style="background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);display:flex;align-items:center;gap:5px;" onclick="resetData()"><i class="fas fa-rotate-left"></i> Reset to Default</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end main -->
+
+<!-- EDIT OVERLAYS -->
+<div class="edit-overlay" id="editProductOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-box"></i> <span id="editProductTitle">Add Product</span></h3><button class="close-x" onclick="closeEditProduct()"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-font"></i> Product Name *</label><input class="form-input" id="ep-name"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-tag"></i> Brand</label><input class="form-input" id="ep-brand"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-folder"></i> Category *</label>
+          <select class="form-select" id="ep-cat">
+            <option value="keyboard">Keyboard</option><option value="mouse">Mouse</option>
+            <option value="monitor">Monitor</option><option value="headset">Headset</option>
+            <option value="webcam">Webcam</option><option value="storage">Storage</option>
+            <option value="hub">Hub</option><option value="cooling">Cooling</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ep-icon" placeholder="fas fa-keyboard"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-rupee-sign"></i> Price (Rs.) *</label><input class="form-input" id="ep-price" type="number"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-strikethrough"></i> Old Price (Rs.)</label><input class="form-input" id="ep-old" type="number"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-certificate"></i> Badge</label>
+          <select class="form-select" id="ep-badge">
+            <option value="">None</option><option value="new">New</option>
+            <option value="hot">Hot</option><option value="sale">Sale</option><option value="top">Top</option>
+          </select>
+        </div>
+        <div class="form-row" style="gap:0.5rem;">
+          <div class="form-group"><label class="form-label"><i class="fas fa-star"></i> Rating</label><input class="form-input" id="ep-rating" type="number" step="0.1" min="0" max="5"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-comment"></i> Reviews</label><input class="form-input" id="ep-reviews" type="number"></div>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-align-left"></i> Description</label><textarea class="form-textarea" id="ep-desc"></textarea></div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-list-ul"></i> Specs (JSON format)</label><textarea class="form-textarea" id="ep-specs" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;" placeholder='{"Type":"Mechanical","Warranty":"2 Years"}'></textarea></div>
+    </div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="closeEditProduct()">Cancel</button>
+      <button class="btn-sm btn-add-item" onclick="saveProduct()"><i class="fas fa-floppy-disk"></i> Save Product</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="editCatOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-folder"></i> <span id="editCatTitle">Add Category</span></h3><button class="close-x" onclick="closeEditCat()"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-id-badge"></i> Category ID (lowercase)</label><input class="form-input" id="ec-id" placeholder="keyboard"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-font"></i> Display Name</label><input class="form-input" id="ec-name"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ec-icon" placeholder="fas fa-keyboard"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Color (hex)</label><input class="form-input" id="ec-color" placeholder="#6366f1"></div>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Item Count</label><input class="form-input" id="ec-count" type="number"></div>
+    </div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="closeEditCat()">Cancel</button>
+      <button class="btn-sm btn-add-item" onclick="saveCat()"><i class="fas fa-floppy-disk"></i> Save Category</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="editBrandOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-star"></i> <span id="editBrandTitle">Add Brand</span></h3><button class="close-x" onclick="closeEditBrand()"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-font"></i> Brand Name</label><input class="form-input" id="eb-name"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-face-smile"></i> Emoji Icon</label><input class="form-input" id="eb-icon" placeholder="🖱️"></div>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-certificate"></i> Tag (Official/Authorized)</label><input class="form-input" id="eb-tag" placeholder="Official"></div>
+    </div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="closeEditBrand()">Cancel</button>
+      <button class="btn-sm btn-add-item" onclick="saveBrand()"><i class="fas fa-floppy-disk"></i> Save Brand</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="editRevOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-comment"></i> <span id="editRevTitle">Add Review</span></h3><button class="close-x" onclick="closeEditRev()"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Customer Name</label><input class="form-input" id="er-name"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-briefcase"></i> Role / Location</label><input class="form-input" id="er-role"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-star"></i> Stars (1–5)</label><input class="form-input" id="er-stars" type="number" min="1" max="5" value="5"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Avatar Color</label><input class="form-input" id="er-color" placeholder="#6366f1"></div>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-message"></i> Review Text</label><textarea class="form-textarea" id="er-text" style="min-height:90px;"></textarea></div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-id-badge"></i> Avatar Initials</label><input class="form-input" id="er-av" placeholder="AH" maxlength="2"></div>
+    </div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="closeEditRev()">Cancel</button>
+      <button class="btn-sm btn-add-item" onclick="saveRev()"><i class="fas fa-floppy-disk"></i> Save Review</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="editFeatOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-shield"></i> <span id="editFeatTitle">Add Feature</span></h3><button class="close-x" onclick="closeEditFeat()"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ef-icon" placeholder="fas fa-rocket"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Icon Color</label><input class="form-input" id="ef-color" placeholder="#6366f1"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-font"></i> Title</label><input class="form-input" id="ef-title"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Number (01, 02...)</label><input class="form-input" id="ef-num" placeholder="01"></div>
+      </div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-align-left"></i> Description</label><textarea class="form-textarea" id="ef-desc"></textarea></div>
+    </div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="closeEditFeat()">Cancel</button>
+      <button class="btn-sm btn-add-item" onclick="saveFeat()"><i class="fas fa-floppy-disk"></i> Save Feature</button>
+    </div>
+  </div>
+</div>
+
+<div class="edit-overlay" id="editOrderOverlay">
+  <div class="edit-box">
+    <div class="edit-hdr"><h3><i class="fas fa-bag-shopping"></i> Order Details</h3><button class="close-x" onclick="document.getElementById('editOrderOverlay').classList.remove('open')"><i class="fas fa-xmark"></i></button></div>
+    <div class="edit-body" id="orderDetailBody"></div>
+    <div class="edit-footer">
+      <button class="btn-sm btn-outline-sm" onclick="document.getElementById('editOrderOverlay').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA MANAGEMENT
+// ============================================================
+const DEFAULT_DATA={
+  categories:[
+    {id:'keyboard',name:'Keyboards',icon:'fas fa-keyboard',color:'#6366f1',count:48},
+    {id:'mouse',name:'Mouse & Pads',icon:'fas fa-computer-mouse',color:'#06b6d4',count:62},
+    {id:'monitor',name:'Monitors',icon:'fas fa-desktop',color:'#10b981',count:35},
+    {id:'headset',name:'Headsets',icon:'fas fa-headphones',color:'#f59e0b',count:44},
+    {id:'webcam',name:'Webcams',icon:'fas fa-camera',color:'#ec4899',count:22},
+    {id:'storage',name:'Storage',icon:'fas fa-hard-drive',color:'#8b5cf6',count:56},
+    {id:'hub',name:'Hubs & Cables',icon:'fas fa-plug',color:'#ef4444',count:80},
+    {id:'cooling',name:'Cooling',icon:'fas fa-snowflake',color:'#0ea5e9',count:28},
+  ],
+  products:[
+    {id:1,name:'Logitech G Pro X Superlight 2',cat:'mouse',price:14999,old:18999,icon:'fas fa-computer-mouse',badge:'new',rating:4.9,reviews:234,brand:'Logitech',specs:{Sensor:'HERO 2 25K',DPI:'100–25,600',Weight:'60g',Connectivity:'2.4GHz Wireless',Warranty:'2 Years'},desc:'Ultra-lightweight gaming mouse'},
+    {id:2,name:'Razer BlackWidow V4 Pro',cat:'keyboard',price:22999,old:27999,icon:'fas fa-keyboard',badge:'hot',rating:4.8,reviews:189,brand:'Razer',specs:{Type:'Mechanical',Switches:'Razer Yellow V3',Backlight:'RGB Chroma',Warranty:'2 Years'},desc:'Professional gaming keyboard'},
+    {id:3,name:'ASUS ROG Swift 27" 4K 144Hz',cat:'monitor',price:89999,old:99999,icon:'fas fa-desktop',badge:'top',rating:4.9,reviews:156,brand:'ASUS ROG',specs:{Size:'27 Inch',Resolution:'4K UHD',RefreshRate:'144Hz',Panel:'IPS',Response:'1ms'},desc:'4K gaming monitor'},
+    {id:4,name:'HyperX Cloud Alpha Wireless',cat:'headset',price:18500,old:21000,icon:'fas fa-headphones',badge:'new',rating:4.7,reviews:312,brand:'HyperX',specs:{Driver:'50mm',Battery:'300 Hours',Warranty:'2 Years'},desc:'300hr battery headset'},
+    {id:5,name:'Samsung 980 Pro 1TB NVMe',cat:'storage',price:16999,old:19999,icon:'fas fa-hard-drive',badge:'sale',rating:4.9,reviews:445,brand:'Samsung',specs:{Type:'NVMe PCIe 4.0',Capacity:'1TB',ReadSpeed:'7,000 MB/s',Warranty:'5 Years'},desc:'NVMe PCIe 4.0 SSD'},
+    {id:6,name:'Logitech MX Master 3S',cat:'mouse',price:12499,old:14999,icon:'fas fa-computer-mouse',badge:'',rating:4.8,reviews:567,brand:'Logitech',specs:{DPI:'200–8,000',Warranty:'1 Year'},desc:'Productivity wireless mouse'},
+    {id:7,name:'Corsair K100 RGB Optical',cat:'keyboard',price:29999,old:34999,icon:'fas fa-keyboard',badge:'hot',rating:4.7,reviews:98,brand:'Corsair',specs:{Type:'Optical-Mechanical',Warranty:'2 Years'},desc:'Flagship gaming keyboard'},
+    {id:8,name:'Dell UltraSharp 32" USB-C',cat:'monitor',price:74999,old:85000,icon:'fas fa-desktop',badge:'',rating:4.8,reviews:201,brand:'Dell',specs:{Size:'32 Inch',Resolution:'4K UHD',Warranty:'3 Years'},desc:'Professional 4K display'},
+    {id:9,name:'Logitech C922 Pro Webcam',cat:'webcam',price:13999,old:16500,icon:'fas fa-camera',badge:'',rating:4.6,reviews:378,brand:'Logitech',specs:{Resolution:'1080p 60fps',Warranty:'2 Years'},desc:'Pro streaming webcam'},
+    {id:10,name:'SteelSeries Arctis Nova Pro',cat:'headset',price:31999,old:36999,icon:'fas fa-headphones',badge:'new',rating:4.9,reviews:145,brand:'SteelSeries',specs:{ANC:'Active',Warranty:'1 Year'},desc:'Premium ANC headset'},
+    {id:11,name:'WD Black SN850X 2TB NVMe',cat:'storage',price:24999,old:28999,icon:'fas fa-hard-drive',badge:'',rating:4.8,reviews:289,brand:'WD',specs:{Type:'NVMe PCIe 4.0',Capacity:'2TB',Warranty:'5 Years'},desc:'Gaming SSD 2TB'},
+    {id:12,name:'Anker 13-in-1 USB-C Hub',cat:'hub',price:7999,old:9999,icon:'fas fa-plug',badge:'sale',rating:4.7,reviews:512,brand:'Anker',specs:{Ports:'13',Warranty:'18 Months'},desc:'13-port USB-C hub'},
+  ],
+  brands:[
+    {name:'Logitech',icon:'🖱️',tag:'Official'},{name:'Razer',icon:'🎮',tag:'Authorized'},
+    {name:'Corsair',icon:'⚡',tag:'Official'},{name:'ASUS ROG',icon:'🔥',tag:'Authorized'},
+    {name:'Samsung',icon:'💾',tag:'Official'},{name:'HyperX',icon:'🎧',tag:'Official'},
+    {name:'SteelSeries',icon:'🎯',tag:'Authorized'},{name:'WD',icon:'💿',tag:'Official'},
+    {name:'Anker',icon:'🔌',tag:'Authorized'},
+  ],
+  features:[
+    {icon:'fas fa-rocket',color:'#6366f1',bg:'rgba(99,102,241,0.1)',title:'Fast Delivery',desc:'Same-day delivery in Karachi. All other cities within 2–3 business days guaranteed.',num:'01'},
+    {icon:'fas fa-shield-check',color:'#10b981',bg:'rgba(16,185,129,0.1)',title:'100% Original',desc:'100% authentic products — full refund if any item is found to be counterfeit.',num:'02'},
+    {icon:'fas fa-tag',color:'#f59e0b',bg:'rgba(245,158,11,0.1)',title:'Best Prices',desc:'Found a lower price? Contact us — we will match or beat it. Price guarantee.',num:'03'},
+    {icon:'fas fa-wrench',color:'#06b6d4',bg:'rgba(6,182,212,0.1)',title:'1 Year Warranty',desc:'Har product par local warranty. ZN Enterprises after-sales support available 7 days a week.',num:'04'},
+    {icon:'fas fa-credit-card',color:'#ec4899',bg:'rgba(236,72,153,0.1)',title:'Easy Payment',desc:'Cash on Delivery, EasyPaisa, JazzCash, and Bank Transfer — all payment methods accepted.',num:'05'},
+    {icon:'fas fa-rotate-left',color:'#8b5cf6',bg:'rgba(139,92,246,0.1)',title:'7-Day Returns',desc:'7-day hassle-free return window — no questions asked. ZN Enterprises return policy.',num:'06'},
+  ],
+  reviews:[
+    {stars:5,text:'Ordered a Razer keyboard from ZN Enterprises — 100% original and delivered the next day. Exceptional service!',name:'Ahmed Hassan',role:'Graphic Designer, Karachi',av:'AH',color:'#6366f1'},
+    {stars:5,text:'Built my entire gaming setup through ZN Enterprises. Great pricing and every product was genuine. Highly recommended!',name:'Zain Khan',role:'Pro Gamer, Lahore',av:'ZK',color:'#06b6d4'},
+    {stars:5,text:'Ordered 15 monitors for our office through ZN. Excellent bulk discount and every unit arrived in perfect condition.',name:'Sara Rizvi',role:'IT Manager, Islamabad',av:'SR',color:'#ec4899'},
+    {stars:5,text:'First time ordering online and ZN Enterprises exceeded all expectations. Secure packaging and on-time delivery.',name:'Bilal Mehmood',role:'Student, Faisalabad',av:'BM',color:'#f59e0b'},
+  ],
+  siteInfo:{
+    name:'ZN Enterprises',phone:'0343-3194763',email:'info@znenterprises.pk',
+    address:'Karachi, Pakistan',timing:'Mon–Sat: 10am–8pm',helpline:'0343-3194763',whatsapp:'923433194763',adminEmail:'admin@znenterprises.pk',
+    heroTitle:'YOUR TRUSTED TECH PARTNER',heroSub:'Pakistan ka #1 computer accessories store.',
+    deliveryCharge:200,freeDeliveryMin:5000
+  },
+  orders:[]
+};
+
+function getData(){try{const s=localStorage.getItem('zn_store_data');return s?JSON.parse(s):JSON.parse(JSON.stringify(DEFAULT_DATA));}catch(e){return JSON.parse(JSON.stringify(DEFAULT_DATA));}}
+function saveData(d){localStorage.setItem('zn_store_data',JSON.stringify(d));window.dispatchEvent(new Event('storage'));}
+let DATA=getData();
+let editProductIdx=null,editCatIdx=null,editBrandIdx=null,editRevIdx=null,editFeatIdx=null;
+let currentOrderIdx=null;
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const panelTitles={
+  dashboard:'<i class="fas fa-gauge-high"></i> Dashboard',
+  orders:'<i class="fas fa-bag-shopping"></i> Orders',
+  products:'<i class="fas fa-boxes-stacked"></i> Products',
+  categories:'<i class="fas fa-folder-open"></i> Categories',
+  brands:'<i class="fas fa-star"></i> Brands',
+  reviews:'<i class="fas fa-comments"></i> Reviews',
+  features:'<i class="fas fa-shield-check"></i> Features',
+  siteinfo:'<i class="fas fa-circle-info"></i> Site Info',
+  payments:'<i class="fas fa-wallet"></i> Payment Accounts',
+  notifications:'<i class="fas fa-envelope"></i> Email Notifications',
+  googlesheet:'<i class="fas fa-table"></i> Google Sheet',
+  settings:'<i class="fas fa-gear"></i> Settings',
+};
+function showPanel(name){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.querySelector(`.sb-nav a[onclick="showPanel('${name}')"]`)?.classList.add('active');
+  document.getElementById('pageTitle').innerHTML=panelTitles[name]||name;
+  document.getElementById('pageBreadcrumb').textContent='ZN Enterprises / '+name.charAt(0).toUpperCase()+name.slice(1);
+  renderPanel(name);
+}
+function renderPanel(name){
+  if(name==='dashboard')renderDashboard();
+  else if(name==='orders')renderOrders();
+  else if(name==='products')renderProductsTable();
+  else if(name==='categories')renderCatsTable();
+  else if(name==='brands')renderBrandsTable();
+  else if(name==='reviews')renderRevsTable();
+  else if(name==='features')renderFeatsTable();
+  else if(name==='siteinfo')loadSiteInfo();
+  else if(name==='payments')loadPaymentAccounts();
+  else if(name==='notifications')loadEmailJS();
+  else if(name==='googlesheet')loadSheetPanel();
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard(){
+  const totalOrders=DATA.orders.length;
+  const totalRev=DATA.orders.reduce((s,o)=>s+(o.total||0),0);
+  const newOrders=DATA.orders.filter(o=>o.status==='New Order').length;
+  document.getElementById('sbOrderBadge').textContent=newOrders;
+  document.getElementById('statsRow').innerHTML=`
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(99,102,241,0.1);"><i class="fas fa-bag-shopping" style="color:var(--primary);"></i></div>
+      <div class="stat-info"><span class="stat-val">${totalOrders}</span><span class="stat-label">Total Orders</span><span class="stat-change up"><i class="fas fa-arrow-up"></i> ${newOrders} new today</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(245,158,11,0.1);"><i class="fas fa-rupee-sign" style="color:var(--accent);"></i></div>
+      <div class="stat-info"><span class="stat-val">Rs. ${(totalRev/1000).toFixed(0)}K</span><span class="stat-label">Total Revenue</span><span class="stat-change up"><i class="fas fa-arrow-up"></i> All time</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(16,185,129,0.1);"><i class="fas fa-boxes-stacked" style="color:var(--green);"></i></div>
+      <div class="stat-info"><span class="stat-val">${DATA.products.length}</span><span class="stat-label">Products Listed</span><span class="stat-change up"><i class="fas fa-check"></i> Active</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(239,68,68,0.1);"><i class="fas fa-fire" style="color:var(--red);"></i></div>
+      <div class="stat-info"><span class="stat-val">${newOrders}</span><span class="stat-label">Pending Orders</span><span class="stat-change ${newOrders>0?'down':'up'}"><i class="fas fa-${newOrders>0?'exclamation':'check'}"></i> ${newOrders>0?'Action needed':'All clear'}</span></div>
+    </div>
+    <div class="stat-card" style="cursor:pointer;" onclick="openWhatsAppDirect()">
+      <div class="stat-icon" style="background:rgba(37,211,102,0.1);"><i class="fab fa-whatsapp" style="color:#25d366;font-size:1.3rem;"></i></div>
+      <div class="stat-info"><span class="stat-val" style="color:#25d366;font-size:1rem;">Open</span><span class="stat-label">WhatsApp Business</span><span class="stat-change up"><i class="fas fa-arrow-up-right-from-square"></i> Helpline: ${DATA.siteInfo?.helpline||'0343-3194763'}</span></div>
+    </div>
+  `;
+  // chart
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const vals=[65,80,45,90,55,75,100];
+  document.getElementById('salesChart').innerHTML=vals.map((v,i)=>`
+    <div class="mini-bar" style="height:${v}%;background:${i===6?'var(--accent)':'var(--primary)'};opacity:${0.5+v/200};">
+      <span class="mini-bar-label">${days[i]}</span>
+    </div>`).join('');
+  // recent orders
+  const recent=DATA.orders.slice(-5).reverse();
+  if(recent.length){
+    document.getElementById('recentOrdersTable').innerHTML=`<div style="overflow-x:auto;"><table><thead><tr><th>ID</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody>${
+      recent.map(o=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">${o.orderId}</td><td class="td-name">${o.name}</td><td class="td-price">Rs. ${(o.total||0).toLocaleString()}</td><td><span class="status-badge status-${(o.status||'new').toLowerCase().replace(' ','-')}">${o.status||'New Order'}</span></td></tr>`).join('')
+    }</tbody></table></div>`;
+  }else{document.getElementById('recentOrdersTable').innerHTML=`<div class="empty-state"><i class="fas fa-inbox"></i><p>No orders yet</p></div>`;}
+  // activity
+  document.getElementById('activityList').innerHTML=`
+    <div class="act-item"><div class="act-icon" style="background:rgba(99,102,241,0.1);"><i class="fas fa-box" style="color:var(--primary);"></i></div><div class="act-text"><strong>${DATA.products.length} products</strong> listed in store</div><span class="act-time">Active</span></div>
+    <div class="act-item"><div class="act-icon" style="background:rgba(16,185,129,0.1);"><i class="fas fa-check" style="color:var(--green);"></i></div><div class="act-text">Store is <strong>Live & Ready</strong></div><span class="act-time">Now</span></div>
+    ${DATA.orders.slice(-3).reverse().map(o=>`<div class="act-item"><div class="act-icon" style="background:rgba(245,158,11,0.1);"><i class="fas fa-bag-shopping" style="color:var(--accent);"></i></div><div class="act-text">New order from <strong>${o.name}</strong></div><span class="act-time">${o.timestamp?.split(',')[0]||'Recent'}</span></div>`).join('')}
+  `;
+  // cat stats
+  const catCounts={};DATA.products.forEach(p=>{catCounts[p.cat]=(catCounts[p.cat]||0)+1;});
+  const total=DATA.products.length;
+  document.getElementById('catStats').innerHTML=Object.entries(catCounts).map(([cat,count])=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.75rem;">
+        <span style="color:var(--text2);">${cat}</span>
+        <span style="font-family:'JetBrains Mono',monospace;color:var(--text3);">${count}</span>
+      </div>
+      <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${(count/total*100).toFixed(0)}%;background:var(--primary);border-radius:3px;transition:width 0.6s;"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// ORDERS
+// ============================================================
+
+function openWhatsAppDirect(){
+  const wa=DATA.siteInfo?.whatsapp||'923433194763';
+  window.open('https://wa.me/'+wa,'_blank');
+}
+function quickConfirm(idx){
+  const o=DATA.orders[idx];
+  if(o.status==='Confirmed'){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> Order already confirmed');return;}
+  o.status='Confirmed';
+  saveData(DATA);renderOrders();
+  sendStatusEmailToCustomer(o,'Confirmed');
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Order '+o.orderId+' confirmed — email sent!');
+}
+function renderOrders(){
+  const orders=DATA.orders;
+  document.getElementById('sbOrderBadge').textContent=orders.filter(o=>o.status==='New Order').length;
+  if(!orders.length){document.getElementById('ordersTableBody').innerHTML=`<tr><td colspan="10"><div class="empty-state"><i class="fas fa-inbox"></i><p>No orders received yet</p></div></td></tr>`;return;}
+  renderOrdersFiltered(orders);
+}
+function renderOrdersFiltered(orders){
+  document.getElementById('ordersTableBody').innerHTML=orders.slice().reverse().map((o,realIdx)=>{
+    const idx=DATA.orders.indexOf(o);
+    return`<tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--primary2);">${o.orderId||'—'}</td>
+      <td class="td-name">${o.name||'—'}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">${o.phone||'—'}</td>
+      <td>${o.city||'—'}</td>
+      <td style="font-size:0.75rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.items||'—'}</td>
+      <td class="td-price">Rs. ${(o.total||0).toLocaleString()}</td>
+      <td style="font-size:0.75rem;">${o.payment||'COD'}</td>
+      <td><span class="status-badge status-${(o.status||'new').toLowerCase().replace(' ','-')}">${o.status||'New Order'}</span></td>
+      <td style="font-size:0.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace;">${o.timestamp?.split(',')[0]||'—'}</td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-view" onclick="viewOrder(${idx})" title="View Details"><i class="fas fa-eye"></i></button>
+        <button class="tac-btn" onclick="quickConfirm(${idx})" title="Quick Confirm + Email" style="background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2);"><i class="fas fa-check"></i></button>
+        <button class="tac-btn tac-del" onclick="delOrder(${idx})" title="Delete"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function filterOrders(){
+  const q=document.getElementById('orderSearch').value.toLowerCase();
+  renderOrdersFiltered(DATA.orders.filter(o=>
+    o.name?.toLowerCase().includes(q)||o.phone?.includes(q)||o.orderId?.toLowerCase().includes(q)||o.city?.toLowerCase().includes(q)
+  ));
+}
+function viewOrder(idx){
+  currentOrderIdx=idx;
+  const o=DATA.orders[idx];
+  const statuses=['New Order','Confirmed','Shipped','Delivered','Cancelled'];
+  document.getElementById('orderDetailBody').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem;">
+      ${[['Order ID',o.orderId],['Date',o.timestamp],['Name',o.name],['Phone',o.phone],['Email',o.email],['City',o.city]].map(([k,v])=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;"><div style="font-size:0.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${k}</div><div style="font-size:0.82rem;font-weight:600;">${v||'—'}</div></div>`).join('')}
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;">
+      <div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;margin-bottom:5px;">DELIVERY ADDRESS</div>
+      <div style="font-size:0.85rem;">${o.address||'—'}</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;">
+      <div style="font-size:0.68px;color:var(--text3);letter-spacing:2px;margin-bottom:5px;font-size:0.68rem;">ITEMS</div>
+      <div style="font-size:0.82rem;">${o.items||'—'}</div>
+    </div>
+    ${o.note?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;"><div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;margin-bottom:5px;">NOTE</div><div style="font-size:0.82rem;font-style:italic;">${o.note}</div></div>`:''}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-bottom:1rem;">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Subtotal</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);">Rs. ${(o.subtotal||0).toLocaleString()}</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Delivery</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cyan);">${o.delivery===0?'FREE':'Rs. '+(o.delivery||0).toLocaleString()}</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Total</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);">Rs. ${(o.total||0).toLocaleString()}</div></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label"><i class="fas fa-circle-dot"></i> Update Status</label>
+      <select class="form-select" id="orderStatusSelect">
+        ${statuses.map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  `;
+  document.getElementById('editOrderOverlay').classList.add('open');
+}
+function viewOrder(idx){
+  currentOrderIdx=idx;
+  const o=DATA.orders[idx];
+  const statuses=['New Order','Confirmed','Processing','Shipped','Delivered','Cancelled'];
+  document.getElementById('orderDetailBody').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem;">
+      ${[['Order ID',o.orderId],['Date',o.timestamp],['Name',o.name],['Phone',o.phone],['Email',o.email||'—'],['City',o.city]].map(([k,v])=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;"><div style="font-size:0.65rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${k}</div><div style="font-size:0.82rem;font-weight:600;">${v||'—'}</div></div>`).join('')}
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;">
+      <div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;margin-bottom:5px;">DELIVERY ADDRESS</div>
+      <div style="font-size:0.85rem;">${o.address||'—'}</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;">
+      <div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;margin-bottom:5px;">ITEMS ORDERED</div>
+      <div style="font-size:0.82rem;">${o.items||'—'}</div>
+    </div>
+    ${o.note?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.85rem;margin-bottom:0.8rem;"><div style="font-size:0.68rem;color:var(--text3);letter-spacing:2px;margin-bottom:5px;">CUSTOMER NOTE</div><div style="font-size:0.82rem;font-style:italic;">${o.note}</div></div>`:''}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-bottom:1rem;">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Subtotal</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text);">Rs. ${(o.subtotal||0).toLocaleString()}</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Delivery</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cyan);">${o.delivery===0?'FREE':'Rs. '+(o.delivery||0).toLocaleString()}</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.7rem;text-align:center;"><div style="font-size:0.65rem;color:var(--text3);">Total Payable</div><div style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);">Rs. ${(o.total||0).toLocaleString()}</div></div>
+    </div>
+    <div class="form-group" style="margin-bottom:1rem;">
+      <label class="form-label"><i class="fas fa-circle-dot"></i> Update Order Status</label>
+      <select class="form-select" id="orderStatusSelect">
+        ${statuses.map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <div style="font-size:0.72rem;color:var(--text3);margin-top:5px;"><i class="fas fa-circle-info"></i> Selecting "Confirmed" will trigger an email notification to the customer (if EmailJS is configured).</div>
+    </div>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+      <button onclick="updateOrderStatus(true)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;">
+        <i class="fas fa-check-circle"></i> Save & Notify Customer
+      </button>
+      <button onclick="updateOrderStatus(false)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:rgba(99,102,241,0.15);color:var(--primary2);border:1px solid var(--border2);border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;">
+        <i class="fas fa-floppy-disk"></i> Save Only (No Email)
+      </button>
+      ${o.phone?`<a href="https://wa.me/${(DATA.siteInfo?.whatsapp||'923433194763')}" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.3);border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;text-decoration:none;" onclick="openOrderWA(${idx})"><i class="fab fa-whatsapp"></i> Contact on WhatsApp</a>`:''}
+    </div>
+  `;
+  document.getElementById('editOrderOverlay').classList.add('open');
+}
+
+function openOrderWA(idx){
+  const o=DATA.orders[idx];
+  const wa=(DATA.siteInfo?.whatsapp||'923433194763');
+  const msg=`Hi ${o.name}! This is ZN Enterprises regarding your order ${o.orderId}. `;
+  window.open('https://wa.me/'+o.phone?.replace(/^0/,'92').replace(/-/g,'')+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function updateOrderStatus(sendEmail=false){
+  if(currentOrderIdx===null)return;
+  const newStatus=document.getElementById('orderStatusSelect').value;
+  const o=DATA.orders[currentOrderIdx];
+  const oldStatus=o.status;
+  o.status=newStatus;
+  saveData(DATA);renderOrders();
+  if(sendEmail && newStatus!==oldStatus){
+    sendStatusEmailToCustomer(o,newStatus);
+  }
+  document.getElementById('editOrderOverlay').classList.remove('open');
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Order status updated'+(sendEmail?' — Customer notification sent!':'!'));
+}
+
+function sendStatusEmailToCustomer(order, status){
+  try{
+    const cfg=JSON.parse(localStorage.getItem('zn_emailjs')||'{}');
+    if(!cfg.serviceId||!cfg.templateCustomer||!order.email){
+      showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> EmailJS not configured — no email sent');
+      return;
+    }
+    const loadEmailJS=()=>{
+      const params={
+        order_id:order.orderId,customer_name:order.name,
+        customer_email:order.email,customer_phone:order.phone,
+        delivery_address:(order.address||'')+(order.city?', '+order.city:''),
+        items:order.items,total:'Rs. '+(order.total||0).toLocaleString(),
+        payment:order.payment,order_status:status,
+        store_name:DATA.siteInfo?.name||'ZN Enterprises',
+        store_phone:DATA.siteInfo?.helpline||'0343-3194763',
+        whatsapp_link:'https://wa.me/'+(DATA.siteInfo?.whatsapp||'923433194763'),
+        to_email:order.email
+      };
+      try{window.emailjs.send(cfg.serviceId,cfg.templateCustomer,params);}
+      catch(e){console.log('EmailJS send error',e);}
+    };
+    if(!window.emailjs){
+      const sc=document.createElement('script');
+      sc.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+      sc.onload=()=>{window.emailjs.init(cfg.publicKey||'');loadEmailJS();};
+      document.head.appendChild(sc);
+    }else{loadEmailJS();}
+  }catch(e){console.log('Email error',e);}
+}
+function delOrder(idx){if(confirm('Are you sure you want to delete this order?')){DATA.orders.splice(idx,1);saveData(DATA);renderOrders();showToast('<i class="fas fa-trash" style="color:var(--red)"></i> Order deleted');}}
+function clearOrders(){if(confirm('Delete ALL orders? This action cannot be undone.')){DATA.orders=[];saveData(DATA);renderOrders();showToast('<i class="fas fa-trash" style="color:var(--red)"></i> All orders cleared');}}
+function exportOrders(){
+  if(!DATA.orders.length){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> No orders to export');return;}
+  const keys=['orderId','timestamp','name','phone','email','city','address','payment','items','subtotal','delivery','total','note','status'];
+  const csv=[keys.join(','),...DATA.orders.map(o=>keys.map(k=>`"${(o[k]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='ZN_Orders_'+Date.now()+'.csv';a.click();
+  showToast('<i class="fas fa-download" style="color:var(--green)"></i> Orders exported!');
+}
+
+// ============================================================
+// PRODUCTS TABLE
+// ============================================================
+function renderProductsTable(list){
+  const data=list||DATA.products;
+  document.getElementById('productsTableBody').innerHTML=data.map((p,idx)=>`
+    <tr>
+      <td><i class="${p.icon}" style="font-size:1.2rem;"></i></td>
+      <td class="td-name">${p.name}</td>
+      <td><span class="td-cat"><i class="${getCatIcon2(p.cat)}"></i> ${p.cat}</span></td>
+      <td class="td-price">Rs. ${p.price.toLocaleString()}</td>
+      <td style="color:var(--text3);font-size:0.78rem;">${p.old?'Rs. '+p.old.toLocaleString():'—'}</td>
+      <td>${p.badge?`<span class="td-badge td-${p.badge}">${p.badge.toUpperCase()}</span>`:'—'}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">${p.rating}★ (${p.reviews})</td>
+      <td style="font-size:0.78rem;color:var(--text2);">${p.brand||'—'}</td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-edit" onclick="openEditProduct(${DATA.products.indexOf(p)})" title="Edit"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn tac-del" onclick="delProduct(${DATA.products.indexOf(p)})" title="Delete"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+function filterProducts(){
+  const q=document.getElementById('productSearch').value.toLowerCase();
+  renderProductsTable(DATA.products.filter(p=>p.name.toLowerCase().includes(q)||p.cat.includes(q)||p.brand?.toLowerCase().includes(q)));
+}
+function getCatIcon2(cat){
+  const c={keyboard:'fas fa-keyboard',mouse:'fas fa-computer-mouse',monitor:'fas fa-desktop',headset:'fas fa-headphones',webcam:'fas fa-camera',storage:'fas fa-hard-drive',hub:'fas fa-plug',cooling:'fas fa-snowflake'};
+  return c[cat]||'fas fa-box';
+}
+
+// EDIT PRODUCT
+function openEditProduct(idx){
+  editProductIdx=idx;
+  document.getElementById('editProductTitle').textContent=idx===null?'Add Product':'Edit Product';
+  if(idx!==null){
+    const p=DATA.products[idx];
+    document.getElementById('ep-name').value=p.name;document.getElementById('ep-brand').value=p.brand||'';
+    document.getElementById('ep-cat').value=p.cat;document.getElementById('ep-icon').value=p.icon||'';
+    document.getElementById('ep-price').value=p.price;document.getElementById('ep-old').value=p.old||'';
+    document.getElementById('ep-badge').value=p.badge||'';document.getElementById('ep-rating').value=p.rating;
+    document.getElementById('ep-reviews').value=p.reviews;document.getElementById('ep-desc').value=p.desc||'';
+    document.getElementById('ep-specs').value=p.specs?JSON.stringify(p.specs,null,2):'';
+  }else{
+    ['ep-name','ep-brand','ep-icon','ep-price','ep-old','ep-desc','ep-specs'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('ep-badge').value='';document.getElementById('ep-rating').value='4.5';document.getElementById('ep-reviews').value='0';
+  }
+  document.getElementById('editProductOverlay').classList.add('open');
+}
+function closeEditProduct(){document.getElementById('editProductOverlay').classList.remove('open');}
+function saveProduct(){
+  const p={
+    id:editProductIdx!==null?DATA.products[editProductIdx].id:Date.now(),
+    name:document.getElementById('ep-name').value.trim(),
+    cat:document.getElementById('ep-cat').value,
+    icon:document.getElementById('ep-icon').value||'fas fa-box',
+    price:parseFloat(document.getElementById('ep-price').value)||0,
+    old:parseFloat(document.getElementById('ep-old').value)||null,
+    badge:document.getElementById('ep-badge').value,
+    rating:parseFloat(document.getElementById('ep-rating').value)||4.5,
+    reviews:parseInt(document.getElementById('ep-reviews').value)||0,
+    brand:document.getElementById('ep-brand').value.trim(),
+    desc:document.getElementById('ep-desc').value.trim(),
+    specs:{}
+  };
+  try{if(document.getElementById('ep-specs').value)p.specs=JSON.parse(document.getElementById('ep-specs').value);}catch(e){}
+  if(!p.name||!p.price){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Name aur price zaroori hai!');return;}
+  if(editProductIdx!==null)DATA.products[editProductIdx]=p;
+  else DATA.products.push(p);
+  saveData(DATA);closeEditProduct();renderProductsTable();
+  showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Product ${editProductIdx!==null?'updated':'added'}!`);
+}
+function delProduct(idx){if(confirm('Product delete karna chahte hain?')){DATA.products.splice(idx,1);saveData(DATA);renderProductsTable();showToast('<i class="fas fa-trash" style="color:var(--red)"></i> Product deleted');}}
+
+// ============================================================
+// CATEGORIES
+// ============================================================
+function renderCatsTable(){
+  document.getElementById('catsTableBody').innerHTML=DATA.categories.map((c,idx)=>`
+    <tr>
+      <td><i class="${c.icon}" style="color:${c.color};font-size:1.1rem;"></i> <span style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text3);">${c.icon}</span></td>
+      <td class="td-name">${c.name}</td>
+      <td><span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:${c.color};display:inline-block;"></span>${c.color}</span></td>
+      <td style="font-family:'JetBrains Mono',monospace;">${c.count}</td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-edit" onclick="openEditCat(${idx})"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn tac-del" onclick="delCat(${idx})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+function openEditCat(idx){
+  editCatIdx=idx;document.getElementById('editCatTitle').textContent=idx===null?'Add Category':'Edit Category';
+  if(idx!==null){const c=DATA.categories[idx];document.getElementById('ec-id').value=c.id;document.getElementById('ec-name').value=c.name;document.getElementById('ec-icon').value=c.icon;document.getElementById('ec-color').value=c.color;document.getElementById('ec-count').value=c.count;}
+  else{['ec-id','ec-name','ec-icon','ec-color','ec-count'].forEach(id=>document.getElementById(id).value='');}
+  document.getElementById('editCatOverlay').classList.add('open');
+}
+function closeEditCat(){document.getElementById('editCatOverlay').classList.remove('open');}
+function saveCat(){
+  const c={id:document.getElementById('ec-id').value.trim(),name:document.getElementById('ec-name').value.trim(),icon:document.getElementById('ec-icon').value.trim(),color:document.getElementById('ec-color').value.trim(),count:parseInt(document.getElementById('ec-count').value)||0};
+  if(!c.id||!c.name){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> ID aur Name zaroori hai!');return;}
+  if(editCatIdx!==null)DATA.categories[editCatIdx]=c;else DATA.categories.push(c);
+  saveData(DATA);closeEditCat();renderCatsTable();showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Category saved!`);
+}
+function delCat(idx){if(confirm('Category delete karna chahte hain?')){DATA.categories.splice(idx,1);saveData(DATA);renderCatsTable();}}
+
+// ============================================================
+// BRANDS
+// ============================================================
+function renderBrandsTable(){
+  document.getElementById('brandsTableBody').innerHTML=DATA.brands.map((b,idx)=>`
+    <tr>
+      <td style="font-size:1.5rem;">${b.icon}</td>
+      <td class="td-name">${b.name}</td>
+      <td><span style="background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.2);padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;">${b.tag||'Partner'}</span></td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-edit" onclick="openEditBrand(${idx})"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn tac-del" onclick="delBrand(${idx})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+function openEditBrand(idx){
+  editBrandIdx=idx;document.getElementById('editBrandTitle').textContent=idx===null?'Add Brand':'Edit Brand';
+  if(idx!==null){const b=DATA.brands[idx];document.getElementById('eb-name').value=b.name;document.getElementById('eb-icon').value=b.icon;document.getElementById('eb-tag').value=b.tag||'';}
+  else{['eb-name','eb-icon','eb-tag'].forEach(id=>document.getElementById(id).value='');}
+  document.getElementById('editBrandOverlay').classList.add('open');
+}
+function closeEditBrand(){document.getElementById('editBrandOverlay').classList.remove('open');}
+function saveBrand(){
+  const b={name:document.getElementById('eb-name').value.trim(),icon:document.getElementById('eb-icon').value.trim(),tag:document.getElementById('eb-tag').value.trim()};
+  if(!b.name){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Brand name zaroori!');return;}
+  if(editBrandIdx!==null)DATA.brands[editBrandIdx]=b;else DATA.brands.push(b);
+  saveData(DATA);closeEditBrand();renderBrandsTable();showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Brand saved!`);
+}
+function delBrand(idx){if(confirm('Delete this brand?')){DATA.brands.splice(idx,1);saveData(DATA);renderBrandsTable();}}
+
+// ============================================================
+// REVIEWS
+// ============================================================
+function renderRevsTable(){
+  document.getElementById('revsTableBody').innerHTML=DATA.reviews.map((r,idx)=>`
+    <tr>
+      <td class="td-name">${r.name}</td>
+      <td style="font-size:0.78rem;color:var(--text2);">${r.role}</td>
+      <td style="color:var(--accent);">${'★'.repeat(r.stars)}</td>
+      <td style="font-size:0.78rem;color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.text}</td>
+      <td><span style="width:16px;height:16px;border-radius:50%;background:${r.color};display:inline-block;"></span></td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-edit" onclick="openEditReview(${idx})"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn tac-del" onclick="delRev(${idx})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+function openEditReview(idx){
+  editRevIdx=idx;document.getElementById('editRevTitle').textContent=idx===null?'Add Review':'Edit Review';
+  if(idx!==null){const r=DATA.reviews[idx];document.getElementById('er-name').value=r.name;document.getElementById('er-role').value=r.role;document.getElementById('er-stars').value=r.stars;document.getElementById('er-color').value=r.color;document.getElementById('er-text').value=r.text;document.getElementById('er-av').value=r.av;}
+  else{['er-name','er-role','er-text','er-av','er-color'].forEach(id=>document.getElementById(id).value='');document.getElementById('er-stars').value=5;}
+  document.getElementById('editRevOverlay').classList.add('open');
+}
+function closeEditRev(){document.getElementById('editRevOverlay').classList.remove('open');}
+function saveRev(){
+  const r={name:document.getElementById('er-name').value.trim(),role:document.getElementById('er-role').value.trim(),stars:parseInt(document.getElementById('er-stars').value)||5,color:document.getElementById('er-color').value||'#6366f1',text:document.getElementById('er-text').value.trim(),av:document.getElementById('er-av').value.toUpperCase().slice(0,2)};
+  if(!r.name||!r.text){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Name aur review text zaroori!');return;}
+  if(editRevIdx!==null)DATA.reviews[editRevIdx]=r;else DATA.reviews.push(r);
+  saveData(DATA);closeEditRev();renderRevsTable();showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Review saved!`);
+}
+function delRev(idx){if(confirm('Delete this review?')){DATA.reviews.splice(idx,1);saveData(DATA);renderRevsTable();}}
+
+// ============================================================
+// FEATURES
+// ============================================================
+function renderFeatsTable(){
+  document.getElementById('featsTableBody').innerHTML=DATA.features.map((f,idx)=>`
+    <tr>
+      <td><i class="${f.icon}" style="color:${f.color};font-size:1.1rem;"></i></td>
+      <td><span style="width:14px;height:14px;border-radius:3px;background:${f.color};display:inline-block;"></span> ${f.color}</td>
+      <td class="td-name">${f.title}</td>
+      <td style="font-size:0.78rem;color:var(--text2);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.desc}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--primary2);">${f.num}</td>
+      <td><div class="td-actions">
+        <button class="tac-btn tac-edit" onclick="openEditFeat(${idx})"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn tac-del" onclick="delFeat(${idx})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+function openEditFeat(idx){
+  editFeatIdx=idx;document.getElementById('editFeatTitle').textContent=idx===null?'Add Feature':'Edit Feature';
+  if(idx!==null){const f=DATA.features[idx];document.getElementById('ef-icon').value=f.icon;document.getElementById('ef-color').value=f.color;document.getElementById('ef-title').value=f.title;document.getElementById('ef-num').value=f.num;document.getElementById('ef-desc').value=f.desc;}
+  else{['ef-icon','ef-color','ef-title','ef-num','ef-desc'].forEach(id=>document.getElementById(id).value='');}
+  document.getElementById('editFeatOverlay').classList.add('open');
+}
+function closeEditFeat(){document.getElementById('editFeatOverlay').classList.remove('open');}
+function saveFeat(){
+  const f={icon:document.getElementById('ef-icon').value.trim(),color:document.getElementById('ef-color').value.trim(),bg:`${document.getElementById('ef-color').value}20`,title:document.getElementById('ef-title').value.trim(),num:document.getElementById('ef-num').value.trim(),desc:document.getElementById('ef-desc').value.trim()};
+  if(!f.title){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Title zaroori!');return;}
+  if(editFeatIdx!==null)DATA.features[editFeatIdx]=f;else DATA.features.push(f);
+  saveData(DATA);closeEditFeat();renderFeatsTable();showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Feature saved!`);
+}
+function delFeat(idx){if(confirm('Delete this feature?')){DATA.features.splice(idx,1);saveData(DATA);renderFeatsTable();}}
+
+// ============================================================
+// SITE INFO
+// ============================================================
+function loadSiteInfo(){
+  const s=DATA.siteInfo||{};
+  ['name','phone','email','address','timing','whatsapp','heroTitle','heroSub'].forEach(k=>{const el=document.getElementById('si-'+k);if(el)el.value=s[k]||'';});
+  const hlEl=document.getElementById('si-helpline');if(hlEl)hlEl.value=s.helpline||s.phone||'';
+  const aeEl=document.getElementById('si-adminEmail');if(aeEl)aeEl.value=s.adminEmail||'';
+  document.getElementById('si-delivery').value=s.deliveryCharge||200;
+  document.getElementById('si-freeMin').value=s.freeDeliveryMin||5000;
+}
+function testWaNumber(){
+  const num=(document.getElementById('si-whatsapp').value||'').trim()||'923433194763';
+  const link=document.getElementById('si-helpline-test');
+  if(link)link.href='https://wa.me/'+num+'?text=Hi+ZN+Enterprises!+Testing+helpline.';
+}
+function saveSiteInfo(){
+  const existing=DATA.siteInfo||{};
+  DATA.siteInfo={
+    ...existing,
+    name:document.getElementById('si-name').value,
+    phone:document.getElementById('si-phone').value,
+    helpline:document.getElementById('si-helpline').value||document.getElementById('si-phone').value,
+    email:document.getElementById('si-email').value,
+    adminEmail:document.getElementById('si-adminEmail').value||document.getElementById('si-email').value,
+    address:document.getElementById('si-address').value,
+    timing:document.getElementById('si-timing').value,
+    whatsapp:document.getElementById('si-whatsapp').value,
+    heroTitle:document.getElementById('si-heroTitle').value,
+    heroSub:document.getElementById('si-heroSub').value,
+    deliveryCharge:parseFloat(document.getElementById('si-delivery').value)||200,
+    freeDeliveryMin:parseFloat(document.getElementById('si-freeMin').value)||5000,
+  };
+  saveData(DATA);
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Site info saved! Changes are live on the store.');
+}
+
+// ============================================================
+// PAYMENT ACCOUNTS
+// ============================================================
+function loadPaymentAccounts(){
+  const pa=(DATA.siteInfo&&DATA.siteInfo.paymentAccounts)||{};
+  const jc=pa.JazzCash||{};
+  const ep=pa.EasyPaisa||{};
+  const bk=pa.Bank||{};
+  const setV=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  setV('pay-jc-name',jc.accountName||'ZN Enterprises');
+  setV('pay-jc-number',jc.accountNumber||DATA.siteInfo?.helpline||'0343-3194763');
+  setV('pay-jc-instructions',jc.instructions||'Transfer the exact amount to this JazzCash number, then send screenshot to our WhatsApp helpline for order confirmation.');
+  setV('pay-ep-name',ep.accountName||'ZN Enterprises');
+  setV('pay-ep-number',ep.accountNumber||DATA.siteInfo?.helpline||'0343-3194763');
+  setV('pay-ep-instructions',ep.instructions||'Transfer the exact amount to this EasyPaisa number, then send screenshot to our WhatsApp helpline for order confirmation.');
+  setV('pay-bank-name',bk.bankName||'HBL Pakistan');
+  setV('pay-bank-title',bk.accountTitle||'ZN Enterprises');
+  setV('pay-bank-number',bk.accountNumber||'');
+  setV('pay-bank-iban',bk.IBAN||'');
+  setV('pay-bank-instructions',bk.instructions||'Transfer the exact amount to the bank account above and email the transaction receipt to our support email.');
+}
+function savePaymentAccounts(){
+  if(!DATA.siteInfo)DATA.siteInfo={};
+  DATA.siteInfo.paymentAccounts={
+    JazzCash:{
+      accountName:document.getElementById('pay-jc-name').value,
+      accountNumber:document.getElementById('pay-jc-number').value,
+      instructions:document.getElementById('pay-jc-instructions').value
+    },
+    EasyPaisa:{
+      accountName:document.getElementById('pay-ep-name').value,
+      accountNumber:document.getElementById('pay-ep-number').value,
+      instructions:document.getElementById('pay-ep-instructions').value
+    },
+    Bank:{
+      bankName:document.getElementById('pay-bank-name').value,
+      accountTitle:document.getElementById('pay-bank-title').value,
+      accountNumber:document.getElementById('pay-bank-number').value,
+      IBAN:document.getElementById('pay-bank-iban').value,
+      instructions:document.getElementById('pay-bank-instructions').value
+    }
+  };
+  saveData(DATA);
+  const msg=document.getElementById('payMsg');
+  if(msg){msg.style.display='block';msg.style.background='rgba(16,185,129,0.1)';msg.style.border='1px solid rgba(16,185,129,0.3)';msg.style.color='var(--green)';msg.innerHTML='<i class="fas fa-check-circle"></i> Payment accounts saved! Customers will see these at checkout.';}
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Payment accounts updated!');
+  setTimeout(()=>{if(msg)msg.style.display='none';},4000);
+}
+
+// ============================================================
+// EMAIL NOTIFICATIONS (EmailJS)
+// ============================================================
+function loadEmailJS(){
+  const cfg=JSON.parse(localStorage.getItem('zn_emailjs')||'{}');
+  const setV=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  setV('ejs-serviceId',cfg.serviceId||'');
+  setV('ejs-publicKey',cfg.publicKey||'');
+  setV('ejs-templateAdmin',cfg.templateAdmin||'');
+  setV('ejs-templateCustomer',cfg.templateCustomer||'');
+  updateEJSStatus(cfg);
+}
+function updateEJSStatus(cfg){
+  const el=document.getElementById('ejsStatus');if(!el)return;
+  const configured=cfg&&cfg.serviceId&&cfg.templateAdmin&&cfg.publicKey;
+  el.innerHTML=configured
+    ?`<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:0.8rem;font-size:0.78rem;color:var(--green);display:flex;align-items:center;gap:7px;"><i class="fas fa-check-circle"></i> <div><strong>Email alerts are ACTIVE</strong><br><span style="opacity:0.8;">Admin: ${cfg.templateAdmin} | Customer: ${cfg.templateCustomer||'Not set'}</span></div></div>`
+    :`<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:0.8rem;font-size:0.78rem;color:var(--red);display:flex;align-items:center;gap:7px;"><i class="fas fa-circle-exclamation"></i> <div><strong>Email alerts NOT configured</strong><br><span style="opacity:0.8;">Follow setup instructions on the left to enable.</span></div></div>`;
+}
+function saveEmailJS(){
+  const cfg={
+    serviceId:document.getElementById('ejs-serviceId').value.trim(),
+    publicKey:document.getElementById('ejs-publicKey').value.trim(),
+    templateAdmin:document.getElementById('ejs-templateAdmin').value.trim(),
+    templateCustomer:document.getElementById('ejs-templateCustomer').value.trim()
+  };
+  if(!cfg.serviceId||!cfg.publicKey||!cfg.templateAdmin){
+    const msg=document.getElementById('ejsMsg');
+    msg.style.display='block';msg.style.background='rgba(239,68,68,0.08)';msg.style.border='1px solid rgba(239,68,68,0.2)';msg.style.color='var(--red)';
+    msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Service ID, Public Key, and Admin Template ID are required.';
+    return;
+  }
+  localStorage.setItem('zn_emailjs',JSON.stringify(cfg));
+  updateEJSStatus(cfg);
+  const msg=document.getElementById('ejsMsg');
+  msg.style.display='block';msg.style.background='rgba(16,185,129,0.1)';msg.style.border='1px solid rgba(16,185,129,0.3)';msg.style.color='var(--green)';
+  msg.innerHTML='<i class="fas fa-check-circle"></i> Email configuration saved! Order alerts are now active.';
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Email notifications enabled!');
+  setTimeout(()=>{msg.style.display='none';},4000);
+}
+
+// ============================================================
+// GOOGLE SHEET
+// ============================================================
+const APPS_SCRIPT=`// ===================================================
+// ZN Enterprises — Google Apps Script (Gmail Version)
+// 1. Extensions > Apps Script > Paste this > Save
+// 2. Change ADMIN_EMAIL on line 6
+// 3. Deploy > New Deployment > Web App
+//    Execute as: Me | Access: Anyone
+// 4. Copy the Web App URL to Dashboard > Google Sheet
+// ===================================================
+
+var ADMIN_EMAIL = "your-gmail@gmail.com"; // ← CHANGE THIS
+var STORE_NAME  = "ZN Enterprises";
+
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var action = data.action || "new_order";
+    if (action === "new_order")     return handleNewOrder(data);
+    if (action === "update_status") return handleStatusUpdate(data);
+    return ok("unknown action ignored");
+  } catch(err) {
+    return err_(err.toString());
+  }
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput(
+    JSON.stringify({status:"ok",msg:"ZN Enterprises webhook active"})
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+function handleNewOrder(data) {
+  var sheet = getOrCreateSheet();
+  sheet.appendRow([
+    data.orderId, data.timestamp, data.name, data.phone,
+    data.email||"", data.city, data.address, data.payment,
+    data.items, data.subtotal, data.delivery, data.total,
+    data.note||"", data.status||"New Order"
+  ]);
+  // Email admin
+  MailApp.sendEmail({
+    to: ADMIN_EMAIL,
+    subject: "New Order " + data.orderId + " — " + data.name + " | " + STORE_NAME,
+    htmlBody: buildAdminEmail(data)
+  });
+  // Email customer
+  if (data.email) {
+    MailApp.sendEmail({
+      to: data.email,
+      subject: "Order Confirmed — " + data.orderId + " | " + STORE_NAME,
+      htmlBody: buildCustomerEmail(data)
+    });
+  }
+  return ok("order saved + emails sent");
+}
+
+function handleStatusUpdate(data) {
+  var sheet = getOrCreateSheet();
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.orderId) {
+      sheet.getRange(i+1, 14).setValue(data.status);
+      break;
+    }
+  }
+  if (data.email) {
+    MailApp.sendEmail({
+      to: data.email,
+      subject: "Order Update: " + data.status + " — " + data.orderId + " | " + STORE_NAME,
+      htmlBody: buildStatusEmail(data)
+    });
+  }
+  return ok("status updated + email sent");
+}
+
+function getOrCreateSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("ZN Orders");
+  if (!sheet) {
+    sheet = ss.insertSheet("ZN Orders");
+    sheet.appendRow(["Order ID","Timestamp","Name","Phone","Email","City","Address","Payment","Items","Subtotal","Delivery","Total","Note","Status"]);
+    sheet.getRange(1,1,1,14).setFontWeight("bold").setBackground("#5b54e8").setFontColor("#ffffff");
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+function buildAdminEmail(d) {
+  return '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;background:#f5f4ff;padding:20px;border-radius:12px;">'
+   +'<div style="background:linear-gradient(135deg,#5b54e8,#7c74f0);border-radius:10px;padding:18px 22px;color:#fff;margin-bottom:14px;">'
+   +'<h2 style="margin:0;font-size:17px;">New Order Received — '+STORE_NAME+'</h2>'
+   +'<p style="margin:5px 0 0;opacity:0.8;font-size:12px;">'+new Date().toLocaleString()+'</p></div>'
+   +'<div style="background:#fff;border-radius:10px;padding:18px 22px;border:1px solid #e0defa;">'
+   +'<table style="width:100%;border-collapse:collapse;font-size:13px;">'
+   +r("Order ID",d.orderId,"#5b54e8")+r("Customer",d.name)+r("Phone",d.phone)
+   +r("Email",d.email||"Not provided")+r("City",d.city)+r("Address",d.address)
+   +r("Payment",d.payment)+r("Items",d.items)+r("Total","Rs. "+d.total,"#059669")
+   +r("Note",d.note||"—")+'</table></div></div>';
+}
+
+function buildCustomerEmail(d) {
+  return '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;background:#f5f4ff;padding:20px;border-radius:12px;">'
+   +'<div style="background:linear-gradient(135deg,#059669,#10b981);border-radius:10px;padding:18px 22px;color:#fff;text-align:center;margin-bottom:14px;">'
+   +'<div style="font-size:36px;margin-bottom:6px;">✅</div>'
+   +'<h2 style="margin:0;font-size:17px;">Order Confirmed!</h2>'
+   +'<p style="margin:5px 0 0;opacity:0.85;font-size:12px;">Thank you for shopping with '+STORE_NAME+'</p></div>'
+   +'<div style="background:#fff;border-radius:10px;padding:18px 22px;border:1px solid #e0defa;">'
+   +'<table style="width:100%;border-collapse:collapse;font-size:13px;">'
+   +r("Order ID",d.orderId,"#5b54e8")+r("Items",d.items)+r("Total","Rs. "+d.total,"#059669")
+   +r("Payment",d.payment)+r("Delivery To",d.address+", "+d.city)+'</table>'
+   +'<p style="font-size:12px;color:#5b54e8;margin-top:14px;padding:10px;background:#ede9ff;border-radius:8px;">Our team will confirm within 1–2 hours and share tracking once dispatched. Questions? WhatsApp: 0343-3194763</p>'
+   +'</div></div>';
+}
+
+function buildStatusEmail(d) {
+  var c={"Confirmed":"#5b54e8","Processing":"#0891b2","Dispatched":"#d97706","Delivered":"#059669"}[d.status]||"#5b54e8";
+  return '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;padding:20px;border-radius:12px;">'
+   +'<div style="background:'+c+';border-radius:10px;padding:18px;color:#fff;text-align:center;margin-bottom:14px;">'
+   +'<h2 style="margin:0;">Order '+d.status+'</h2>'
+   +'<p style="margin:5px 0 0;opacity:0.85;font-size:12px;">'+STORE_NAME+' — Order '+d.orderId+'</p></div>'
+   +'<div style="background:#fff;border-radius:10px;padding:18px;border:1px solid #e0defa;">'
+   +'<p style="font-size:13px;">Hi <strong>'+(d.customerName||d.name||"Customer")+'</strong>, your order <strong>'+d.orderId+'</strong> is now <strong style="color:'+c+';">'+d.status+'</strong>.</p>'
+   +(d.status==="Dispatched"?"<p style='font-size:13px;'>Your package is on the way! Expected delivery: 1–3 working days.</p>":"")
+   +(d.status==="Delivered"?"<p style='font-size:13px;'>Your order has been delivered! For any issues, contact us within 7 days.</p>":"")
+   +'<p style="font-size:11px;color:#9490b5;margin-top:12px;">Questions? WhatsApp 0343-3194763</p></div></div>';
+}
+
+function r(label,value,color) {
+  return '<tr><td style="padding:6px 0;color:#9490b5;font-size:12px;width:120px;">'+label+'</td>'
+    +'<td style="padding:6px 0;font-weight:600;color:'+(color||"#12103a")+';">'+value+'</td></tr>';
+}
+
+function ok(msg)  { return ContentService.createTextOutput(JSON.stringify({status:"success",msg:msg})).setMimeType(ContentService.MimeType.JSON); }
+function err_(m)  { return ContentService.createTextOutput(JSON.stringify({status:"error",msg:m})).setMimeType(ContentService.MimeType.JSON); }
+`;
+
+
+function loadSheetPanel(){
+  document.getElementById('scriptCode').textContent=APPS_SCRIPT;
+  document.getElementById('sheetUrl').value=localStorage.getItem('zn_sheet_url')||'';
+}
+function copyScript(){
+  navigator.clipboard.writeText(APPS_SCRIPT).then(()=>showToast('<i class="fas fa-copy" style="color:var(--green)"></i> Script copied!'));
+}
+function copyText(txt){navigator.clipboard.writeText(txt).then(()=>showToast('<i class="fas fa-copy" style="color:var(--green)"></i> Copied!'));}
+function saveSheetUrl(){
+  const url=document.getElementById('sheetUrl').value.trim();
+  if(!url){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Please enter a valid URL.');return;}
+  localStorage.setItem('zn_sheet_url',url);
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Sheet URL saved!');
+}
+function testSheet(){
+  const url=localStorage.getItem('zn_sheet_url');
+  if(!url){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Please save the URL first.');return;}
+  const testData={orderId:'ZN-TEST-'+Date.now(),timestamp:new Date().toLocaleString(),name:'ZN Test',phone:'03001234567',email:'test@znenterprises.pk',city:'Karachi',address:'Test Address',payment:'COD',items:'Test Item x1',subtotal:0,delivery:0,total:0,note:'TEST ORDER - IGNORE',status:'Test'};
+  fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(testData)})
+    .then(()=>{
+      const el=document.getElementById('sheetStatus');
+      el.style.display='block';el.style.background='rgba(16,185,129,0.1)';el.style.border='1px solid rgba(16,185,129,0.3)';el.style.color='var(--green)';
+      el.innerHTML='<i class="fas fa-check-circle"></i> Test request sent — check your Google Sheet.';
+    })
+    .catch(e=>{
+      const el=document.getElementById('sheetStatus');
+      el.style.display='block';el.style.background='rgba(239,68,68,0.1)';el.style.border='1px solid rgba(239,68,68,0.3)';el.style.color='var(--red)';
+      el.innerHTML='<i class="fas fa-exclamation-circle"></i> Error: '+e.message;
+    });
+}
+
+// ============================================================
+// GLOBAL SAVE & MISC
+// ============================================================
+function saveAllData(){
+  saveSiteInfo();saveData(DATA);
+  showToast('<i class="fas fa-floppy-disk" style="color:var(--green)"></i> All changes saved to store!');
+}
+function openStore(){window.open('zn-store.html','_blank');}
+function togglePassVis(inputId, btnId){
+  const inp=document.getElementById(inputId);
+  const btn=document.getElementById(btnId);
+  if(inp.type==='password'){inp.type='text';btn.innerHTML='<i class="fas fa-eye-slash"></i>';}
+  else{inp.type='password';btn.innerHTML='<i class="fas fa-eye"></i>';}
+}
+
+// Password strength checker
+document.addEventListener('DOMContentLoaded',()=>{
+  const np=document.getElementById('newPass');
+  if(np)np.addEventListener('input',function(){
+    const v=this.value;const bar=document.getElementById('passStrengthBar');const txt=document.getElementById('passStrengthText');
+    if(!v){bar.style.width='0%';txt.textContent='';return;}
+    let score=0;
+    if(v.length>=6)score++;if(v.length>=10)score++;
+    if(/[A-Z]/.test(v))score++;if(/[0-9]/.test(v))score++;if(/[^A-Za-z0-9]/.test(v))score++;
+    const levels=[['0%','var(--red)',''],['20%','var(--red)','Weak'],['45%','var(--orange)','Fair'],['65%','var(--accent)','Good'],['85%','var(--cyan)','Strong'],['100%','var(--green)','Very Strong']];
+    bar.style.width=levels[score][0];bar.style.background=levels[score][1];txt.textContent=levels[score][2];txt.style.color=levels[score][1];
+  });
+});
+
+function resetPassFields(){
+  ['currentPass','newPass','confirmPass'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['currentPassErr','confirmPassErr'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  const bar=document.getElementById('passStrengthBar');const txt=document.getElementById('passStrengthText');
+  if(bar)bar.style.width='0%';if(txt)txt.textContent='';
+}
+
+
+// changePassword is handled by saveAdmin()
+
+function saveAdmin(){
+  const newUser=document.getElementById('adminUser').value.trim();
+  const currentPass=document.getElementById('currentPass').value;
+  const newPass=document.getElementById('newPass').value;
+  const confirmPass=document.getElementById('confirmPass').value;
+
+  // Load saved credentials
+  const savedCreds=JSON.parse(localStorage.getItem('zn_admin_creds')||'{"user":"admin","pass":"admin123"}');
+
+  // If user wants to change password
+  if(newPass || currentPass){
+    // Validate current password
+    if(currentPass !== savedCreds.pass){
+      document.getElementById('currentPassErr').style.display='block';
+      showToast('<i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Current password galat hai!');
+      return;
+    }else{document.getElementById('currentPassErr').style.display='none';}
+    // New password min length
+    if(newPass.length < 6){showToast('<i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Password kam az kam 6 characters hona chahiye!');return;}
+    // Confirm match
+    if(newPass !== confirmPass){
+      document.getElementById('confirmPassErr').style.display='block';
+      showToast('<i class="fas fa-exclamation-triangle" style="color:var(--red)"></i> Passwords do not match!');
+      return;
+    }else{document.getElementById('confirmPassErr').style.display='none';}
+    // Save new password
+    savedCreds.pass=newPass;
+    showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Password successfully update ho gaya!');
+  }
+
+  // Update username if provided
+  if(newUser && newUser !== savedCreds.user){
+    savedCreds.user=newUser;
+    const disp=document.getElementById('currentUserDisplay');
+    if(disp)disp.textContent=newUser;
+  }
+
+  localStorage.setItem('zn_admin_creds',JSON.stringify(savedCreds));
+  if(!newPass && !currentPass)showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Admin credentials updated!');
+  resetPassFields();
+}
+function exportData(){
+  const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(DATA,null,2));a.download='ZN_Store_Backup_'+Date.now()+'.json';a.click();
+  showToast('<i class="fas fa-download" style="color:var(--green)"></i> Data exported!');
+}
+function importData(){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> Select a JSON backup file to import...');}
+function resetData(){
+  if(confirm('Sab data reset ho jayega. Sure hain?')){
+    localStorage.removeItem('zn_store_data');DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData(DATA);
+    showToast('<i class="fas fa-rotate-left" style="color:var(--accent)"></i> Data reset to defaults!');
+    renderPanel('dashboard');
+  }
+}
+
+
+// ============================================================
+// LOGIN GATE
+// ============================================================
+let loginAttempts = 0;
+const MAX_ATTEMPTS = 5;
+
+function checkLoginState() {
+  const session = sessionStorage.getItem('zn_admin_session');
+  if (session === 'true') {
+    document.getElementById('loginGate').style.display = 'none';
+    document.body.style.overflow = '';
+  } else {
+    document.getElementById('loginGate').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      const u = document.getElementById('loginUser');
+      if (u) u.focus();
+    }, 100);
+  }
+}
+
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const creds = JSON.parse(localStorage.getItem('zn_admin_creds') || '{"user":"admin","pass":"admin123"}');
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
+  const errMsg = document.getElementById('loginErrorMsg');
+
+  if (loginAttempts >= MAX_ATTEMPTS) {
+    errMsg.textContent = 'Too many failed attempts. Please wait 60 seconds.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  if (!user || !pass) {
+    errMsg.textContent = 'Username aur password dono zaroori hain!';
+    errEl.classList.add('show');
+    ['loginUser','loginPass'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 500);
+    });
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+
+  setTimeout(() => {
+    if (user === creds.user && pass === creds.pass) {
+      sessionStorage.setItem('zn_admin_session', 'true');
+      loginAttempts = 0;
+      document.getElementById('loginGate').style.display = 'none';
+      document.body.style.overflow = '';
+      btn.innerHTML = '<i class="fas fa-check"></i> Logged In!';
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Login to Dashboard';
+        document.getElementById('loginUser').value = '';
+        document.getElementById('loginPass').value = '';
+        errEl.classList.remove('show');
+      }, 500);
+      showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Welcome to ZN Dashboard!');
+    } else {
+      loginAttempts++;
+      const rem = MAX_ATTEMPTS - loginAttempts;
+      errMsg.textContent = `Invalid username or password. ${rem > 0 ? rem+' attempt(s) remaining' : 'Account temporarily locked.'}`;
+      errEl.classList.add('show');
+      document.getElementById('loginAttempts').textContent = rem > 0 ? `${loginAttempts}/${MAX_ATTEMPTS} attempts used` : '';
+      ['loginUser','loginPass'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.add('shake');
+        setTimeout(() => el.classList.remove('shake'), 500);
+      });
+      document.getElementById('loginPass').value = '';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Login to Dashboard';
+      if (loginAttempts >= MAX_ATTEMPTS) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-lock"></i> Account Locked';
+        setTimeout(() => { loginAttempts = 0; btn.disabled = false; btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Login to Dashboard'; document.getElementById('loginAttempts').textContent = ''; }, 60000);
+      }
+    }
+  }, 600);
+}
+
+function toggleLoginEye() {
+  const inp = document.getElementById('loginPass');
+  const ico = document.getElementById('loginEyeIcon');
+  if (inp.type === 'password') { inp.type = 'text'; ico.className = 'fas fa-eye-slash'; }
+  else { inp.type = 'password'; ico.className = 'fas fa-eye'; }
+}
+
+function doLogout() {
+  if (confirm('Confirm logout from ZN Dashboard?')) {
+    sessionStorage.removeItem('zn_admin_session');
+    checkLoginState();
+    showToast('<i class="fas fa-right-from-bracket" style="color:var(--accent)"></i> Logged out successfully!');
+  }
+}
+
+// Run login check
+checkLoginState();
+
+// Receive orders from store window
+window.addEventListener('storage',e=>{
+  if(e.key==='zn_store_data'){DATA=getData();if(document.getElementById('panel-orders').classList.contains('active'))renderOrders();if(document.getElementById('panel-dashboard').classList.contains('active'))renderDashboard();}
+});
+// Receive orders posted by store
+window.addEventListener('zn_new_order',e=>{DATA=getData();});
+
+// ============================================================
+// TOAST
+// ============================================================
+let tt;
+function showToast(html){
+  const t=document.getElementById('toast');t.innerHTML=html;t.classList.add('show');
+  clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderPanel('dashboard');
+</script>
+
+<!-- LOGIN GATE -->
+<div id="loginGate">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="lgHex" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs>
+        <polygon points="22,5 38,13.5 38,30.5 22,39 6,30.5 6,13.5" fill="url(#lgHex)"/>
+        <polygon points="22,8.5 35,16 35,28 22,35.5 9,28 9,16" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
+        <text x="22" y="27" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle">ZN</text>
+      </svg>
+      <h2>ZN <span>Enterprises</span></h2>
+      <p>Admin Dashboard</p>
+    </div>
+    <div class="login-error" id="loginError">
+      <i class="fas fa-circle-exclamation"></i>
+      <span id="loginErrorMsg">Invalid username or password. Please try again.</span>
+    </div>
+    <div class="login-field">
+      <label><i class="fas fa-user"></i> Username</label>
+      <div class="login-input-wrap">
+        <input class="login-input" type="text" id="loginUser" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+    </div>
+    <div class="login-field">
+      <label><i class="fas fa-lock"></i> Password</label>
+      <div class="login-input-wrap">
+        <input class="login-input" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="eye-toggle" type="button" onclick="toggleLoginEye()" id="loginEyeBtn"><i class="fas fa-eye" id="loginEyeIcon"></i></button>
+      </div>
+    </div>
+    <button class="btn-login" id="loginBtn" onclick="doLogin()">
+      <i class="fas fa-right-to-bracket"></i> Login to Dashboard
+    </button>
+    <div class="login-hint">
+      <i class="fas fa-circle-info"></i>
+      Default credentials: admin / admin123 — Change in Settings after logging in
+    </div>
+    <div class="login-attempts" id="loginAttempts"></div>
+  </div>
+</div>
+
+</body>
+</html>

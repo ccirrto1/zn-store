@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>ZN Enterprises — Premium Computer Accessories Pakistan</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -108,22 +109,22 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .hb-wa i{font-size:0.75rem;}
 
 /* ===== NAV ===== */
-nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:rgba(245,244,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(91,84,232,0.06);}
-.nav-logo{display:flex;align-items:center;cursor:pointer;text-decoration:none;}
+nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;gap:1rem;padding:0 3%;height:64px;background:rgba(245,244,255,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(91,84,232,0.06);}
+.nav-logo{display:flex;align-items:center;cursor:pointer;text-decoration:none;flex-shrink:0;}
 .nav-logo img{height:38px;width:auto;}
-.nav-menu{display:flex;gap:0.15rem;list-style:none;}
-.nav-menu a{display:flex;align-items:center;gap:5px;padding:0.42rem 0.82rem;border-radius:8px;text-decoration:none;color:var(--text2);font-size:0.81rem;font-weight:600;transition:all 0.2s;cursor:pointer;}
+.nav-menu{display:flex;gap:0.1rem;list-style:none;flex-shrink:0;}
+.nav-menu a{display:flex;align-items:center;gap:5px;padding:0.42rem 0.75rem;border-radius:8px;text-decoration:none;color:var(--text2);font-size:0.8rem;font-weight:600;transition:all 0.2s;cursor:pointer;white-space:nowrap;}
 .nav-menu a:hover,.nav-menu a.active{background:var(--primary3);color:var(--primary);}
 .nav-menu a i{font-size:0.7rem;color:var(--primary);}
-.nav-right{display:flex;align-items:center;gap:0.65rem;position:relative;}
+.nav-right{display:flex;align-items:center;gap:0.65rem;position:relative;flex:1;justify-content:flex-end;}
 
-/* Search with dropdown */
-.search-wrap{position:relative;}
-.search-box{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:0.44rem 0.88rem;transition:all 0.2s;}
+/* Search — expanded to fill available space */
+.search-wrap{position:relative;flex:1;max-width:480px;}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1.5px solid var(--border);border-radius:22px;padding:0.5rem 1rem;transition:all 0.2s;width:100%;}
 .search-box:focus-within{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(91,84,232,0.1);}
-.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.8rem;width:180px;}
+.search-box input{background:none;border:none;outline:none;color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.83rem;width:100%;min-width:0;}
 .search-box input::placeholder{color:var(--text3);}
-.search-box i{color:var(--text3);font-size:0.78rem;}
+.search-box i{color:var(--text3);font-size:0.82rem;flex-shrink:0;}
 .search-dropdown{
   position:absolute;top:calc(100% + 8px);left:0;right:0;
   background:#fff;border:1.5px solid var(--border2);border-radius:12px;
@@ -144,7 +145,7 @@ nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-co
 .sd-no-result{padding:1.2rem;text-align:center;color:var(--text3);font-size:0.83rem;}
 .sd-header{padding:0.5rem 1rem 0.3rem;font-size:0.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;background:var(--bg2);}
 
-.cart-btn{display:flex;align-items:center;gap:7px;background:var(--primary);color:#fff;border:none;border-radius:9px;padding:0.48rem 1.05rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.81rem;font-weight:700;transition:all 0.25s;position:relative;box-shadow:0 4px 14px rgba(91,84,232,0.28);}
+.cart-btn{flex-shrink:0;display:flex;align-items:center;gap:7px;background:var(--primary);color:#fff;border:none;border-radius:9px;padding:0.48rem 1.05rem;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.81rem;font-weight:700;transition:all 0.25s;position:relative;box-shadow:0 4px 14px rgba(91,84,232,0.28);}
 .cart-btn:hover{background:var(--primary2);transform:translateY(-1px);}
 .cart-badge{position:absolute;top:-7px;right:-7px;background:var(--accent);color:#000;width:18px;height:18px;border-radius:50%;font-size:0.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);}
 .ham-btn{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:4px;}
@@ -250,7 +251,7 @@ section{padding:68px 5%;position:relative;}
 .sec-center{text-align:center;margin-bottom:2.6rem;}
 
 /* ===== CATEGORIES ===== */
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:1rem;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:1rem;}
 .cat-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r);padding:1.4rem 0.9rem 1.15rem;text-align:center;cursor:pointer;transition:all 0.28s;}
 .cat-card:hover{border-color:var(--primary);transform:translateY(-5px);box-shadow:var(--shadow2);background:#fff;}
 .cat-icon-box{width:54px;height:54px;border-radius:14px;margin:0 auto 0.8rem;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:all 0.3s;}
@@ -268,7 +269,7 @@ section{padding:68px 5%;position:relative;}
 .sort-sel{margin-left:auto;background:var(--bg2);border:1px solid var(--border);color:var(--text2);border-radius:7px;padding:0.38rem 0.88rem;font-size:0.76rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;cursor:pointer;}
 
 /* ===== PRODUCT CARDS ===== */
-.prods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.5rem;}
+.prods-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.3rem;}
 .pcard{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all 0.3s;cursor:pointer;box-shadow:var(--shadow);}
 .pcard:hover{border-color:var(--primary);transform:translateY(-6px);box-shadow:var(--shadow3);}
 .pimg{height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
@@ -429,7 +430,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 .wa-messages::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 .wm-row{display:flex;align-items:flex-end;gap:6px;}
 .wm-row.user{flex-direction:row-reverse;}
-.wm-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;}
+.wm-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;line-height:1;}
 .wm-av.bot{background:linear-gradient(135deg,#075e54,#128c7e);color:#fff;}
 .wm-av.user{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;}
 .wm-bubble{max-width:82%;padding:0.6rem 0.85rem;border-radius:14px;font-size:0.78rem;line-height:1.55;word-break:break-word;}
@@ -767,6 +768,17 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 
   /* Buttons */
   .btn-primary,.btn-ghost{padding:0.7rem 1.2rem;font-size:0.8rem;}
+}
+
+/* ===== WIDE DESKTOP (min 1400px) ===== */
+@media(min-width:1400px){
+  .prods-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));}
+  .cat-grid{grid-template-columns:repeat(8,1fr);}
+  .search-wrap{max-width:560px;}
+  nav{padding:0 5%;}
+}
+@media(min-width:1600px){
+  .prods-grid{grid-template-columns:repeat(5,1fr);}
 }
 
 /* ===== VERY SMALL PHONES (max 380px) ===== */
@@ -1910,6 +1922,8 @@ let waOpen=false;
 let aiChatHistory=[];
 let aiTyping=false;
 let aiChatStarted=false;
+let aiQuestionCount=0;
+const AI_MAX_QUESTIONS=3; // 3 questions per session
 
 const AI_SYSTEM_PROMPT = `You are ZN AI, a friendly and helpful customer support assistant for ZN Enterprises — Pakistan's trusted computer accessories store based in Karachi.
 
@@ -1971,6 +1985,7 @@ function updateWaLink(){
 
 function initAiChat(){
   aiChatStarted=true;
+  aiQuestionCount=0;
   const msgs=document.getElementById('waMessages');
   if(!msgs) return;
   msgs.innerHTML='';
@@ -1993,6 +2008,11 @@ function aiQuickSend(text){
   const qr=document.getElementById('waQuickReplies');
   if(qr) qr.style.display='none';
   appendUserMsg(text);
+  aiQuestionCount++;
+  if(aiQuestionCount>AI_MAX_QUESTIONS){
+    showAiLimitReached();
+    return;
+  }
   callAiAPI(text);
 }
 
@@ -2006,6 +2026,12 @@ function sendAiMessage(){
   const qr=document.getElementById('waQuickReplies');
   if(qr) qr.style.display='none';
   appendUserMsg(text);
+  // Check question limit
+  aiQuestionCount++;
+  if(aiQuestionCount>AI_MAX_QUESTIONS){
+    showAiLimitReached();
+    return;
+  }
   callAiAPI(text);
 }
 
@@ -2016,11 +2042,11 @@ function appendUserMsg(text){
   const div=document.createElement('div');
   div.className='wm-row user';
   div.innerHTML=`
-    <div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;">
       <div class="wm-bubble user">${escapeHtml(text)}</div>
       <div class="wm-time">${now}</div>
     </div>
-    <div class="wm-av user"><i class="fas fa-user"></i></div>`;
+    <div class="wm-av user">👤</div>`;
   msgs.appendChild(div);
   scrollMsgs();
   aiChatHistory.push({role:'user',content:text});
@@ -2033,7 +2059,7 @@ function appendBotMsg(text, isWelcome=false){
   const div=document.createElement('div');
   div.className='wm-row';
   div.innerHTML=`
-    <div class="wm-av bot"><i class="fas fa-robot"></i></div>
+    <div class="wm-av bot">🤖</div>
     <div>
       <div class="wm-bubble bot">${text}</div>
       <div class="wm-time">${now}</div>
@@ -2049,7 +2075,7 @@ function showTyping(){
   const div=document.createElement('div');
   div.className='wm-row';div.id='aiTypingIndicator';
   div.innerHTML=`
-    <div class="wm-av bot"><i class="fas fa-robot"></i></div>
+    <div class="wm-av bot">🤖</div>
     <div class="wm-typing"><span></span><span></span><span></span></div>`;
   msgs.appendChild(div);
   scrollMsgs();
@@ -2128,6 +2154,38 @@ function showOrderActions(){
     </button>`;
   msgs.appendChild(div);
   scrollMsgs();
+}
+
+// Show limit reached message + WhatsApp redirect
+function showAiLimitReached(){
+  const wa=getWA();
+  const waLink='https://wa.me/'+wa+'?text='+encodeURIComponent('Hi ZN Enterprises! I need assistance.');
+  const msgs=document.getElementById('waMessages');
+  if(!msgs) return;
+  // Disable input
+  const inp=document.getElementById('waTextInput');
+  const btn=document.getElementById('waSendBtn');
+  if(inp){inp.disabled=true;inp.placeholder='Chat limit reached — continue on WhatsApp';}
+  if(btn){btn.disabled=true;}
+  // Show limit message
+  const div=document.createElement('div');
+  div.className='wm-row';
+  div.innerHTML=`
+    <div class="wm-av bot">🤖</div>
+    <div>
+      <div class="wm-bubble bot" style="border-color:#25d366;">
+        <strong style="color:#128c7e;display:block;margin-bottom:4px;">💬 Free questions used up!</strong>
+        For more help, connect with our team directly on WhatsApp — we reply instantly!
+      </div>
+      <a href="${waLink}" target="_blank" style="display:flex;align-items:center;gap:6px;margin-top:6px;padding:0.55rem 0.9rem;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border-radius:22px;font-size:0.75rem;font-weight:700;text-decoration:none;width:fit-content;">
+        <i class="fab fa-whatsapp"></i> Continue on WhatsApp
+      </a>
+    </div>`;
+  msgs.appendChild(div);
+  // Auto scroll
+  setTimeout(()=>{msgs.scrollTop=msgs.scrollHeight;},50);
+  // Auto open WhatsApp after 3 seconds
+  setTimeout(()=>{window.open(waLink,'_blank');},3000);
 }
 
 // Legacy compat

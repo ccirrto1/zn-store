@@ -1877,13 +1877,13 @@ function renderReviews(){document.getElementById('revsGrid').innerHTML=DATA.revi
 // ============================================================
 // WISHLIST
 // ============================================================
-let wishlist=JSON.parse(localStorage.getItem('zn_wishlist')||'[]');
+let wishlist=[];try{wishlist=JSON.parse(localStorage.getItem('zn_wishlist')||'[]');}catch(e){wishlist=[];}
 function updateWLBadge(){const b=document.getElementById('wlBadge');if(wishlist.length>0){b.style.display='inline';b.textContent=wishlist.length;}else b.style.display='none';}
 function toggleWish(id,name){
   const idx=wishlist.indexOf(id);const el=document.getElementById('wish'+id);
   if(idx===-1){wishlist.push(id);if(el)el.classList.add('wishlisted');showToast('♥',name.slice(0,26)+' added to wishlist!','pink');}
   else{wishlist.splice(idx,1);if(el)el.classList.remove('wishlisted');showToast('✕',name.slice(0,26)+' removed from wishlist','gray');}
-  localStorage.setItem('zn_wishlist',JSON.stringify(wishlist));updateWLBadge();
+  try{localStorage.setItem('zn_wishlist',JSON.stringify(wishlist));}catch(e){}updateWLBadge();
 }
 function openWishlistPanel(){
   if(!wishlist.length){showToast('ℹ','Your wishlist is empty','gray');return;}
@@ -2080,6 +2080,8 @@ async function callAiAPI(userMsg){
     const ZN_AI_PROXY='https://zn-ai-proxy.rbma987654321.workers.dev/chat';
     const res=await fetch(ZN_AI_PROXY,{
       method:'POST',
+      mode:'cors',
+      credentials:'omit',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({system:AI_SYSTEM_PROMPT,messages:messages})
     });
@@ -2311,7 +2313,7 @@ function placeOrder(){
 function sendOrderEmails(order){
   // Uses Google Apps Script (Gmail) — configure Sheet URL in dashboard
   try{
-    const url=localStorage.getItem('zn_sheet_url');
+    const url=(() => { try { return localStorage.getItem('zn_sheet_url'); } catch(e) { return null; } })();
     if(!url)return;
     const si=getSI();
     const items=Array.isArray(order.cart)
@@ -2622,7 +2624,7 @@ function trackOrder(){
   const id=document.getElementById('trackInput').value.trim().toUpperCase();
   const res=document.getElementById('trackResult');
   if(!id){res.innerHTML='<div style="color:var(--red);font-size:0.8rem;padding:0.5rem;"><i class="fas fa-exclamation-circle"></i> Please enter your Order ID.</div>';return;}
-  const orders=JSON.parse(localStorage.getItem('zn_store_data')||'{}').orders||[];
+  let orders=[];try{orders=JSON.parse(localStorage.getItem('zn_store_data')||'{}').orders||[];}catch(e){orders=[];}
   const order=orders.find(o=>o.orderId&&o.orderId.toUpperCase()===id);
   if(!order){
     res.innerHTML=`<div style="background:var(--red2);border:1.5px solid rgba(220,38,38,0.2);border-radius:12px;padding:1rem;text-align:center;">

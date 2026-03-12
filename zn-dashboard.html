@@ -509,11 +509,21 @@ tr:hover td{background:rgba(99,102,241,0.03);}
             <div class="mini-bars" id="salesChart"></div>
           </div>
           <div class="chart-card">
-            <h4><i class="fas fa-list-check"></i> Recent Orders</h4>
+            <h4><i class="fas fa-list-check"></i> Recent Orders <span style="font-size:0.7rem;font-weight:500;color:var(--text3);margin-left:8px;">Click Confirm to update order status</span></h4>
             <div id="recentOrdersTable"></div>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fas fa-trophy" style="color:#f59e0b;"></i> Top Rated Products</h4>
+            <div id="topProductsList"></div>
           </div>
         </div>
         <div>
+          <div class="chart-card">
+            <h4><i class="fas fa-triangle-exclamation" style="color:#d97706;"></i> Low Stock Alerts
+              <button onclick="showPanel('inventory')" style="float:right;font-size:0.65rem;padding:2px 8px;background:rgba(245,158,11,0.12);color:#d97706;border:1px solid rgba(245,158,11,0.3);border-radius:5px;cursor:pointer;font-weight:700;">Manage →</button>
+            </h4>
+            <div id="lowStockAlerts"></div>
+          </div>
           <div class="chart-card">
             <h4><i class="fas fa-clock-rotate-left"></i> Recent Activity</h4>
             <div class="activity-list" id="activityList"></div>
@@ -698,6 +708,20 @@ tr:hover td{background:rgba(99,102,241,0.03);}
           <h4><i class="fas fa-heading"></i> Hero Section</h4>
           <div class="form-group"><label class="form-label"><i class="fas fa-h"></i> Hero Title</label><input class="form-input" id="si-heroTitle"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-text"></i> Hero Subtitle</label><textarea class="form-textarea" id="si-heroSub"></textarea></div>
+          
+          <h4 style="margin-top:1.25rem;"><i class="fas fa-star" style="color:#f59e0b;"></i> Reviews & Google Form</h4>
+          <div class="form-group">
+            <label class="form-label"><i class="fab fa-google" style="color:#4285f4;"></i> Google Review Form Link</label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+              <input class="form-input" id="si-googleFormUrl" placeholder="https://forms.gle/yourformlink" style="flex:1;">
+              <a id="si-gform-test" href="#" target="_blank" onclick="testGoogleForm()" style="display:flex;align-items:center;gap:5px;padding:0.5rem 0.85rem;background:rgba(66,133,244,0.12);color:#4285f4;border:1px solid rgba(66,133,244,0.3);border-radius:8px;font-size:0.75rem;font-weight:700;text-decoration:none;white-space:nowrap;cursor:pointer;"><i class="fas fa-external-link"></i> Test</a>
+            </div>
+            <div style="font-size:0.7rem;color:var(--text3);margin-top:5px;background:rgba(66,133,244,0.05);border:1px solid rgba(66,133,244,0.15);padding:0.45rem 0.7rem;border-radius:7px;line-height:1.6;">
+              <i class="fab fa-google" style="color:#4285f4;"></i> Yeh link product review form mein <strong>"Submit via Google Form →"</strong> button pe lagega.<br>
+              <span style="color:#d97706;">Google Form kaise banaye:</span> forms.google.com → New Form → Name, Rating, Review fields add karo → Share link copy karo
+            </div>
+          </div>
+
           <h4 style="margin-top:1rem;"><i class="fas fa-truck"></i> Delivery Settings</h4>
           <div class="form-row">
             <div class="form-group"><label class="form-label"><i class="fas fa-rupee-sign"></i> Delivery Charge (Rs.)</label><input class="form-input" id="si-delivery" type="number"></div>
@@ -1366,6 +1390,17 @@ function renderDashboard(){
       <div class="stat-icon" style="background:rgba(37,211,102,0.1);"><i class="fab fa-whatsapp" style="color:#25d366;font-size:1.3rem;"></i></div>
       <div class="stat-info"><span class="stat-val" style="color:#25d366;font-size:1rem;">Open</span><span class="stat-label">WhatsApp Business</span><span class="stat-change up"><i class="fas fa-arrow-up-right-from-square"></i> Helpline: ${DATA.siteInfo?.helpline||'0343-3194763'}</span></div>
     </div>
+    <div class="stat-card" style="cursor:pointer;" onclick="showPanel('inventory')">
+      <div class="stat-icon" style="background:rgba(245,158,11,0.1);"><i class="fas fa-triangle-exclamation" style="color:#d97706;"></i></div>
+      <div class="stat-info">
+        <span class="stat-val" style="color:#d97706;">${DATA.products.filter(p=>(p.stock??5)<=3&&(p.stock??5)>0).length}</span>
+        <span class="stat-label">Low Stock Items</span>
+        <span class="stat-change ${DATA.products.filter(p=>(p.stock??5)===0).length>0?'down':'up'}">
+          <i class="fas fa-${DATA.products.filter(p=>(p.stock??5)===0).length>0?'exclamation':'check'}"></i>
+          ${DATA.products.filter(p=>(p.stock??5)===0).length} out of stock
+        </span>
+      </div>
+    </div>
   `;
   // chart
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -1377,8 +1412,22 @@ function renderDashboard(){
   // recent orders
   const recent=DATA.orders.slice(-5).reverse();
   if(recent.length){
-    document.getElementById('recentOrdersTable').innerHTML=`<div style="overflow-x:auto;"><table><thead><tr><th>ID</th><th>Customer</th><th>Total</th><th>Status</th></tr></thead><tbody>${
-      recent.map(o=>`<tr><td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;">${o.orderId}</td><td class="td-name">${o.name}</td><td class="td-price">Rs. ${(o.total||0).toLocaleString()}</td><td><span class="status-badge status-${(o.status||'new').toLowerCase().replace(' ','-')}">${o.status||'New Order'}</span></td></tr>`).join('')
+    document.getElementById('recentOrdersTable').innerHTML=`<div style="overflow-x:auto;"><table><thead><tr><th>ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Actions</th></tr></thead><tbody>${
+      recent.map(o=>{
+        const idx=DATA.orders.indexOf(o);
+        const wa=DATA.siteInfo?.whatsapp||'923433194763';
+        const waMsg=encodeURIComponent('Assalam o Alaikum '+o.name+'! Aapka order '+o.orderId+' confirm ho gaya. ZN Enterprises');
+        return `<tr>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--primary2);">${o.orderId}</td>
+          <td class="td-name">${o.name}<br><span style="font-size:0.68rem;color:var(--text3);">${o.phone||''}</span></td>
+          <td class="td-price">Rs. ${(o.total||0).toLocaleString()}</td>
+          <td><span class="status-badge status-${(o.status||'new').toLowerCase().replace(/ /g,'-')}">${o.status||'New Order'}</span></td>
+          <td style="display:flex;gap:5px;flex-wrap:wrap;">
+            ${o.status==='New Order'?`<button onclick="quickConfirm(${idx})" style="padding:3px 10px;font-size:0.68rem;background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3);border-radius:6px;cursor:pointer;font-weight:700;"><i class="fas fa-check"></i> Confirm</button>`:''}
+            <a href="https://wa.me/${wa}?text=${waMsg}" target="_blank" style="padding:3px 10px;font-size:0.68rem;background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.3);border-radius:6px;cursor:pointer;font-weight:700;text-decoration:none;"><i class="fab fa-whatsapp"></i></a>
+          </td>
+        </tr>`;
+      }).join('')
     }</tbody></table></div>`;
   }else{document.getElementById('recentOrdersTable').innerHTML=`<div class="empty-state"><i class="fas fa-inbox"></i><p>No orders yet</p></div>`;}
   // activity
@@ -1390,7 +1439,7 @@ function renderDashboard(){
   // cat stats
   const catCounts={};DATA.products.forEach(p=>{catCounts[p.cat]=(catCounts[p.cat]||0)+1;});
   const total=DATA.products.length;
-  document.getElementById('catStats').innerHTML=Object.entries(catCounts).map(([cat,count])=>`
+  document.getElementById('catStats').innerHTML=Object.entries(catCounts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([cat,count])=>`
     <div>
       <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.75rem;">
         <span style="color:var(--text2);">${cat}</span>
@@ -1401,6 +1450,49 @@ function renderDashboard(){
       </div>
     </div>
   `).join('');
+
+  // Top rated products quick view
+  const topEl=document.getElementById('topProductsList');
+  if(topEl){
+    const top5=[...DATA.products].sort((a,b)=>(b.rating||0)-(a.rating||0)).slice(0,5);
+    topEl.innerHTML=top5.map(p=>`
+      <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--border);">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(91,84,232,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="${p.icon||'fas fa-box'}" style="color:var(--primary);font-size:0.85rem;"></i>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
+          <div style="font-size:0.68rem;color:var(--text3);">Rs. ${p.price.toLocaleString()} · ${p.cat}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:0.72rem;color:#f59e0b;font-weight:700;">${'★'.repeat(Math.floor(p.rating||5))}</div>
+          <div style="font-size:0.65rem;color:var(--text3);">${p.stock??5} in stock</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Low stock alerts
+  const alertEl=document.getElementById('lowStockAlerts');
+  if(alertEl){
+    const lowStock=DATA.products.filter(p=>(p.stock??5)<=3).sort((a,b)=>(a.stock??5)-(b.stock??5)).slice(0,5);
+    if(lowStock.length){
+      alertEl.innerHTML=lowStock.map(p=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.75rem;background:${(p.stock??5)===0?'rgba(239,68,68,0.08)':'rgba(245,158,11,0.08)'};border-left:3px solid ${(p.stock??5)===0?'#dc2626':'#d97706'};border-radius:0 8px 8px 0;margin-bottom:5px;">
+          <div>
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text1);">${p.name.slice(0,28)}${p.name.length>28?'...':''}</div>
+            <div style="font-size:0.67rem;color:var(--text3);">${p.cat} · Rs.${p.price.toLocaleString()}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:0.72rem;font-weight:800;color:${(p.stock??5)===0?'#dc2626':'#d97706'};">${(p.stock??5)===0?'OUT':''+p.stock+' left'}</span>
+            <button onclick="quickStock(DATA.products.indexOf(DATA.products.find(x=>x.id===${p.id})),5)" style="padding:2px 8px;font-size:0.65rem;background:var(--primary);color:#fff;border:none;border-radius:5px;cursor:pointer;">+5</button>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      alertEl.innerHTML=`<div style="text-align:center;padding:1rem;color:var(--green);font-size:0.78rem;"><i class="fas fa-check-circle" style="font-size:1.2rem;display:block;margin-bottom:4px;"></i> All products in stock!</div>`;
+    }
+  }
 }
 
 // ============================================================
@@ -1894,6 +1986,13 @@ function loadSiteInfo(){
   const aeEl=document.getElementById('si-adminEmail');if(aeEl)aeEl.value=s.adminEmail||'';
   document.getElementById('si-delivery').value=s.deliveryCharge||200;
   document.getElementById('si-freeMin').value=s.freeDeliveryMin||5000;
+  const gfEl=document.getElementById('si-googleFormUrl');if(gfEl)gfEl.value=s.googleFormUrl||'';
+}
+function testGoogleForm(){
+  const url=(document.getElementById('si-googleFormUrl').value||'').trim();
+  const link=document.getElementById('si-gform-test');
+  if(!url){showToast('<i class="fas fa-exclamation" style="color:orange"></i> Pehle Google Form URL save karo!');return;}
+  if(link) link.href=url;
 }
 function testWaNumber(){
   const num=(document.getElementById('si-whatsapp').value||'').trim()||'923433194763';
@@ -1916,6 +2015,7 @@ function saveSiteInfo(){
     heroSub:document.getElementById('si-heroSub').value,
     deliveryCharge:parseFloat(document.getElementById('si-delivery').value)||200,
     freeDeliveryMin:parseFloat(document.getElementById('si-freeMin').value)||5000,
+    googleFormUrl:(document.getElementById('si-googleFormUrl').value||'').trim(),
   };
   saveData(DATA);
   showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Site info saved! Changes are live on the store.');

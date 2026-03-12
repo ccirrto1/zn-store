@@ -983,7 +983,29 @@ tr:hover td{background:rgba(99,102,241,0.03);}
             <option value="misc">📦 Miscellaneous</option>
           </select>
         </div>
-        <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ep-icon" placeholder="fas fa-keyboard"></div>
+        <div class="form-group">
+          <label class="form-label"><i class="fas fa-icons"></i> FA Icon Class
+            <span onclick="document.getElementById('faHelp').style.display=document.getElementById('faHelp').style.display==='none'?'block':'none'" style="cursor:pointer;margin-left:6px;font-size:0.68rem;background:var(--primary3);color:var(--primary);padding:1px 7px;border-radius:10px;font-weight:700;">? Help</span>
+          </label>
+          <input class="form-input" id="ep-icon" placeholder="fas fa-keyboard">
+          <div id="faHelp" style="display:none;margin-top:6px;background:var(--bg2);border:1.5px solid var(--border);border-radius:8px;padding:0.6rem 0.8rem;font-size:0.72rem;line-height:1.8;">
+            <strong>FA Icon Class kya hai?</strong> — Product ke liye ek small icon.<br>
+            Agar image upload karo to zaroorat nahi. Default chod sakte hain.<br><br>
+            <strong>Common Icons:</strong><br>
+            🖱️ Mouse → <code>fas fa-computer-mouse</code><br>
+            ⌨️ Keyboard → <code>fas fa-keyboard</code><br>
+            🖥️ Monitor → <code>fas fa-desktop</code><br>
+            🎧 Headset → <code>fas fa-headphones</code><br>
+            📷 Webcam → <code>fas fa-camera</code><br>
+            💾 Storage → <code>fas fa-hard-drive</code><br>
+            🔌 Hub/Cable → <code>fas fa-plug</code><br>
+            ❄️ Cooling → <code>fas fa-snowflake</code><br>
+            💻 Laptop → <code>fas fa-laptop</code><br>
+            🖥️ Desktop → <code>fas fa-computer</code><br>
+            🎮 GPU → <code>fas fa-microchip</code><br>
+            <br><em>Image upload karo to yeh field chhod sakte hain — image pehle show hogi.</em>
+          </div>
+        </div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-rupee-sign"></i> Price (Rs.) *</label><input class="form-input" id="ep-price" type="number"></div>
@@ -1003,6 +1025,21 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Stock</label><input class="form-input" id="ep-stock" type="number" min="0" placeholder="5"></div>
+        <div class="form-group">
+          <label class="form-label"><i class="fas fa-shield-halved"></i> Warranty</label>
+          <select class="form-select" id="ep-warranty">
+            <option value="15 Days Checking Warranty">15 Days Checking Warranty (Default)</option>
+            <option value="1 Month Warranty">1 Month Warranty</option>
+            <option value="3 Months Warranty">3 Months Warranty</option>
+            <option value="6 Months Warranty">6 Months Warranty</option>
+            <option value="1 Year Local Warranty">1 Year Local Warranty</option>
+            <option value="2 Years Warranty">2 Years Warranty</option>
+            <option value="3 Years Warranty">3 Years Warranty</option>
+            <option value="No Warranty">No Warranty</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-image"></i> Image URL (optional)</label><input class="form-input" id="ep-imgurl" placeholder="https://example.com/img.jpg"></div>
       </div>
       <div class="form-group">
@@ -1209,14 +1246,16 @@ const panelTitles={
   settings:'<i class="fas fa-gear"></i> Settings',
 };
 function showPanel(name){
-  if(name==='inventory') setTimeout(renderInventory, 50);
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
+  const panelEl = document.getElementById('panel-'+name);
+  if(!panelEl){ console.warn('Panel not found: panel-'+name); return; }
+  panelEl.classList.add('active');
   document.querySelector(`.sb-nav a[onclick="showPanel('${name}')"]`)?.classList.add('active');
   document.getElementById('pageTitle').innerHTML=panelTitles[name]||name;
   document.getElementById('pageBreadcrumb').textContent='ZN Enterprises / '+name.charAt(0).toUpperCase()+name.slice(1);
   renderPanel(name);
+  if(name==='inventory') setTimeout(()=>{ DATA=getData(); renderInventory(); },80);
 }
 function renderPanel(name){
   if(name==='dashboard')renderDashboard();
@@ -1532,6 +1571,12 @@ function openEditProduct(idx){
     document.getElementById('ep-rating').value=p.rating||4.5;
     document.getElementById('ep-reviews').value=p.reviews||0;
     document.getElementById('ep-stock').value=p.stock!=null?p.stock:5;
+    // Load warranty from specs or direct field
+    const wv = p.warranty || p.specs?.Warranty || p.specs?.warranty || '15 Days Checking Warranty';
+    const wSel = document.getElementById('ep-warranty');
+    // If the exact option exists, select it; else default
+    const wOpts = Array.from(wSel.options).map(o=>o.value);
+    wSel.value = wOpts.includes(wv) ? wv : '15 Days Checking Warranty';
     document.getElementById('ep-desc').value=p.desc||'';
     document.getElementById('ep-imgurl').value=p.imgurl||'';
     // Specs: convert object to Key: Value lines
@@ -1554,6 +1599,7 @@ function openEditProduct(idx){
     document.getElementById('ep-rating').value='4.5';
     document.getElementById('ep-reviews').value='0';
     document.getElementById('ep-stock').value='5';
+    document.getElementById('ep-warranty').value='15 Days Checking Warranty';
     document.getElementById('ep-specs').value='';
     thumb.innerHTML='<i class="fas fa-image" style="color:var(--text3);font-size:1.4rem;"></i>';
     status.textContent='JPG, PNG, WebP — Max 2MB';
@@ -1597,11 +1643,15 @@ function saveProduct(){
     rating:parseFloat(document.getElementById('ep-rating').value)||4.5,
     reviews:parseInt(document.getElementById('ep-reviews').value)||0,
     stock:parseInt(document.getElementById('ep-stock').value)||0,
+    warranty:document.getElementById('ep-warranty').value||'15 Days Checking Warranty',
     brand:document.getElementById('ep-brand').value.trim(),
     desc:document.getElementById('ep-desc').value.trim(),
     imgurl:document.getElementById('ep-imgurl').value.trim(),
     specs:specs
   };
+  // Inject warranty into specs so product modal shows it
+  if(!p.specs) p.specs={};
+  p.specs.Warranty = p.warranty;
   // Save base64 image if uploaded
   if(window._epImgBase64) p.imgBase64=window._epImgBase64;
   else if(editProductIdx!==null && DATA.products[editProductIdx].imgBase64) p.imgBase64=DATA.products[editProductIdx].imgBase64;
@@ -2268,12 +2318,7 @@ function bulkSetStock(val){
   showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> All products stock set to: '+val);
 }
 
-// Override renderPanel to call renderInventory when needed
-const _origRenderPanel=renderPanel;
-renderPanel=function(name){
-  _origRenderPanel(name);
-  if(name==='inventory')setTimeout(renderInventory,30);
-};
+// renderPanel — inventory handled in showPanel directly
 
 renderPanel('dashboard');
   }

@@ -2468,13 +2468,15 @@ function waQuick(msg){
 }
 
 // ============================================================
-// CART
+// CART — persisted in localStorage
 // ============================================================
-let cart=[];
+function loadCart(){try{return JSON.parse(localStorage.getItem('zn_cart')||'[]');}catch(e){return[];}}
+function saveCart(){try{localStorage.setItem('zn_cart',JSON.stringify(cart));}catch(e){}}
+let cart=loadCart();
 function addToCart(id){
   const ex=cart.find(x=>x.id===id);
   if(ex)ex.qty++;else{const p=DATA.products.find(x=>x.id===id);if(p)cart.push({...p,qty:1});}
-  updateCartBadge();renderCartBody();
+  saveCart();updateCartBadge();renderCartBody();
   const p=DATA.products.find(x=>x.id===id);
   showToast('✓',(p?.name||'Product').slice(0,28)+'... added to cart!','green');
 }
@@ -2520,13 +2522,67 @@ function openProduct(id){
   document.getElementById('mRating').innerHTML=`<span style="color:var(--accent);font-size:0.86rem;">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span> <span style="font-size:0.77rem;color:var(--text3);font-family:'JetBrains Mono',monospace;">${p.rating}/5 (${p.reviews} reviews)</span>`;
   document.getElementById('mPriceRow').innerHTML=`<div class="m-price-now">Rs. ${p.price.toLocaleString()}</div>${p.old?`<span class="m-price-old">Rs. ${p.old.toLocaleString()}</span>`:''} ${d>0?`<span class="m-price-save">-${d}% OFF</span>`:''}`;
   const specs=Object.entries(p.specs||{}).map(([k,v])=>`<div class="spec-row"><span class="spec-k">${k.replace(/_/g,' ')}</span><span class="spec-v">${v}</span></div>`).join('');
-  document.getElementById('mSpecs').innerHTML=specs||`<div class="spec-row"><span class="spec-k">Description</span><span class="spec-v" style="font-weight:400;font-family:'Plus Jakarta Sans';">${p.desc}</span></div>`;
+  // Full description + specs tabs
+  const descHtml = `
+    <div style="padding:0.5rem 0;">
+      <p style="font-size:0.83rem;line-height:1.7;color:var(--text2);margin-bottom:1rem;">${p.desc||'High-quality product from ZN Enterprises.'}</p>
+      ${p.brand?`<div style="display:flex;align-items:center;gap:8px;margin-bottom:0.5rem;"><span style="font-size:0.72rem;color:var(--text3);font-weight:600;text-transform:uppercase;">Brand</span><span style="font-size:0.8rem;font-weight:700;color:var(--primary);">${p.brand}</span></div>`:''}
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:0.5rem;"><span style="font-size:0.72rem;color:var(--text3);font-weight:600;text-transform:uppercase;">Category</span><span style="font-size:0.8rem;font-weight:700;">${p.cat.toUpperCase()}</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:0.72rem;color:var(--text3);font-weight:600;text-transform:uppercase;">Warranty</span><span style="font-size:0.8rem;font-weight:700;">${p.specs?.Warranty||p.specs?.warranty||'1 Year Local Warranty'}</span></div>
+    </div>`;
+  const specsHtml = specs || `<div class="spec-row"><span class="spec-k">Description</span><span class="spec-v" style="font-weight:400;">${p.desc||''}</span></div>`;
+  
+  document.getElementById('mSpecs').innerHTML = `
+    <div style="display:flex;gap:0;border-bottom:1.5px solid var(--border);margin-bottom:0.75rem;">
+      <button onclick="switchModalTab('specs',this)" id="tabSpecs" style="padding:0.45rem 1rem;font-size:0.75rem;font-weight:700;border:none;background:none;cursor:pointer;border-bottom:2.5px solid var(--primary);color:var(--primary);">Specifications</button>
+      <button onclick="switchModalTab('desc',this)" id="tabDesc" style="padding:0.45rem 1rem;font-size:0.75rem;font-weight:700;border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--text3);">Description</button>
+      <button onclick="switchModalTab('delivery',this)" id="tabDelivery" style="padding:0.45rem 1rem;font-size:0.75rem;font-weight:700;border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;color:var(--text3);">Delivery</button>
+    </div>
+    <div id="tabContentSpecs">${specsHtml}</div>
+    <div id="tabContentDesc" style="display:none;">${descHtml}</div>
+    <div id="tabContentDelivery" style="display:none;">
+      <div class="spec-row"><span class="spec-k">📦 Karachi</span><span class="spec-v" style="color:#059669;font-weight:700;">Same Day / Next Day</span></div>
+      <div class="spec-row"><span class="spec-k">🚚 Lahore/Islamabad</span><span class="spec-v">2-3 Business Days</span></div>
+      <div class="spec-row"><span class="spec-k">🌍 Other Cities</span><span class="spec-v">3-5 Business Days</span></div>
+      <div class="spec-row"><span class="spec-k">💰 Free Delivery</span><span class="spec-v" style="color:#059669;">On orders above Rs. 5,000</span></div>
+      <div class="spec-row"><span class="spec-k">💳 Payment</span><span class="spec-v">COD, JazzCash, EasyPaisa, Bank</span></div>
+      <div class="spec-row"><span class="spec-k">↩️ Returns</span><span class="spec-v">7-Day Easy Returns</span></div>
+    </div>`;
+    
+  // Related products
+  const related = DATA.products.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4);
+  const relatedHtml = related.length ? `
+    <div style="margin-top:1rem;padding-top:0.75rem;border-top:1.5px solid var(--border);">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.65rem;">Related Products</div>
+      <div style="display:flex;gap:0.65rem;overflow-x:auto;padding-bottom:0.3rem;">
+        ${related.map(r=>`
+          <div onclick="openProduct(${r.id})" style="flex-shrink:0;width:90px;cursor:pointer;text-align:center;padding:0.5rem;border:1.5px solid var(--border);border-radius:10px;background:#fff;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+            ${prodImg(r.id)?`<img src="${prodImg(r.id)}" style="width:55px;height:45px;object-fit:contain;" onerror="this.style.display='none'">`:`<i class="${r.icon}" style="font-size:1.8rem;color:${cc(r.cat)};display:block;margin:0 auto 4px;"></i>`}
+            <div style="font-size:0.62rem;font-weight:600;color:var(--text2);line-height:1.3;margin-top:3px;">${r.name.slice(0,22)}...</div>
+            <div style="font-size:0.68rem;font-weight:800;color:var(--primary);margin-top:2px;">Rs.${r.price.toLocaleString()}</div>
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+  
+  // Append related after modal opens
+  setTimeout(()=>{
+    const specsEl = document.getElementById('mSpecs');
+    if(specsEl && related.length) specsEl.insertAdjacentHTML('afterend', relatedHtml);
+  }, 50);
   const thumb=img?`<div class="m-thumb active"><img src="${img}" alt="${p.name}"></div>`:`<div class="m-thumb active"><i class="${p.icon}" style="color:${cc(p.cat)};"></i></div>`;
   document.getElementById('modalThumbs').innerHTML=thumb+`<div class="m-thumb" style="opacity:0.4;"><i class="${p.icon}" style="color:#bbb;"></i></div>`;
   document.getElementById('productModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeModal(){document.getElementById('productModal').classList.remove('open');document.body.style.overflow='';}
+function switchModalTab(tab, btn){
+  ['specs','desc','delivery'].forEach(t=>{
+    const el=document.getElementById('tabContent'+t.charAt(0).toUpperCase()+t.slice(1));
+    const b=document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(el) el.style.display=t===tab?'':'none';
+    if(b){b.style.borderBottomColor=t===tab?'var(--primary)':'transparent';b.style.color=t===tab?'var(--primary)':'var(--text3)';}
+  });
+}
 function mqty(d){mQty=Math.max(1,Math.min(10,mQty+d));document.getElementById('mqtyNum').textContent=mQty;}
 function cartFromModal(){if(!currentProd)return;for(let i=0;i<mQty;i++){const ex=cart.find(x=>x.id===currentProd.id);if(ex)ex.qty++;else cart.push({...currentProd,qty:1});}updateCartBadge();renderCartBody();showToast('✓',`${mQty}x ${currentProd.name.slice(0,24)}... added to cart!`,'green');}
 function orderFromModal(){if(!currentProd)return;closeModal();openOrderModal(currentProd,mQty);}
@@ -2644,7 +2700,8 @@ function placeOrder(){
 function sendOrderEmails(order){
   // Uses Google Apps Script (Gmail) — configure Sheet URL in dashboard
   try{
-    const url=(() => { try { return localStorage.getItem('zn_sheet_url'); } catch(e) { return null; } })();
+    const ZN_SHEET_HARDCODED='https://script.google.com/macros/s/AKfycbx4Q5yLV3zqHYnXYWV3UQ2TYbVGNp7StwIFCr62GMVZzIZbjzkfJrJgicVEqg6xvO2R/exec';
+    const url=(() => { try { return localStorage.getItem('zn_sheet_url')||ZN_SHEET_HARDCODED; } catch(e) { return ZN_SHEET_HARDCODED; } })();
     if(!url)return;
     const si=getSI();
     const items=Array.isArray(order.cart)

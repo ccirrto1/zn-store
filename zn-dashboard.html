@@ -1923,7 +1923,7 @@ function saveSheetUrl(){
   showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Sheet URL saved!');
 }
 function testSheet(){
-  const url=localStorage.getItem('zn_sheet_url');
+  const ZN_SHEET_HARDCODED='https://script.google.com/macros/s/AKfycbx4Q5yLV3zqHYnXYWV3UQ2TYbVGNp7StwIFCr62GMVZzIZbjzkfJrJgicVEqg6xvO2R/exec';const url=(() => {try{return localStorage.getItem('zn_sheet_url')||ZN_SHEET_HARDCODED;}catch(e){return ZN_SHEET_HARDCODED;}})();
   if(!url){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Please save the URL first.');return;}
   const testData={orderId:'ZN-TEST-'+Date.now(),timestamp:new Date().toLocaleString(),name:'ZN Test',phone:'03001234567',email:'test@znenterprises.pk',city:'Karachi',address:'Test Address',payment:'COD',items:'Test Item x1',subtotal:0,delivery:0,total:0,note:'TEST ORDER - IGNORE',status:'Test'};
   fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(testData)})

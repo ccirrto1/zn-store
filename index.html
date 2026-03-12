@@ -2999,12 +2999,16 @@ function openReviewForm(){
   document.getElementById('rfText').value = '';
   selectedReviewStars = 0;
   setReviewStars(0);
-  // Reset border colors
   document.getElementById('rfName').style.borderColor = 'var(--border)';
   document.getElementById('rfText').style.borderColor = 'var(--border)';
-  // Open review modal on top of product modal
+  // Update Google Form link from siteInfo
+  const gfUrl = (DATA.siteInfo&&DATA.siteInfo.googleFormUrl)||'';
+  const gfEl = document.getElementById('googleFormLink');
+  if(gfEl){
+    if(gfUrl){ gfEl.href=gfUrl; gfEl.style.display='inline'; }
+    else { gfEl.style.display='none'; }
+  }
   document.getElementById('reviewFormModal').classList.add('open');
-  // Focus name field after animation
   setTimeout(()=>{ const el=document.getElementById('rfName'); if(el) el.focus(); }, 200);
 }
 function closeReviewForm(){

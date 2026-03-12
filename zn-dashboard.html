@@ -551,7 +551,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       <div class="section-hdr">
         <h3><i class="fas fa-boxes-stacked"></i> Products Management</h3>
         <div class="action-btns">
-          <button class="btn-sm btn-add-item" onclick="openEditProduct(null)"><i class="fas fa-plus"></i> Add Product</button>
+          <div style="display:flex;align-items:center;gap:0.75rem;"><span id="productsCount" style="font-size:0.75rem;color:var(--text3);font-weight:600;"></span><button class="btn-sm btn-add-item" onclick="openEditProduct(null)"><i class="fas fa-plus"></i> Add Product</button></div>
         </div>
       </div>
       <div class="table-wrap">
@@ -560,7 +560,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
           <input type="text" placeholder="Search products..." id="productSearch" oninput="filterProducts()">
         </div>
         <div style="overflow-x:auto;"><table><thead><tr>
-          <th>Icon</th><th>Name</th><th>Category</th><th>Price</th><th>Old Price</th><th>Badge</th><th>Rating</th><th>Brand</th><th>Actions</th>
+          <th style='width:50px'>Img</th><th>Product Name</th><th>Category</th><th>Brand</th><th>Price</th><th>Stock</th><th>Badge</th><th>Actions</th>
         </tr></thead><tbody id="productsTableBody"></tbody></table></div>
       </div>
     </div>
@@ -1054,7 +1054,12 @@ tr:hover td{background:rgba(99,102,241,0.03);}
             <span id="ep-img-status" style="font-size:0.7rem;color:var(--text3);">JPG, PNG, WebP — Max 2MB</span>
           </div>
         </div>
-        <small style="color:var(--text3);font-size:0.68rem;"><i class="fas fa-info-circle"></i> Image saves as base64 in product data. Or paste an image URL above.</small>
+        <small style="color:var(--text3);font-size:0.68rem;line-height:1.6;display:block;">
+          <i class="fas fa-info-circle" style="color:var(--primary);"></i> 
+          <strong>Image kahan save hoti hai?</strong> — Image browser localStorage mein base64 format mein save hoti hai — koi alag hosting nahi chahiye. 
+          Ya Image URL paste karo (Google Drive / Imgur / direct link) — URL wali image web se load hogi.<br>
+          <span style="color:#d97706;">⚠️ Base64 limit: 2MB per image. Zyada products ke liye Imgur ya Google Drive URL use karo.</span>
+        </small>
       </div>
       <div class="form-group"><label class="form-label"><i class="fas fa-align-left"></i> Description</label><textarea class="form-textarea" id="ep-desc"></textarea></div>
       <div class="form-group"><label class="form-label"><i class="fas fa-list-ul"></i> Specs (one per line: Key: Value)</label>
@@ -1179,18 +1184,56 @@ const DEFAULT_DATA={
     {id:'cooling',name:'Cooling',icon:'fas fa-snowflake',color:'#0ea5e9',count:28},
   ],
   products:[
-    {id:1,name:'Logitech G Pro X Superlight 2',cat:'mouse',price:14999,old:18999,icon:'fas fa-computer-mouse',badge:'new',rating:4.9,reviews:234,brand:'Logitech',specs:{Sensor:'HERO 2 25K',DPI:'100–25,600',Weight:'60g',Connectivity:'2.4GHz Wireless',Warranty:'2 Years'},desc:'Ultra-lightweight gaming mouse'},
-    {id:2,name:'Razer BlackWidow V4 Pro',cat:'keyboard',price:22999,old:27999,icon:'fas fa-keyboard',badge:'hot',rating:4.8,reviews:189,brand:'Razer',specs:{Type:'Mechanical',Switches:'Razer Yellow V3',Backlight:'RGB Chroma',Warranty:'2 Years'},desc:'Professional gaming keyboard'},
-    {id:3,name:'ASUS ROG Swift 27" 4K 144Hz',cat:'monitor',price:89999,old:99999,icon:'fas fa-desktop',badge:'top',rating:4.9,reviews:156,brand:'ASUS ROG',specs:{Size:'27 Inch',Resolution:'4K UHD',RefreshRate:'144Hz',Panel:'IPS',Response:'1ms'},desc:'4K gaming monitor'},
-    {id:4,name:'HyperX Cloud Alpha Wireless',cat:'headset',price:18500,old:21000,icon:'fas fa-headphones',badge:'new',rating:4.7,reviews:312,brand:'HyperX',specs:{Driver:'50mm',Battery:'300 Hours',Warranty:'2 Years'},desc:'300hr battery headset'},
-    {id:5,name:'Samsung 980 Pro 1TB NVMe',cat:'storage',price:16999,old:19999,icon:'fas fa-hard-drive',badge:'sale',rating:4.9,reviews:445,brand:'Samsung',specs:{Type:'NVMe PCIe 4.0',Capacity:'1TB',ReadSpeed:'7,000 MB/s',Warranty:'5 Years'},desc:'NVMe PCIe 4.0 SSD'},
-    {id:6,name:'Logitech MX Master 3S',cat:'mouse',price:12499,old:14999,icon:'fas fa-computer-mouse',badge:'',rating:4.8,reviews:567,brand:'Logitech',specs:{DPI:'200–8,000',Warranty:'1 Year'},desc:'Productivity wireless mouse'},
-    {id:7,name:'Corsair K100 RGB Optical',cat:'keyboard',price:29999,old:34999,icon:'fas fa-keyboard',badge:'hot',rating:4.7,reviews:98,brand:'Corsair',specs:{Type:'Optical-Mechanical',Warranty:'2 Years'},desc:'Flagship gaming keyboard'},
-    {id:8,name:'Dell UltraSharp 32" USB-C',cat:'monitor',price:74999,old:85000,icon:'fas fa-desktop',badge:'',rating:4.8,reviews:201,brand:'Dell',specs:{Size:'32 Inch',Resolution:'4K UHD',Warranty:'3 Years'},desc:'Professional 4K display'},
-    {id:9,name:'Logitech C922 Pro Webcam',cat:'webcam',price:13999,old:16500,icon:'fas fa-camera',badge:'',rating:4.6,reviews:378,brand:'Logitech',specs:{Resolution:'1080p 60fps',Warranty:'2 Years'},desc:'Pro streaming webcam'},
-    {id:10,name:'SteelSeries Arctis Nova Pro',cat:'headset',price:31999,old:36999,icon:'fas fa-headphones',badge:'new',rating:4.9,reviews:145,brand:'SteelSeries',specs:{ANC:'Active',Warranty:'1 Year'},desc:'Premium ANC headset'},
-    {id:11,name:'WD Black SN850X 2TB NVMe',cat:'storage',price:24999,old:28999,icon:'fas fa-hard-drive',badge:'',rating:4.8,reviews:289,brand:'WD',specs:{Type:'NVMe PCIe 4.0',Capacity:'2TB',Warranty:'5 Years'},desc:'Gaming SSD 2TB'},
-    {id:12,name:'Anker 13-in-1 USB-C Hub',cat:'hub',price:7999,old:9999,icon:'fas fa-plug',badge:'sale',rating:4.7,reviews:512,brand:'Anker',specs:{Ports:'13',Warranty:'18 Months'},desc:'13-port USB-C hub'},
+    {id:1,name:'Logitech G Pro X Superlight 2',cat:'mouse',price:14999,old:18999,icon:'fas fa-computer-mouse',badge:'new',rating:4.9,reviews:234,stock:5,brand:'Logitech',specs:{Sensor:'HERO 2 25K',DPI:'100-25600',Weight:'60g',Connectivity:'2.4GHz Wireless',Warranty:'2 Years Warranty'},desc:'Ultra-lightweight 60g wireless gaming mouse used by esports world champions. HERO 2 25K sensor with zero smoothing.'},
+    {id:2,name:'Logitech G502 X Plus Wireless',cat:'mouse',price:12999,old:15999,icon:'fas fa-computer-mouse',badge:'hot',rating:4.8,reviews:312,stock:5,brand:'Logitech',specs:{Sensor:'HERO 25K',DPI:'100-25600',Weight:'89g',Buttons:'13 Programmable',Warranty:'2 Years Warranty'},desc:'Feature-packed wireless gaming mouse with LIGHTFORCE hybrid switches and LIGHTSPEED wireless technology.'},
+    {id:3,name:'Logitech MX Master 3S',cat:'mouse',price:12499,old:14999,icon:'fas fa-computer-mouse',badge:'',rating:4.8,reviews:567,stock:5,brand:'Logitech',specs:{DPI:'200-8000',Buttons:'7 Programmable',Scroll:'MagSpeed Electromagnetic',Connectivity:'Bluetooth + USB',Warranty:'1 Year Local Warranty'},desc:'Most advanced wireless mouse for productivity. MagSpeed scroll wheel moves 1000 lines per second.'},
+    {id:4,name:'Razer DeathAdder V3 HyperSpeed',cat:'mouse',price:7999,old:9999,icon:'fas fa-computer-mouse',badge:'sale',rating:4.7,reviews:445,stock:5,brand:'Razer',specs:{Sensor:'Razer 26K Focus Pro',DPI:'100-26000',Weight:'59g',Battery:'300 Hours',Warranty:'2 Years Warranty'},desc:'Ergonomic wireless gaming mouse with ultra-long 300-hour battery life and Razer HyperSpeed wireless.'},
+    {id:5,name:'SteelSeries Prime Wireless',cat:'mouse',price:9499,old:11999,icon:'fas fa-computer-mouse',badge:'',rating:4.6,reviews:198,stock:5,brand:'SteelSeries',specs:{Sensor:'TrueMove Air',DPI:'100-18000',Weight:'80g',Switches:'Magnetic Optical',Warranty:'1 Year Local Warranty'},desc:'Tournament-grade wireless mouse with magnetic optical switches for near-zero click latency.'},
+    {id:6,name:'Razer BlackWidow V4 Pro',cat:'keyboard',price:22999,old:27999,icon:'fas fa-keyboard',badge:'hot',rating:4.8,reviews:189,stock:5,brand:'Razer',specs:{Type:'Mechanical',Switches:'Razer Yellow V3',Backlight:'Razer Chroma RGB',Layout:'Full Size',Warranty:'2 Years Warranty'},desc:'Professional gaming keyboard with ultra-fast Razer Yellow V3 switches and full Chroma RGB lighting.'},
+    {id:7,name:'Corsair K100 RGB Optical',cat:'keyboard',price:29999,old:34999,icon:'fas fa-keyboard',badge:'',rating:4.7,reviews:98,stock:5,brand:'Corsair',specs:{Type:'Optical-Mechanical',Switches:'Corsair OPX',Backlight:'RGB iCUE',Layout:'Full Size US',Warranty:'2 Years Warranty'},desc:'Flagship gaming keyboard with zero-debounce optical-mechanical OPX switches and iCUE smart lighting.'},
+    {id:8,name:'Logitech G915 TKL Wireless',cat:'keyboard',price:19999,old:23999,icon:'fas fa-keyboard',badge:'new',rating:4.8,reviews:267,stock:5,brand:'Logitech',specs:{Type:'Low Profile Mechanical',Switches:'GL Tactile',Wireless:'LIGHTSPEED + Bluetooth',Battery:'40 Hours',Warranty:'2 Years Warranty'},desc:'Ultra-slim wireless TKL gaming keyboard with LIGHTSPEED wireless and 40-hour battery life.'},
+    {id:9,name:'HyperX Alloy Origins Core',cat:'keyboard',price:8999,old:10999,icon:'fas fa-keyboard',badge:'sale',rating:4.7,reviews:534,stock:5,brand:'HyperX',specs:{Type:'Mechanical TKL',Switches:'HyperX Red Linear',Backlight:'RGB',Frame:'Aircraft-grade Aluminium',Warranty:'2 Years Warranty'},desc:'Compact TKL mechanical keyboard with aircraft-grade aluminium body and smooth HyperX Red switches.'},
+    {id:10,name:'Keychron K8 Pro Wireless',cat:'keyboard',price:11999,old:13999,icon:'fas fa-keyboard',badge:'',rating:4.9,reviews:423,stock:5,brand:'Keychron',specs:{Type:'Wireless Mechanical TKL',Switches:'Gateron G Pro Red',Backlight:'RGB',Bluetooth:'5.1 Multi-Device',Warranty:'1 Year Local Warranty'},desc:'Hot-swappable wireless TKL keyboard with Gateron G Pro switches. Works on Mac and Windows.'},
+    {id:11,name:'ASUS ROG Swift 27 4K 144Hz',cat:'monitor',price:89999,old:99999,icon:'fas fa-desktop',badge:'top',rating:4.9,reviews:156,stock:5,brand:'ASUS ROG',specs:{Size:'27 Inch',Resolution:'4K UHD 3840x2160',RefreshRate:'144Hz',Panel:'IPS',Response:'1ms GTG'},desc:'Professional 4K gaming monitor with G-SYNC Ultimate and DisplayHDR 600 certification.'},
+    {id:12,name:'Dell UltraSharp 32 USB-C',cat:'monitor',price:74999,old:85000,icon:'fas fa-desktop',badge:'',rating:4.8,reviews:201,stock:5,brand:'Dell',specs:{Size:'32 Inch',Resolution:'4K UHD',Panel:'IPS Black',USB_C:'96W Power Delivery',Warranty:'3 Years Premium'},desc:'Professional 4K IPS Black display with 96W USB-C charging. Ideal for designers and creators.'},
+    {id:13,name:'LG UltraGear 27 1440p 165Hz',cat:'monitor',price:54999,old:62999,icon:'fas fa-desktop',badge:'hot',rating:4.8,reviews:334,stock:5,brand:'LG',specs:{Size:'27 Inch',Resolution:'1440p QHD',RefreshRate:'165Hz',Panel:'IPS',Response:'1ms GtG'},desc:'QHD gaming monitor with 165Hz refresh rate, IPS panel, and NVIDIA G-SYNC compatible support.'},
+    {id:14,name:'Samsung Odyssey G5 27 Curved',cat:'monitor',price:47999,old:55000,icon:'fas fa-desktop',badge:'sale',rating:4.6,reviews:289,stock:5,brand:'Samsung',specs:{Size:'27 Inch',Resolution:'1440p QHD',Curve:'1000R',RefreshRate:'144Hz',Warranty:'3 Years'},desc:'1000R curved gaming monitor for immersive gameplay. 1440p QHD with 1ms response time.'},
+    {id:15,name:'BenQ MOBIUZ 24 1080p 144Hz',cat:'monitor',price:29999,old:34999,icon:'fas fa-desktop',badge:'',rating:4.5,reviews:412,stock:5,brand:'BenQ',specs:{Size:'24 Inch',Resolution:'1080p FHD',RefreshRate:'144Hz',Panel:'IPS',Speakers:'2x2.5W treVolo'},desc:'Budget-friendly 144Hz gaming monitor with HDRi technology and built-in treVolo speakers.'},
+    {id:16,name:'ASUS ROG Strix 27 240Hz',cat:'monitor',price:39999,old:46999,icon:'fas fa-desktop',badge:'',rating:4.7,reviews:267,stock:5,brand:'ASUS ROG',specs:{Size:'27 Inch',Resolution:'1080p FHD',RefreshRate:'240Hz',Panel:'IPS',Response:'0.5ms GTG'},desc:'Esports-grade 240Hz IPS gaming monitor for competitive players who demand fastest response.'},
+    {id:17,name:'SteelSeries Arctis Nova Pro',cat:'headset',price:31999,old:36999,icon:'fas fa-headphones',badge:'new',rating:4.9,reviews:145,stock:5,brand:'SteelSeries',specs:{Driver:'40mm High Fidelity',ANC:'Active Noise Cancellation',DAC:'Hi-Res DAC',Connectivity:'Wired + 2.4GHz Wireless',Warranty:'1 Year Local Warranty'},desc:'Premium headset with active noise cancellation, Hi-Res audio DAC, and dual wireless connectivity.'},
+    {id:18,name:'HyperX Cloud Alpha Wireless',cat:'headset',price:18500,old:21000,icon:'fas fa-headphones',badge:'',rating:4.7,reviews:312,stock:5,brand:'HyperX',specs:{Driver:'50mm Dual Chamber',Battery:'300 Hours',Range:'20m Wireless',Connectivity:'2.4GHz',Warranty:'2 Years Warranty'},desc:'Industry-leading 300-hour battery life wireless gaming headset with dual chamber drivers.'},
+    {id:19,name:'Razer BlackShark V2 Pro',cat:'headset',price:19999,old:23999,icon:'fas fa-headphones',badge:'hot',rating:4.7,reviews:278,stock:5,brand:'Razer',specs:{Driver:'50mm TriForce Titanium',Wireless:'HyperSpeed 2.4GHz',Battery:'70 Hours',Mic:'HyperClear Supercardioid',Warranty:'2 Years Warranty'},desc:'Wireless esports headset with 70-hour battery, HyperSpeed wireless, and detachable supercardioid mic.'},
+    {id:20,name:'Logitech G733 Wireless',cat:'headset',price:13999,old:16999,icon:'fas fa-headphones',badge:'sale',rating:4.6,reviews:367,stock:5,brand:'Logitech',specs:{Driver:'40mm',Wireless:'LIGHTSPEED',Battery:'29 Hours',Weight:'278g',Warranty:'2 Years Warranty'},desc:'Lightweight wireless gaming headset with LIGHTSPEED wireless and LIGHTSYNC RGB lighting.'},
+    {id:21,name:'JBL Quantum 910 Wireless',cat:'headset',price:16999,old:19999,icon:'fas fa-headphones',badge:'',rating:4.5,reviews:189,stock:5,brand:'JBL',specs:{Driver:'50mm',ANC:'Active Noise Cancellation',Wireless:'2.4GHz + Bluetooth',Battery:'34 Hours',Warranty:'1 Year Local Warranty'},desc:'Head-tracking spatial audio headset with ANC and JBL QuantumSURROUND sound technology.'},
+    {id:22,name:'Corsair HS80 RGB Wireless',cat:'headset',price:14999,old:17999,icon:'fas fa-headphones',badge:'',rating:4.7,reviews:234,stock:5,brand:'Corsair',specs:{Driver:'50mm Neodymium',Wireless:'Slipstream 2.4GHz',Battery:'20 Hours',Mic:'Omnidirectional',Warranty:'2 Years Warranty'},desc:'Premium wireless gaming headset with Slipstream wireless, Dolby Audio 7.1, and 20-hour battery.'},
+    {id:23,name:'Logitech G432 Wired',cat:'headset',price:6499,old:7999,icon:'fas fa-headphones',badge:'sale',rating:4.5,reviews:567,stock:5,brand:'Logitech',specs:{Driver:'50mm',Surround:'DTS Headphone X 2.0',Mic:'Flip-to-mute boom',Connection:'USB + 3.5mm',Warranty:'2 Years Warranty'},desc:'Affordable 7.1 surround sound gaming headset with DTS Headphone X 2.0 and memory foam ear pads.'},
+    {id:24,name:'Samsung 980 Pro 1TB NVMe',cat:'storage',price:16999,old:19999,icon:'fas fa-hard-drive',badge:'hot',rating:4.9,reviews:445,stock:5,brand:'Samsung',specs:{Type:'NVMe PCIe 4.0',Capacity:'1TB',ReadSpeed:'7000 MB/s',WriteSpeed:'5000 MB/s',Warranty:'5 Years'},desc:'Next-generation PCIe 4.0 NVMe SSD. PS5 compatible with up to 7000 MB/s sequential read speed.'},
+    {id:25,name:'WD Black SN850X 2TB NVMe',cat:'storage',price:24999,old:28999,icon:'fas fa-hard-drive',badge:'',rating:4.8,reviews:289,stock:5,brand:'WD',specs:{Type:'NVMe PCIe 4.0',Capacity:'2TB',ReadSpeed:'7300 MB/s',WriteSpeed:'6600 MB/s',Warranty:'5 Years'},desc:'Top-tier gaming SSD engineered for PS5 and PC. Game Mode 2.0 technology for peak performance.'},
+    {id:26,name:'Seagate FireCuda 530 1TB',cat:'storage',price:15499,old:18999,icon:'fas fa-hard-drive',badge:'sale',rating:4.8,reviews:334,stock:5,brand:'Seagate',specs:{Type:'NVMe PCIe 4.0',Capacity:'1TB',ReadSpeed:'7300 MB/s',WriteSpeed:'6900 MB/s',Warranty:'5 Years'},desc:'PCIe Gen4 NVMe SSD built for gaming and creative professionals. Up to 7300 MB/s read speed.'},
+    {id:27,name:'Samsung 870 EVO 1TB SATA',cat:'storage',price:9999,old:12999,icon:'fas fa-hard-drive',badge:'',rating:4.9,reviews:789,stock:5,brand:'Samsung',specs:{Type:'SATA SSD',Capacity:'1TB',ReadSpeed:'560 MB/s',WriteSpeed:'530 MB/s',Warranty:'5 Years'},desc:'Most reliable SATA SSD for upgrading laptops and desktops. Massive upgrade over traditional HDDs.'},
+    {id:28,name:'Kingston A2000 500GB NVMe',cat:'storage',price:6499,old:7999,icon:'fas fa-hard-drive',badge:'sale',rating:4.6,reviews:512,stock:5,brand:'Kingston',specs:{Type:'NVMe PCIe 3.0',Capacity:'500GB',ReadSpeed:'2200 MB/s',WriteSpeed:'2000 MB/s',Warranty:'5 Years'},desc:'Affordable NVMe SSD for PC builders on a budget. Huge performance upgrade over traditional HDDs.'},
+    {id:29,name:'Kingston HyperX Fury 32GB DDR4',cat:'storage',price:8999,old:10999,icon:'fas fa-hard-drive',badge:'',rating:4.7,reviews:345,stock:5,brand:'Kingston',specs:{Type:'DDR4 RAM',Capacity:'32GB 2x16GB',Speed:'3200MHz',Latency:'CL16',Warranty:'Lifetime'},desc:'High-performance DDR4 RAM kit for gaming and content creation. Plug-and-play with XMP 2.0.'},
+    {id:30,name:'G.Skill Trident Z5 RGB 32GB DDR5',cat:'storage',price:16999,old:19999,icon:'fas fa-hard-drive',badge:'new',rating:4.9,reviews:189,stock:5,brand:'G.Skill',specs:{Type:'DDR5 RAM',Capacity:'32GB 2x16GB',Speed:'6000MHz',Latency:'CL30',Warranty:'Lifetime'},desc:'Next-gen DDR5 gaming memory with blazing 6000MHz speeds and stunning ARGB lighting.'},
+    {id:31,name:'Corsair Vengeance 16GB DDR4',cat:'storage',price:4999,old:6499,icon:'fas fa-hard-drive',badge:'sale',rating:4.6,reviews:623,stock:5,brand:'Corsair',specs:{Type:'DDR4 RAM',Capacity:'16GB 2x8GB',Speed:'3200MHz',Latency:'CL16',Warranty:'Lifetime'},desc:'Best-selling DDR4 RAM for budget gaming builds. Compatible with Intel and AMD platforms.'},
+    {id:32,name:'Logitech C922 Pro Webcam',cat:'webcam',price:13999,old:16500,icon:'fas fa-camera',badge:'',rating:4.6,reviews:378,stock:5,brand:'Logitech',specs:{Resolution:'1080p at 60fps',Autofocus:'Advanced AF',Connection:'USB-A',FOV:'78 degrees',Warranty:'2 Years Warranty'},desc:'Professional streaming webcam with 1080p/60fps, background replacement, and dual mics.'},
+    {id:33,name:'Razer Kiyo Pro Ultra',cat:'webcam',price:21999,old:25999,icon:'fas fa-camera',badge:'new',rating:4.8,reviews:134,stock:5,brand:'Razer',specs:{Resolution:'4K 30fps or 1080p 60fps',Sensor:'Sony STARVIS 2',Autofocus:'Phase Detect AF',FOV:'90 degrees',Warranty:'2 Years Warranty'},desc:'4K streaming webcam with Sony STARVIS 2 sensor for incredible low-light performance.'},
+    {id:34,name:'Elgato Facecam Pro 4K',cat:'webcam',price:24999,old:28999,icon:'fas fa-camera',badge:'hot',rating:4.7,reviews:89,stock:5,brand:'Elgato',specs:{Resolution:'4K 60fps',Sensor:'Sony STARVIS 1/1.8 inch',Lens:'90 degree fixed focus',Connection:'USB-C',Warranty:'2 Years Warranty'},desc:'Uncompressed 4K60 webcam built for streaming. PRIME lens system for razor-sharp image quality.'},
+    {id:35,name:'Logitech StreamCam Plus',cat:'webcam',price:15999,old:18999,icon:'fas fa-camera',badge:'',rating:4.5,reviews:223,stock:5,brand:'Logitech',specs:{Resolution:'1080p 60fps',AI_Framing:'Smart Auto-Focus',Connection:'USB-C',Orientation:'Vertical and Horizontal',Warranty:'2 Years Warranty'},desc:'Premium webcam for content creators with AI-powered framing and USB-C connectivity.'},
+    {id:36,name:'Logitech C270 HD Webcam',cat:'webcam',price:3999,old:4999,icon:'fas fa-camera',badge:'sale',rating:4.3,reviews:892,stock:5,brand:'Logitech',specs:{Resolution:'720p 30fps',Autofocus:'Fixed Focus',Connection:'USB-A',Mic:'Built-in mono',Warranty:'2 Years Warranty'},desc:'Affordable HD webcam for video calls and basic streaming. Plug-and-play with no drivers needed.'},
+    {id:37,name:'Anker 13-in-1 USB-C Hub',cat:'hub',price:7999,old:9999,icon:'fas fa-plug',badge:'sale',rating:4.7,reviews:512,stock:5,brand:'Anker',specs:{Ports:'13 Ports Total',USB_C:'100W Power Delivery',HDMI:'4K 60Hz',Card:'SD + MicroSD',Warranty:'18 Months'},desc:'Complete connectivity hub with 13 ports. 4K HDMI, 100W PD, and SD card reader in one device.'},
+    {id:38,name:'Ugreen Revodok 100W 9-in-1',cat:'hub',price:5999,old:7499,icon:'fas fa-plug',badge:'',rating:4.6,reviews:334,stock:5,brand:'Ugreen',specs:{Ports:'9 Ports',USB_C_PD:'100W',HDMI:'4K',USB_A:'3x USB 3.0',Warranty:'18 Months'},desc:'Slim 9-in-1 USB-C hub with 100W PD pass-through and 4K HDMI for MacBook and laptops.'},
+    {id:39,name:'Baseus 17-in-1 USB-C Dock',cat:'hub',price:9499,old:11999,icon:'fas fa-plug',badge:'hot',rating:4.7,reviews:267,stock:5,brand:'Baseus',specs:{Ports:'17 Ports',Dual_HDMI:'4K + 1080p',RJ45:'Gigabit Ethernet',USB_A:'4x USB 3.0',Warranty:'1 Year Local Warranty'},desc:'Ultimate docking station with dual monitor support, Gigabit Ethernet, and 17 total ports.'},
+    {id:40,name:'Elgato Stream Deck MK.2',cat:'hub',price:14999,old:17999,icon:'fas fa-plug',badge:'new',rating:4.9,reviews:456,stock:5,brand:'Elgato',specs:{Keys:'15 LCD Keys',Customizable:'Fully programmable',Software:'Stream Deck App',Connection:'USB-C',Warranty:'2 Years Warranty'},desc:'The ultimate streaming controller with 15 customizable LCD keys. Automate any action instantly.'},
+    {id:41,name:'Corsair MM700 RGB XL Mouse Pad',cat:'hub',price:5499,old:6999,icon:'fas fa-plug',badge:'',rating:4.8,reviews:234,stock:5,brand:'Corsair',specs:{Size:'930x400mm XL',Surface:'Micro-woven cloth',RGB:'360-degree LED',USB:'3-port hub built-in',Warranty:'2 Years Warranty'},desc:'Extended XL gaming mouse pad with built-in 3-port USB hub and 360-degree dynamic RGB lighting.'},
+    {id:42,name:'SteelSeries QcK Heavy XL',cat:'hub',price:3499,old:4499,icon:'fas fa-plug',badge:'',rating:4.8,reviews:789,stock:5,brand:'SteelSeries',specs:{Size:'900x300mm',Thickness:'6mm',Surface:'Micro-woven cloth',Base:'Non-slip rubber',Warranty:'1 Year Local Warranty'},desc:'Extra-thick XL gaming mouse pad with micro-woven surface for consistent tracking at any speed.'},
+    {id:43,name:'Noctua NH-D15 CPU Cooler',cat:'cooling',price:12999,old:15000,icon:'fas fa-snowflake',badge:'top',rating:4.9,reviews:678,stock:5,brand:'Noctua',specs:{Type:'Dual Tower Air',TDP:'250W+',Fans:'2x NF-A15 140mm',Noise:'24.6 dBA',Warranty:'6 Years'},desc:'The best air cooler ever made. Dual 140mm fans, 6-year warranty, and legendary quiet operation.'},
+    {id:44,name:'Corsair iCUE H150i Elite 360mm',cat:'cooling',price:22999,old:26999,icon:'fas fa-snowflake',badge:'hot',rating:4.8,reviews:234,stock:5,brand:'Corsair',specs:{Type:'360mm AIO Liquid',Pump:'iCUE Commander Core XT',Fans:'3x QL120 RGB',TDP:'300W+',Warranty:'5 Years'},desc:'High-performance 360mm AIO liquid cooler with ARGB fans and iCUE software control.'},
+    {id:45,name:'DeepCool AK620 Dual Tower',cat:'cooling',price:7999,old:9999,icon:'fas fa-snowflake',badge:'sale',rating:4.7,reviews:445,stock:5,brand:'DeepCool',specs:{Type:'Dual Tower Air',Fans:'2x 120mm FDB',TDP:'260W',Height:'160mm',Warranty:'3 Years'},desc:'Budget-king dual tower cooler that rivals 240mm AIOs at half the price. Near-silent operation.'},
+    {id:46,name:'be quiet! Dark Rock 4',cat:'cooling',price:9499,old:11499,icon:'fas fa-snowflake',badge:'',rating:4.8,reviews:312,stock:5,brand:'be quiet!',specs:{Type:'Single Tower',Fan:'1x 135mm Silent Wings 3',TDP:'200W',Noise:'21.4 dBA',Warranty:'3 Years'},desc:'Silent high-performance CPU cooler with brushed aluminium top and exclusive Silent Wings fan.'},
+    {id:47,name:'Thermalright Peerless Assassin 120',cat:'cooling',price:5999,old:7999,icon:'fas fa-snowflake',badge:'new',rating:4.9,reviews:567,stock:5,brand:'Thermalright',specs:{Type:'Dual Tower',Fans:'2x 120mm TL-C12',TDP:'260W',Height:'155mm',Warranty:'3 Years'},desc:'Best value CPU cooler on the market. Dual tower with 6 heat pipes beats most 240mm AIOs.'},
+    {id:48,name:'NZXT Kraken 240mm AIO',cat:'cooling',price:16999,old:19999,icon:'fas fa-snowflake',badge:'',rating:4.7,reviews:198,stock:5,brand:'NZXT',specs:{Type:'240mm AIO Liquid',Fans:'2x Aer RGB 120mm',Pump:'7th Gen',LCD:'1.54 inch Customizable',Warranty:'6 Years'},desc:'240mm AIO with 1.54-inch LCD display on the pump head for monitoring or custom artwork.'},
+    {id:49,name:'Razer Firefly V2 Pro RGB Pad',cat:'hub',price:6999,old:8499,icon:'fas fa-plug',badge:'hot',rating:4.6,reviews:178,stock:5,brand:'Razer',specs:{Size:'355x255mm',Lighting:'19-zone Chroma RGB',Surface:'Micro-textured cloth',USB:'Pass-through',Warranty:'2 Years Warranty'},desc:'First-ever fully illuminated hard gaming mouse pad with 19-zone Chroma RGB edge lighting.'},
+    {id:50,name:'Cable Matters Thunderbolt 4 Hub',cat:'hub',price:12999,old:14999,icon:'fas fa-plug',badge:'',rating:4.8,reviews:145,stock:5,brand:'Cable Matters',specs:{Standard:'Thunderbolt 4',Ports:'4x TB4',Speed:'40Gbps',Power:'60W Charging',Warranty:'2 Years Warranty'},desc:'Thunderbolt 4 hub for daisy-chaining up to 4 devices at 40Gbps. Backward compatible with TB3.'},
   ],
   brands:[
     {name:'Logitech',icon:'🖱️',tag:'Official'},{name:'Razer',icon:'🎮',tag:'Authorized'},
@@ -1222,9 +1265,31 @@ const DEFAULT_DATA={
   orders:[]
 };
 
-function getData(){try{const s=localStorage.getItem('zn_store_data');return s?JSON.parse(s):JSON.parse(JSON.stringify(DEFAULT_DATA));}catch(e){return JSON.parse(JSON.stringify(DEFAULT_DATA));}}
-function saveData(d){localStorage.setItem('zn_store_data',JSON.stringify(d));window.dispatchEvent(new Event('storage'));}
+function getData(){
+  try{
+    const s=localStorage.getItem('zn_store_data');
+    if(!s) return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    const saved=JSON.parse(s);
+    // If saved has fewer products than default, merge (use default as base)
+    if(!saved.products || saved.products.length < DEFAULT_DATA.products.length){
+      saved.products = DEFAULT_DATA.products.map(dp=>{
+        const sp = (saved.products||[]).find(p=>p.id===dp.id);
+        return sp ? {...dp,...sp} : dp;
+      });
+    }
+    return saved;
+  }catch(e){return JSON.parse(JSON.stringify(DEFAULT_DATA));}
+}
+function saveData(d){
+  try{
+    localStorage.setItem('zn_store_data',JSON.stringify(d));
+    window.dispatchEvent(new Event('storage'));
+  }catch(e){console.error('saveData failed',e);}
+}
 let DATA=getData();
+// On load: ensure stock is set on all products
+DATA.products.forEach(p=>{ if(p.stock==null) p.stock=5; if(!p.warranty){p.warranty=p.specs?.Warranty||'15 Days Checking Warranty'; if(p.specs)p.specs.Warranty=p.warranty;} });
+saveData(DATA);
 let editProductIdx=null,editCatIdx=null,editBrandIdx=null,editRevIdx=null,editFeatIdx=null;
 let currentOrderIdx=null;
 
@@ -1260,7 +1325,7 @@ function showPanel(name){
 function renderPanel(name){
   if(name==='dashboard')renderDashboard();
   else if(name==='orders')renderOrders();
-  else if(name==='products')renderProductsTable();
+  else if(name==='products'){DATA=getData();renderProductsTable();}
   else if(name==='categories')renderCatsTable();
   else if(name==='brands')renderBrandsTable();
   else if(name==='reviews')renderRevsTable();
@@ -1275,6 +1340,7 @@ function renderPanel(name){
 // DASHBOARD
 // ============================================================
 function renderDashboard(){
+  DATA=getData(); // always fresh
   const totalOrders=DATA.orders.length;
   const totalRev=DATA.orders.reduce((s,o)=>s+(o.total||0),0);
   const newOrders=DATA.orders.filter(o=>o.status==='New Order').length;
@@ -1524,23 +1590,48 @@ function exportOrders(){
 // PRODUCTS TABLE
 // ============================================================
 function renderProductsTable(list){
-  const data=list||DATA.products;
-  document.getElementById('productsTableBody').innerHTML=data.map((p,idx)=>`
-    <tr>
-      <td><i class="${p.icon}" style="font-size:1.2rem;"></i></td>
-      <td class="td-name">${p.name}</td>
-      <td><span class="td-cat"><i class="${getCatIcon2(p.cat)}"></i> ${p.cat}</span></td>
-      <td class="td-price">Rs. ${p.price.toLocaleString()}</td>
-      <td style="color:var(--text3);font-size:0.78rem;">${p.old?'Rs. '+p.old.toLocaleString():'—'}</td>
+  DATA=getData();
+  const data=list||(DATA.products||[]);
+  const catIcons={mouse:'🖱️',keyboard:'⌨️',monitor:'🖥️',headset:'🎧',webcam:'📷',storage:'💾',hub:'🔌',cooling:'❄️',laptop:'💻',desktop:'🖥️',gpu:'🎮',cpu:'⚙️',casing:'📦',psu:'⚡',speakers:'🔊',microphone:'🎙️',ups:'🔋',router:'📡',printer:'🖨️',apple:'🍎',gaming:'🕹️',smartwatch:'⌚',chair:'🪑',misc:'📦'};
+  const stockBadge=s=>s<=0?'<span style="color:#dc2626;font-size:0.68rem;font-weight:700;background:rgba(220,38,38,0.1);padding:1px 6px;border-radius:10px;">❌ 0</span>':s<=3?`<span style="color:#d97706;font-size:0.68rem;font-weight:700;background:rgba(245,158,11,0.1);padding:1px 6px;border-radius:10px;">⚠️ ${s}</span>`:`<span style="color:#059669;font-size:0.68rem;font-weight:700;background:rgba(5,150,105,0.1);padding:1px 6px;border-radius:10px;">✅ ${s}</span>`;
+  document.getElementById('productsTableBody').innerHTML=data.map((p)=>{
+    const realIdx=DATA.products.indexOf(p);
+    const imgSrc=p.imgBase64||p.imgurl||'';
+    const s=p.stock!=null?p.stock:5;
+    return `<tr>
+      <td style="padding:0.5rem;">
+        <div style="width:42px;height:38px;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg2);">
+          ${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:contain;" onerror="this.parentNode.innerHTML='<span style=font-size:1.2rem>${catIcons[p.cat]||'📦'}</span>'">`:`<span style="font-size:1.2rem;">${catIcons[p.cat]||'📦'}</span>`}
+        </div>
+      </td>
+      <td class="td-name" style="max-width:220px;">
+        <div style="font-weight:600;font-size:0.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.name}">${p.name}</div>
+        <div style="font-size:0.68rem;color:var(--text3);">${p.brand||''} • Rs.${p.price.toLocaleString()}</div>
+      </td>
+      <td style="font-size:0.76rem;">${catIcons[p.cat]||'📦'} ${p.cat}</td>
+      <td style="font-size:0.76rem;">${p.brand||'—'}</td>
+      <td class="td-price">Rs.${p.price.toLocaleString()}</td>
+      <td>${stockBadge(s)}</td>
       <td>${p.badge?`<span class="td-badge td-${p.badge}">${p.badge.toUpperCase()}</span>`:'—'}</td>
-      <td style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;">${p.rating}★ (${p.reviews})</td>
-      <td style="font-size:0.78rem;color:var(--text2);">${p.brand||'—'}</td>
       <td><div class="td-actions">
-        <button class="tac-btn tac-edit" onclick="openEditProduct(${DATA.products.indexOf(p)})" title="Edit"><i class="fas fa-pen"></i></button>
-        <button class="tac-btn tac-del" onclick="delProduct(${DATA.products.indexOf(p)})" title="Delete"><i class="fas fa-trash"></i></button>
+        <button class="tac-btn tac-edit" onclick="openEditProduct(${realIdx})" title="Edit Product"><i class="fas fa-pen"></i></button>
+        <button class="tac-btn" onclick="quickStockFromProducts(${realIdx})" title="Quick Stock Update" style="background:rgba(5,150,105,0.1);color:#059669;border-color:rgba(5,150,105,0.3);">📦</button>
+        <button class="tac-btn tac-del" onclick="delProduct(${realIdx})" title="Delete"><i class="fas fa-trash"></i></button>
       </div></td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
+  // Update count
+  const countEl=document.getElementById('productsCount');
+  if(countEl) countEl.textContent=data.length+' products';
+}
+function quickStockFromProducts(idx){
+  const p=DATA.products[idx];
+  if(!p)return;
+  const val=prompt('Stock for: '+p.name+'\nCurrent: '+(p.stock||0)+'\nEnter new stock:',p.stock||0);
+  if(val===null)return;
+  DATA.products[idx].stock=Math.max(0,parseInt(val)||0);
+  saveData(DATA);renderProductsTable();
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Stock updated: '+p.name.slice(0,25));
 }
 function filterProducts(){
   const q=document.getElementById('productSearch').value.toLowerCase();
@@ -2201,9 +2292,9 @@ function setInvFilter(f,btn){
 
 function renderInventory(){
   const tbody=document.getElementById('invTableBody');
-  if(!tbody)return;
+  if(!tbody){ console.warn('invTableBody not found'); return; }
   
-  DATA=getData(); // always fresh
+  DATA=getData(); // always fresh — ensure 50 products loaded
   const prods=DATA.products||[];
   
   if(!prods.length){

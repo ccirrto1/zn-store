@@ -109,6 +109,14 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);displa
   transition:all 0.25s;
 }
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+.inv-filter{padding:0.35rem 0.9rem;border:1.5px solid var(--border);border-radius:20px;background:#fff;font-size:0.75rem;font-weight:600;cursor:pointer;transition:all 0.2s;color:var(--text2);}
+.inv-filter.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.inv-row:hover td{background:var(--bg2);}
+.inv-row td{padding:0.65rem 0.5rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.inv-row td:first-child{padding-left:1rem;}.inv-row td:last-child{padding-right:1rem;}
+.stock-input{width:65px;padding:0.3rem 0.5rem;border:1.5px solid var(--border);border-radius:6px;text-align:center;font-size:0.85rem;font-weight:700;}
+.stock-input:focus{border-color:var(--primary);outline:none;}
+.sb-badge.orange{background:#f59e0b;color:#fff;}
 .stat-icon{
   width:44px;height:44px;border-radius:10px;
   display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
@@ -452,6 +460,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
     <li><a onclick="showPanel('dashboard')" class="active"><i class="fas fa-gauge-high"></i> Dashboard</a></li>
     <li><a onclick="showPanel('orders')"><i class="fas fa-bag-shopping"></i> Orders <span class="sb-badge red" id="sbOrderBadge">0</span></a></li>
     <li><a onclick="showPanel('products')"><i class="fas fa-boxes-stacked"></i> Products</a></li>
+    <li><a onclick="showPanel('inventory')"><i class="fas fa-warehouse"></i> Inventory <span class="sb-badge orange" id="sbLowStockBadge" style="display:none">!</span></a></li>
     <li><a onclick="showPanel('categories')"><i class="fas fa-folder-open"></i> Categories</a></li>
     <div class="sb-section">Store</div>
     <li><a onclick="showPanel('brands')"><i class="fas fa-star"></i> Brands</a></li>
@@ -555,6 +564,55 @@ tr:hover td{background:rgba(99,102,241,0.03);}
         </tr></thead><tbody id="productsTableBody"></tbody></table></div>
       </div>
     </div>
+
+      <!-- ===== INVENTORY PANEL ===== -->
+      <div class="panel" id="panel-inventory">
+        <div class="section-hdr">
+          <h3><i class="fas fa-warehouse"></i> Inventory Management</h3>
+          <p class="section-sub">Manage stock levels for all 50 products. Changes save instantly to the store.</p>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:1.5rem;" id="invStats">
+          <div class="stat-card"><div class="stat-val" id="invTotalProducts">50</div><div class="stat-lbl">Total Products</div></div>
+          <div class="stat-card"><div class="stat-val green" id="invInStock">0</div><div class="stat-lbl">In Stock</div></div>
+          <div class="stat-card"><div class="stat-val" style="color:#d97706" id="invLowStock">0</div><div class="stat-lbl">Low Stock (1-3)</div></div>
+          <div class="stat-card"><div class="stat-val red" id="invOutStock">0</div><div class="stat-lbl">Out of Stock</div></div>
+        </div>
+
+        <!-- Bulk actions -->
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <button class="btn-primary" onclick="bulkSetStock(5)" style="font-size:0.78rem;padding:0.4rem 1rem;"><i class="fas fa-plus"></i> Set All to 5</button>
+          <button class="btn-secondary" onclick="bulkSetStock(10)" style="font-size:0.78rem;padding:0.4rem 1rem;"><i class="fas fa-layer-group"></i> Set All to 10</button>
+          <button class="btn-danger" onclick="bulkSetStock(0)" style="font-size:0.78rem;padding:0.4rem 1rem;background:#dc2626;border-color:#dc2626;color:#fff;"><i class="fas fa-ban"></i> Mark All Out of Stock</button>
+          <input type="text" id="invSearch" placeholder="Search products..." oninput="renderInventory()" style="padding:0.4rem 0.8rem;border:1.5px solid var(--border);border-radius:8px;font-size:0.8rem;flex:1;min-width:180px;">
+        </div>
+
+        <!-- Filter tabs -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+          <button class="inv-filter active" data-filter="all" onclick="setInvFilter('all',this)">All Products</button>
+          <button class="inv-filter" data-filter="low" onclick="setInvFilter('low',this)" style="color:#d97706;border-color:#d97706;">⚠️ Low Stock</button>
+          <button class="inv-filter" data-filter="out" onclick="setInvFilter('out',this)" style="color:#dc2626;border-color:#dc2626;">❌ Out of Stock</button>
+          <button class="inv-filter" data-filter="in" onclick="setInvFilter('in',this)" style="color:#059669;border-color:#059669;">✅ In Stock</button>
+        </div>
+
+        <!-- Inventory table -->
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:0.8rem;" id="invTable">
+            <thead>
+              <tr style="background:var(--bg2);border-bottom:1.5px solid var(--border);">
+                <th style="padding:0.75rem 1rem;text-align:left;font-weight:700;">Product</th>
+                <th style="padding:0.75rem 0.5rem;text-align:left;font-weight:700;">Category</th>
+                <th style="padding:0.75rem 0.5rem;text-align:left;font-weight:700;">Price</th>
+                <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Stock</th>
+                <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Status</th>
+                <th style="padding:0.75rem 1rem;text-align:center;font-weight:700;">Update</th>
+              </tr>
+            </thead>
+            <tbody id="invTableBody"></tbody>
+          </table>
+        </div>
+      </div>
 
     <!-- ===== CATEGORIES ===== -->
     <div class="panel" id="panel-categories">
@@ -1109,6 +1167,7 @@ const panelTitles={
   settings:'<i class="fas fa-gear"></i> Settings',
 };
 function showPanel(name){
+  if(name==='inventory') setTimeout(renderInventory, 50);
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-nav a').forEach(a=>a.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');

@@ -711,6 +711,9 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 /* ===== PRODUCT MODAL ===== */
 .overlay{position:fixed;inset:0;z-index:1000;background:rgba(17,15,54,0.72);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:20px;}
 .overlay.open{display:flex;animation:fadein 0.22s ease;}
+#reviewFormModal{align-items:center;}
+#reviewFormModal .modal-box{max-height:90vh;overflow-y:auto;border-radius:18px;animation:slideUpFade 0.25s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes slideUpFade{from{opacity:0;transform:translateY(30px) scale(0.97);}to{opacity:1;transform:translateY(0) scale(1);}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 .modal-box{background:#fff;border:1.5px solid var(--border);border-radius:22px;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;animation:scalein 0.28s ease;position:relative;box-shadow:var(--shadow3);}
 @keyframes scalein{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
@@ -1709,7 +1712,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 </div>
 
 <!-- REVIEW FORM MODAL -->
-<div class="overlay" id="reviewFormModal" style="z-index:600;">
+<div class="overlay" id="reviewFormModal" style="z-index:1200;" onclick="if(event.target===this)closeReviewForm();">
   <div class="modal-box" style="max-width:520px;padding:0;">
     <button class="modal-close" onclick="closeReviewForm()" style="z-index:10;"><i class="fas fa-xmark"></i></button>
     <div style="padding:1.5rem;">
@@ -2985,7 +2988,10 @@ function renderModalReviews(productId){
 }
 
 function openReviewForm(){
-  if(!currentReviewProductId) return;
+  if(!currentReviewProductId){
+    showToast('⚠️','Pehle koi product open karo','orange');
+    return;
+  }
   const p = DATA.products.find(x=>x.id===currentReviewProductId);
   document.getElementById('rfProductName').textContent = p ? '📦 '+p.name : '';
   document.getElementById('rfName').value = '';
@@ -2993,10 +2999,17 @@ function openReviewForm(){
   document.getElementById('rfText').value = '';
   selectedReviewStars = 0;
   setReviewStars(0);
+  // Reset border colors
+  document.getElementById('rfName').style.borderColor = 'var(--border)';
+  document.getElementById('rfText').style.borderColor = 'var(--border)';
+  // Open review modal on top of product modal
   document.getElementById('reviewFormModal').classList.add('open');
+  // Focus name field after animation
+  setTimeout(()=>{ const el=document.getElementById('rfName'); if(el) el.focus(); }, 200);
 }
 function closeReviewForm(){
   document.getElementById('reviewFormModal').classList.remove('open');
+  // Product modal stays open — only review form closes
 }
 function setReviewStars(n){
   selectedReviewStars = n;

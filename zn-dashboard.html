@@ -604,9 +604,10 @@ tr:hover td{background:rgba(99,102,241,0.03);}
                 <th style="padding:0.75rem 1rem;text-align:left;font-weight:700;">Product</th>
                 <th style="padding:0.75rem 0.5rem;text-align:left;font-weight:700;">Category</th>
                 <th style="padding:0.75rem 0.5rem;text-align:left;font-weight:700;">Price</th>
-                <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Stock</th>
+                <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Stock Qty</th>
                 <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Status</th>
-                <th style="padding:0.75rem 1rem;text-align:center;font-weight:700;">Update</th>
+                <th style="padding:0.75rem 0.5rem;text-align:center;font-weight:700;">Quick Set</th>
+                <th style="padding:0.75rem 1rem;text-align:center;font-weight:700;">Edit</th>
               </tr>
             </thead>
             <tbody id="invTableBody"></tbody>
@@ -956,10 +957,30 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-folder"></i> Category *</label>
           <select class="form-select" id="ep-cat">
-            <option value="keyboard">Keyboard</option><option value="mouse">Mouse</option>
-            <option value="monitor">Monitor</option><option value="headset">Headset</option>
-            <option value="webcam">Webcam</option><option value="storage">Storage</option>
-            <option value="hub">Hub</option><option value="cooling">Cooling</option>
+            <option value="monitor">🖥️ Monitors</option>
+            <option value="mouse">🖱️ Mouse & Pads</option>
+            <option value="keyboard">⌨️ Keyboards</option>
+            <option value="headset">🎧 Headsets</option>
+            <option value="storage">💾 Storage / RAM</option>
+            <option value="webcam">📷 Webcams</option>
+            <option value="cooling">❄️ Cooling</option>
+            <option value="hub">🔌 Cables & Hubs</option>
+            <option value="laptop">💻 Laptops</option>
+            <option value="desktop">🖥️ Desktop Computers</option>
+            <option value="gpu">🎮 Graphics Cards</option>
+            <option value="cpu">⚙️ Processors</option>
+            <option value="casing">📦 Casing</option>
+            <option value="psu">⚡ Power Supplies</option>
+            <option value="speakers">🔊 Speakers</option>
+            <option value="microphone">🎙️ Microphones</option>
+            <option value="ups">🔋 UPS</option>
+            <option value="router">📡 Routers & Networking</option>
+            <option value="printer">🖨️ Printers</option>
+            <option value="apple">🍎 Apple Products</option>
+            <option value="gaming">🕹️ Gaming Consoles</option>
+            <option value="smartwatch">⌚ Smart Watches</option>
+            <option value="chair">🪑 Chairs & Desks</option>
+            <option value="misc">📦 Miscellaneous</option>
           </select>
         </div>
         <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ep-icon" placeholder="fas fa-keyboard"></div>
@@ -980,8 +1001,29 @@ tr:hover td{background:rgba(99,102,241,0.03);}
           <div class="form-group"><label class="form-label"><i class="fas fa-comment"></i> Reviews</label><input class="form-input" id="ep-reviews" type="number"></div>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Stock</label><input class="form-input" id="ep-stock" type="number" min="0" placeholder="5"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-image"></i> Image URL (optional)</label><input class="form-input" id="ep-imgurl" placeholder="https://example.com/img.jpg"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><i class="fas fa-upload"></i> Upload Product Image</label>
+        <div id="ep-img-preview" style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
+          <div id="ep-img-thumb" style="width:70px;height:60px;border:2px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f8f9fa;">
+            <i class="fas fa-image" style="color:var(--text3);font-size:1.4rem;"></i>
+          </div>
+          <div style="flex:1;">
+            <input type="file" id="ep-img-file" accept="image/*" style="display:none;" onchange="handleProductImageUpload(this)">
+            <button type="button" onclick="document.getElementById('ep-img-file').click()" style="padding:0.38rem 0.9rem;border:1.5px solid var(--primary);border-radius:8px;background:var(--primary3);color:var(--primary);font-size:0.78rem;font-weight:700;cursor:pointer;display:block;margin-bottom:0.35rem;"><i class="fas fa-upload"></i> Choose Image</button>
+            <span id="ep-img-status" style="font-size:0.7rem;color:var(--text3);">JPG, PNG, WebP — Max 2MB</span>
+          </div>
+        </div>
+        <small style="color:var(--text3);font-size:0.68rem;"><i class="fas fa-info-circle"></i> Image saves as base64 in product data. Or paste an image URL above.</small>
+      </div>
       <div class="form-group"><label class="form-label"><i class="fas fa-align-left"></i> Description</label><textarea class="form-textarea" id="ep-desc"></textarea></div>
-      <div class="form-group"><label class="form-label"><i class="fas fa-list-ul"></i> Specs (JSON format)</label><textarea class="form-textarea" id="ep-specs" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;" placeholder='{"Type":"Mechanical","Warranty":"2 Years"}'></textarea></div>
+      <div class="form-group"><label class="form-label"><i class="fas fa-list-ul"></i> Specs (one per line: Key: Value)</label>
+        <textarea class="form-textarea" id="ep-specs" style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;" placeholder="Type: Mechanical&#10;Connectivity: Wireless&#10;Warranty: 2 Years&#10;Weight: 95g"></textarea>
+        <small style="color:var(--text3);font-size:0.68rem;margin-top:3px;display:block;"><i class="fas fa-info-circle"></i> Har line mein: Key: Value (JSON bhi kaam karta hai)</small>
+      </div>
     </div>
     <div class="edit-footer">
       <button class="btn-sm btn-outline-sm" onclick="closeEditProduct()">Cancel</button>
@@ -1434,7 +1476,7 @@ function clearOrders(){if(confirm('Delete ALL orders? This action cannot be undo
 function exportOrders(){
   if(!DATA.orders.length){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> No orders to export');return;}
   const keys=['orderId','timestamp','name','phone','email','city','address','payment','items','subtotal','delivery','total','note','status'];
-  const csv=[keys.join(','),...DATA.orders.map(o=>keys.map(k=>`"${(o[k]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\n');
+  const csv=[keys.join(','),...DATA.orders.map(o=>keys.map(k=>`"${(o[k]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\x0a');
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='ZN_Orders_'+Date.now()+'.csv';a.click();
   showToast('<i class="fas fa-download" style="color:var(--green)"></i> Orders exported!');
 }
@@ -1474,22 +1516,76 @@ function getCatIcon2(cat){
 function openEditProduct(idx){
   editProductIdx=idx;
   document.getElementById('editProductTitle').textContent=idx===null?'Add Product':'Edit Product';
+  // Reset image preview
+  const thumb=document.getElementById('ep-img-thumb');
+  const status=document.getElementById('ep-img-status');
+  window._epImgBase64=null;
   if(idx!==null){
     const p=DATA.products[idx];
-    document.getElementById('ep-name').value=p.name;document.getElementById('ep-brand').value=p.brand||'';
-    document.getElementById('ep-cat').value=p.cat;document.getElementById('ep-icon').value=p.icon||'';
-    document.getElementById('ep-price').value=p.price;document.getElementById('ep-old').value=p.old||'';
-    document.getElementById('ep-badge').value=p.badge||'';document.getElementById('ep-rating').value=p.rating;
-    document.getElementById('ep-reviews').value=p.reviews;document.getElementById('ep-desc').value=p.desc||'';
-    document.getElementById('ep-specs').value=p.specs?JSON.stringify(p.specs,null,2):'';
+    document.getElementById('ep-name').value=p.name||'';
+    document.getElementById('ep-brand').value=p.brand||'';
+    document.getElementById('ep-cat').value=p.cat||'mouse';
+    document.getElementById('ep-icon').value=p.icon||'';
+    document.getElementById('ep-price').value=p.price||'';
+    document.getElementById('ep-old').value=p.old||'';
+    document.getElementById('ep-badge').value=p.badge||'';
+    document.getElementById('ep-rating').value=p.rating||4.5;
+    document.getElementById('ep-reviews').value=p.reviews||0;
+    document.getElementById('ep-stock').value=p.stock!=null?p.stock:5;
+    document.getElementById('ep-desc').value=p.desc||'';
+    document.getElementById('ep-imgurl').value=p.imgurl||'';
+    // Specs: convert object to Key: Value lines
+    if(p.specs && typeof p.specs==='object'){
+      document.getElementById('ep-specs').value=Object.entries(p.specs).map(([k,v])=>k+': '+v).join(String.fromCharCode(10));
+    } else { document.getElementById('ep-specs').value=''; }
+    // Show existing image
+    const imgSrc = p.imgBase64||p.imgurl||'';
+    if(imgSrc){
+      thumb.innerHTML=`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:contain;border-radius:6px;">`;
+      status.textContent='Current image loaded';
+    } else {
+      thumb.innerHTML='<i class="fas fa-image" style="color:var(--text3);font-size:1.4rem;"></i>';
+      status.textContent='No image — JPG, PNG, WebP — Max 2MB';
+    }
+    if(p.imgBase64) window._epImgBase64=p.imgBase64;
   }else{
-    ['ep-name','ep-brand','ep-icon','ep-price','ep-old','ep-desc','ep-specs'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('ep-badge').value='';document.getElementById('ep-rating').value='4.5';document.getElementById('ep-reviews').value='0';
+    ['ep-name','ep-brand','ep-icon','ep-price','ep-old','ep-desc','ep-imgurl'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('ep-badge').value='';
+    document.getElementById('ep-rating').value='4.5';
+    document.getElementById('ep-reviews').value='0';
+    document.getElementById('ep-stock').value='5';
+    document.getElementById('ep-specs').value='';
+    thumb.innerHTML='<i class="fas fa-image" style="color:var(--text3);font-size:1.4rem;"></i>';
+    status.textContent='JPG, PNG, WebP — Max 2MB';
   }
   document.getElementById('editProductOverlay').classList.add('open');
 }
+function handleProductImageUpload(input){
+  const file=input.files[0];
+  if(!file)return;
+  if(file.size>2*1024*1024){showToast('<i class="fas fa-exclamation-triangle" style="color:orange"></i> Image too large! Max 2MB.');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    window._epImgBase64=e.target.result;
+    document.getElementById('ep-img-thumb').innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:contain;border-radius:6px;">`;
+    document.getElementById('ep-img-status').textContent='✅ '+file.name+' ('+Math.round(file.size/1024)+'KB)';
+  };
+  reader.readAsDataURL(file);
+}
 function closeEditProduct(){document.getElementById('editProductOverlay').classList.remove('open');}
 function saveProduct(){
+  const specsRaw=document.getElementById('ep-specs').value.trim();
+  let specs={};
+  if(specsRaw){
+    try{ specs=JSON.parse(specsRaw); }
+    catch(e){
+      // Parse "Key: Value" lines format
+      specsRaw.split(String.fromCharCode(10)).forEach(line=>{
+        const col=line.indexOf(':');
+        if(col>0){ const k=line.slice(0,col).trim(); const v=line.slice(col+1).trim(); if(k&&v)specs[k]=v; }
+      });
+    }
+  }
   const p={
     id:editProductIdx!==null?DATA.products[editProductIdx].id:Date.now(),
     name:document.getElementById('ep-name').value.trim(),
@@ -1500,11 +1596,16 @@ function saveProduct(){
     badge:document.getElementById('ep-badge').value,
     rating:parseFloat(document.getElementById('ep-rating').value)||4.5,
     reviews:parseInt(document.getElementById('ep-reviews').value)||0,
+    stock:parseInt(document.getElementById('ep-stock').value)||0,
     brand:document.getElementById('ep-brand').value.trim(),
     desc:document.getElementById('ep-desc').value.trim(),
-    specs:{}
+    imgurl:document.getElementById('ep-imgurl').value.trim(),
+    specs:specs
   };
-  try{if(document.getElementById('ep-specs').value)p.specs=JSON.parse(document.getElementById('ep-specs').value);}catch(e){}
+  // Save base64 image if uploaded
+  if(window._epImgBase64) p.imgBase64=window._epImgBase64;
+  else if(editProductIdx!==null && DATA.products[editProductIdx].imgBase64) p.imgBase64=DATA.products[editProductIdx].imgBase64;
+  
   if(!p.name||!p.price){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Name aur price zaroori hai!');return;}
   if(editProductIdx!==null)DATA.products[editProductIdx]=p;
   else DATA.products.push(p);
@@ -2028,7 +2129,153 @@ function resetData(){
   if(confirm('Sab data reset ho jayega. Sure hain?')){
     localStorage.removeItem('zn_store_data');DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData(DATA);
     showToast('<i class="fas fa-rotate-left" style="color:var(--accent)"></i> Data reset to defaults!');
-    renderPanel('dashboard');
+    // ============================================================
+// INVENTORY MANAGEMENT — COMPLETE
+// ============================================================
+let invFilter='all';
+
+function setInvFilter(f,btn){
+  invFilter=f;
+  document.querySelectorAll('.inv-filter').forEach(b=>{
+    b.classList.remove('active');
+    b.style.background='';b.style.color='';b.style.borderColor='';
+  });
+  if(btn){
+    btn.classList.add('active');
+    btn.style.background='var(--primary)';
+    btn.style.color='#fff';
+    btn.style.borderColor='var(--primary)';
+  }
+  renderInventory();
+}
+
+function renderInventory(){
+  const tbody=document.getElementById('invTableBody');
+  if(!tbody)return;
+  
+  DATA=getData(); // always fresh
+  const prods=DATA.products||[];
+  
+  if(!prods.length){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text3);">No products found. Add products first.</td></tr>';
+    updateInvStats([]);
+    return;
+  }
+  
+  const q=(document.getElementById('invSearch')||{value:''}).value.toLowerCase();
+  
+  let filtered=prods.filter(p=>{
+    const s=p.stock!=null?p.stock:5;
+    if(q&&!p.name.toLowerCase().includes(q)&&!(p.cat||'').toLowerCase().includes(q)&&!(p.brand||'').toLowerCase().includes(q))return false;
+    if(invFilter==='low')return s>0&&s<=3;
+    if(invFilter==='out')return s<=0;
+    if(invFilter==='in')return s>3;
+    return true;
+  });
+
+  updateInvStats(prods);
+
+  const icons={mouse:'🖱️',keyboard:'⌨️',monitor:'🖥️',headset:'🎧',webcam:'📷',storage:'💾',hub:'🔌',cooling:'❄️',laptop:'💻',desktop:'🖥️',gpu:'🎮',cpu:'⚙️',casing:'📦',psu:'⚡',speakers:'🔊',microphone:'🎙️',ups:'🔋',router:'📡',printer:'🖨️',apple:'🍎',gaming:'🕹️',smartwatch:'⌚',chair:'🪑',misc:'📦'};
+  
+  const statusBadge=s=>s<=0
+    ?'<span style="color:#dc2626;font-weight:700;font-size:0.7rem;background:rgba(220,38,38,0.1);padding:2px 8px;border-radius:20px;">❌ Out</span>'
+    :s<=3
+    ?'<span style="color:#d97706;font-weight:700;font-size:0.7rem;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:20px;">⚠️ Low</span>'
+    :'<span style="color:#059669;font-weight:700;font-size:0.7rem;background:rgba(5,150,105,0.1);padding:2px 8px;border-radius:20px;">✅ OK</span>';
+
+  if(!filtered.length){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text3);">No products match this filter.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML=filtered.map(p=>{
+    const realIdx=DATA.products.indexOf(p);
+    const s=p.stock!=null?p.stock:5;
+    const imgSrc=p.imgBase64||p.imgurl||'';
+    const rowBg=s<=0?'background:rgba(220,38,38,0.02);':s<=3?'background:rgba(245,158,11,0.02);':'';
+    return `<tr style="${rowBg}border-bottom:1px solid var(--border);">
+      <td style="padding:0.6rem 0.75rem;">
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <div style="width:38px;height:34px;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+            ${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:contain;" onerror="this.parentNode.innerHTML='<span style=font-size:1.1rem>${icons[p.cat]||'📦'}</span>'">`:`<span style="font-size:1.1rem;">${icons[p.cat]||'📦'}</span>`}
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:0.79rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.name}">${p.name}</div>
+            <div style="font-size:0.67rem;color:var(--text3);">${p.brand||''} • ID:${p.id}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding:0.5rem;font-size:0.74rem;">${icons[p.cat]||'📦'} ${p.cat}</td>
+      <td style="padding:0.5rem;font-weight:700;color:var(--primary);font-size:0.79rem;white-space:nowrap;">Rs.${p.price.toLocaleString()}</td>
+      <td style="padding:0.5rem;text-align:center;">
+        <input type="number" min="0" max="9999" value="${s}" id="si-${realIdx}"
+          style="width:64px;padding:0.3rem 0.4rem;border:1.5px solid var(--border);border-radius:7px;text-align:center;font-weight:700;font-size:0.82rem;"
+          onchange="updateProductStock(${realIdx},this.value)"
+          onfocus="this.style.borderColor='var(--primary)'"
+          onblur="this.style.borderColor='var(--border)'">
+      </td>
+      <td style="padding:0.5rem;text-align:center;">${statusBadge(s)}</td>
+      <td style="padding:0.5rem;text-align:center;white-space:nowrap;">
+        <button onclick="quickStock(${realIdx},5)" title="Set 5" style="padding:0.22rem 0.55rem;font-size:0.7rem;border:1.5px solid var(--border);border-radius:5px;background:#fff;cursor:pointer;margin:1px;font-weight:600;">5</button>
+        <button onclick="quickStock(${realIdx},10)" title="Set 10" style="padding:0.22rem 0.55rem;font-size:0.7rem;border:1.5px solid var(--primary);border-radius:5px;background:var(--primary3);color:var(--primary);cursor:pointer;font-weight:700;margin:1px;">10</button>
+        <button onclick="quickStock(${realIdx},0)" title="Out of Stock" style="padding:0.22rem 0.55rem;font-size:0.7rem;border:1.5px solid #dc2626;border-radius:5px;background:#fff5f5;color:#dc2626;cursor:pointer;margin:1px;">0</button>
+      </td>
+      <td style="padding:0.5rem;text-align:center;">
+        <button onclick="openEditProduct(${realIdx})" title="Edit product" style="padding:0.22rem 0.55rem;font-size:0.7rem;border:1.5px solid #059669;border-radius:5px;background:#f0fdf4;color:#059669;cursor:pointer;">✏️</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function updateInvStats(prods){
+  const total=prods.length;
+  const inStock=prods.filter(p=>(p.stock!=null?p.stock:5)>3).length;
+  const lowStock=prods.filter(p=>{const s=p.stock!=null?p.stock:5;return s>0&&s<=3;}).length;
+  const outStock=prods.filter(p=>(p.stock!=null?p.stock:5)<=0).length;
+  const el=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  el('invTotalProducts',total);
+  el('invInStock',inStock);
+  el('invLowStock',lowStock);
+  el('invOutStock',outStock);
+  const badge=document.getElementById('sbLowStockBadge');
+  if(badge){badge.style.display=lowStock>0?'':'none';badge.textContent=lowStock;}
+}
+
+function updateProductStock(realIdx,val){
+  DATA=getData();
+  if(!DATA.products[realIdx])return;
+  DATA.products[realIdx].stock=Math.max(0,parseInt(val)||0);
+  saveData(DATA);
+  updateInvStats(DATA.products);
+  const s=DATA.products[realIdx].stock;
+  const badge=document.getElementById('si-'+realIdx);
+  // Visual feedback
+  if(badge){badge.style.background=s<=0?'#fff5f5':s<=3?'#fffbeb':'#f0fdf4';setTimeout(()=>{badge.style.background='';},1200);}
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Stock updated: <b>'+DATA.products[realIdx].name.slice(0,20)+'</b> → '+s);
+}
+
+function quickStock(realIdx,val){
+  const inp=document.getElementById('si-'+realIdx);
+  if(inp){inp.value=val;updateProductStock(realIdx,val);}
+}
+
+function bulkSetStock(val){
+  if(!confirm('Sab products ki stock '+val+' set karna chahte hain?'))return;
+  DATA=getData();
+  DATA.products.forEach(p=>{p.stock=val;});
+  saveData(DATA);
+  renderInventory();
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> All products stock set to: '+val);
+}
+
+// Override renderPanel to call renderInventory when needed
+const _origRenderPanel=renderPanel;
+renderPanel=function(name){
+  _origRenderPanel(name);
+  if(name==='inventory')setTimeout(renderInventory,30);
+};
+
+renderPanel('dashboard');
   }
 }
 

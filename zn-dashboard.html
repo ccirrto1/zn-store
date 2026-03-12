@@ -2270,7 +2270,11 @@ function resetData(){
   if(confirm('Sab data reset ho jayega. Sure hain?')){
     localStorage.removeItem('zn_store_data');DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData(DATA);
     showToast('<i class="fas fa-rotate-left" style="color:var(--accent)"></i> Data reset to defaults!');
-    // ============================================================
+    renderPanel('dashboard');
+  }
+}
+
+// ============================================================
 // INVENTORY MANAGEMENT — COMPLETE
 // ============================================================
 let invFilter='all';
@@ -2411,9 +2415,7 @@ function bulkSetStock(val){
 
 // renderPanel — inventory handled in showPanel directly
 
-renderPanel('dashboard');
-  }
-}
+
 
 
 // ============================================================

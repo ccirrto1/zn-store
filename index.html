@@ -2902,8 +2902,14 @@ function openProduct(id){
   const sameCat   = DATA.products.filter(x=>x.id!==p.id && x.cat===p.cat && x.brand!==p.brand);
   const related   = [...sameBrand, ...sameCat].slice(0,3);
 
-  const relatedHtml = related.length ? `
-    <div style="margin-top:1rem;padding-top:0.75rem;border-top:1.5px solid var(--border);">
+  // Inject related products — always replace, never append
+  setTimeout(()=>{
+    // Remove ALL previous related sections first
+    document.querySelectorAll('#modalRelatedSection').forEach(el=>el.remove());
+    const specsEl = document.getElementById('mSpecs');
+    if(!specsEl) return;
+    if(!related.length){ specsEl.insertAdjacentHTML('afterend','<div id="modalRelatedSection"></div>'); return; }
+    const relatedHtml = `<div id="modalRelatedSection" style="margin-top:1rem;padding-top:0.75rem;border-top:1.5px solid var(--border);">
       <div style="font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.65rem;">You may also like</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;">
         ${related.map(r=>{
@@ -2915,12 +2921,8 @@ function openProduct(id){
           </div>`;
         }).join('')}
       </div>
-    </div>` : '';
-  
-  // Append related after modal opens
-  setTimeout(()=>{
-    const specsEl = document.getElementById('mSpecs');
-    if(specsEl && related.length) specsEl.insertAdjacentHTML('afterend', relatedHtml);
+    </div>`;
+    specsEl.insertAdjacentHTML('afterend', relatedHtml);
   }, 50);
   const thumb=img?`<div class="m-thumb active"><img src="${img}" alt="${p.name}"></div>`:`<div class="m-thumb active"><i class="${p.icon}" style="color:${cc(p.cat)};"></i></div>`;
   document.getElementById('modalThumbs').innerHTML=thumb+`<div class="m-thumb" style="opacity:0.4;"><i class="${p.icon}" style="color:#bbb;"></i></div>`;

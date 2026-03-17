@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZN Enterprises — Admin Dashboard</title>
+<title>AR Computers — Admin Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -26,8 +26,8 @@ body.light-mode .inv-filter{background:#f0f2ff;color:var(--text2);}
 :root{
   --bg:#07080d;--bg2:#0c0e17;--bg3:#10131f;
   --card:#13172a;--card2:#181d30;
-  --border:rgba(99,102,241,0.18);--border2:rgba(99,102,241,0.35);
-  --primary:#6366f1;--primary2:#818cf8;
+  --border:rgba(37,99,235,0.18);--border2:rgba(37,99,235,0.35);
+  --primary:#1d4ed8;--primary2:#818cf8;
   --accent:#f59e0b;--accent2:#fbbf24;
   --green:#10b981;--red:#ef4444;--cyan:#06b6d4;--pink:#ec4899;--orange:#f97316;
   --text:#f1f5f9;--text2:#94a3b8;--text3:#64748b;
@@ -71,8 +71,8 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);displa
   transition:all 0.2s;cursor:pointer;
 }
 .sb-nav li a i{width:16px;text-align:center;font-size:0.82rem;color:var(--text3);}
-.sb-nav li a:hover{background:rgba(99,102,241,0.06);color:var(--text);border-left-color:var(--border2);}
-.sb-nav li a.active{background:rgba(99,102,241,0.1);color:var(--primary2);border-left-color:var(--primary);}
+.sb-nav li a:hover{background:rgba(37,99,235,0.06);color:var(--text);border-left-color:var(--border2);}
+.sb-nav li a.active{background:rgba(37,99,235,0.1);color:var(--primary2);border-left-color:var(--primary);}
 .sb-nav li a.active i{color:var(--primary);}
 .sb-badge{
   margin-left:auto;padding:0.1rem 0.45rem;
@@ -106,7 +106,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);displa
 }
 .btn-save{background:var(--green);color:#fff;}
 .btn-save:hover{background:#059669;}
-.btn-preview{background:rgba(99,102,241,0.15);color:var(--primary2);border:1px solid var(--border2);}
+.btn-preview{background:rgba(37,99,235,0.15);color:var(--primary2);border:1px solid var(--border2);}
 .btn-preview:hover{background:var(--primary);color:#fff;}
 .btn-danger{background:rgba(239,68,68,0.12);color:var(--red);border:1px solid rgba(239,68,68,0.25);}
 .btn-danger:hover{background:var(--red);color:#fff;}
@@ -161,7 +161,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);displa
 .btn-add-item{background:var(--primary);color:#fff;}
 .btn-add-item:hover{background:var(--primary2);}
 .btn-outline-sm{background:transparent;border:1px solid var(--border2);color:var(--text2);}
-.btn-outline-sm:hover{background:rgba(99,102,241,0.08);color:var(--primary2);}
+.btn-outline-sm:hover{background:rgba(37,99,235,0.08);color:var(--primary2);}
 
 /* ===== TABLE ===== */
 .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
@@ -181,15 +181,15 @@ th{
 }
 td{padding:0.85rem 1rem;font-size:0.82rem;border-bottom:1px solid var(--border);}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(99,102,241,0.03);}
+tr:hover td{background:rgba(37,99,235,0.03);}
 .td-name{font-weight:600;}
 .td-price{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:700;}
 .td-cat{
   display:inline-flex;align-items:center;gap:5px;
   padding:0.2rem 0.6rem;border-radius:100px;
   font-size:0.68rem;font-weight:600;
-  background:rgba(99,102,241,0.1);color:var(--primary2);
-  border:1px solid rgba(99,102,241,0.2);
+  background:rgba(37,99,235,0.1);color:var(--primary2);
+  border:1px solid rgba(37,99,235,0.2);
 }
 .td-badge{
   display:inline-flex;padding:0.18rem 0.5rem;border-radius:4px;
@@ -205,7 +205,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
   display:flex;align-items:center;justify-content:center;
   font-size:0.75rem;cursor:pointer;transition:all 0.2s;
 }
-.tac-edit{background:rgba(99,102,241,0.1);color:var(--primary2);}
+.tac-edit{background:rgba(37,99,235,0.1);color:var(--primary2);}
 .tac-edit:hover{background:var(--primary);color:#fff;}
 .tac-del{background:rgba(239,68,68,0.1);color:var(--red);}
 .tac-del:hover{background:var(--red);color:#fff;}
@@ -216,7 +216,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
   padding:0.2rem 0.6rem;border-radius:6px;
   font-size:0.68rem;font-weight:600;
 }
-.status-new{background:rgba(99,102,241,0.1);color:var(--primary2);}
+.status-new{background:rgba(37,99,235,0.1);color:var(--primary2);}
 .status-confirmed{background:rgba(16,185,129,0.1);color:var(--green);}
 .status-shipped{background:rgba(245,158,11,0.1);color:var(--accent);}
 .status-delivered{background:rgba(6,182,212,0.1);color:var(--cyan);}
@@ -258,7 +258,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
   color:var(--text);border-radius:var(--radius2);
   font-family:'Sora',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.2s;
 }
-.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,0.1);}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.1);}
 .form-textarea{resize:vertical;min-height:70px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
 .form-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;}
@@ -326,7 +326,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 .sheet-step{display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:0.7rem;}
 .step-num{
   width:22px;height:22px;border-radius:50%;
-  background:rgba(99,102,241,0.15);color:var(--primary2);
+  background:rgba(37,99,235,0.15);color:var(--primary2);
   display:flex;align-items:center;justify-content:center;
   font-size:0.7rem;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;
 }
@@ -340,7 +340,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 .copy-btn{
   display:inline-flex;align-items:center;gap:5px;
   padding:0.3rem 0.7rem;border-radius:5px;
-  background:rgba(99,102,241,0.1);color:var(--primary2);
+  background:rgba(37,99,235,0.1);color:var(--primary2);
   border:1px solid var(--border2);font-size:0.72rem;cursor:pointer;transition:all 0.2s;
   font-family:'Sora',sans-serif;
 }
@@ -374,20 +374,20 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 }
 #loginGate::before{
   content:'';position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(99,102,241,0.08) 1px,transparent 1px);
+  background-image:radial-gradient(circle,rgba(37,99,235,0.08) 1px,transparent 1px);
   background-size:32px 32px;
 }
 .login-card{
   background:rgba(19,23,42,0.95);
-  border:1px solid rgba(99,102,241,0.3);
+  border:1px solid rgba(37,99,235,0.3);
   border-radius:20px;padding:2.5rem 2.2rem;
   width:100%;max-width:400px;
   position:relative;z-index:1;
-  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(99,102,241,0.1);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(37,99,235,0.1);
 }
 .login-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#6366f1,#f59e0b,#06b6d4);
+  background:linear-gradient(90deg,#1d4ed8,#f59e0b,#06b6d4);
   border-radius:20px 20px 0 0;
 }
 .login-logo{text-align:center;margin-bottom:1.8rem;}
@@ -397,21 +397,21 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 .login-logo p{font-size:0.72rem;color:#64748b;letter-spacing:2px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-top:3px;}
 .login-field{margin-bottom:1.1rem;}
 .login-field label{display:flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:600;color:#94a3b8;margin-bottom:0.4rem;}
-.login-field label i{font-size:0.7rem;color:#6366f1;}
+.login-field label i{font-size:0.7rem;color:#1d4ed8;}
 .login-input-wrap{position:relative;}
 .login-input{
   width:100%;padding:0.78rem 2.5rem 0.78rem 1rem;
   background:rgba(255,255,255,0.04);
-  border:1px solid rgba(99,102,241,0.25);
+  border:1px solid rgba(37,99,235,0.25);
   border-radius:10px;color:#f1f5f9;
   font-family:'Sora',sans-serif;font-size:0.85rem;outline:none;
   transition:all 0.2s;
 }
-.login-input:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
+.login-input:focus{border-color:#1d4ed8;box-shadow:0 0 0 3px rgba(37,99,235,0.12);}
 .login-input.shake{animation:lshake 0.4s ease;}
 @keyframes lshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .eye-toggle{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:0.82rem;transition:color 0.2s;}
-.eye-toggle:hover{color:#6366f1;}
+.eye-toggle:hover{color:#1d4ed8;}
 .login-error{
   background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);
   border-radius:8px;padding:0.6rem 0.85rem;
@@ -422,14 +422,14 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 .login-attempts{font-size:0.7rem;color:#64748b;text-align:center;margin-top:0.6rem;font-family:'JetBrains Mono',monospace;}
 .btn-login{
   width:100%;padding:0.88rem;
-  background:linear-gradient(135deg,#6366f1,#818cf8);
+  background:linear-gradient(135deg,#1d4ed8,#818cf8);
   color:#fff;border:none;border-radius:10px;
   font-family:'Sora',sans-serif;font-size:0.9rem;font-weight:700;
   cursor:pointer;transition:all 0.28s;
-  box-shadow:0 6px 20px rgba(99,102,241,0.35);
+  box-shadow:0 6px 20px rgba(37,99,235,0.35);
   display:flex;align-items:center;justify-content:center;gap:8px;
 }
-.btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(99,102,241,0.5);}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,0.5);}
 .btn-login:disabled{opacity:0.55;cursor:not-allowed;transform:none;}
 .login-hint{
   margin-top:1.3rem;padding:0.7rem 0.9rem;
@@ -458,16 +458,15 @@ tr:hover td{background:rgba(99,102,241,0.03);}
     <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36" style="flex-shrink:0;">
       <defs>
         <linearGradient id="sbHexG" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/>
+          <stop offset="0%" stop-color="#1d4ed8"/><stop offset="100%" stop-color="#3b82f6"/>
         </linearGradient>
       </defs>
-      <polygon points="22,5 38,13.5 38,30.5 22,39 6,30.5 6,13.5" fill="url(#sbHexG)"/>
-      <polygon points="22,8.5 35,16 35,28 22,35.5 9,28 9,16" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
-      <text x="22" y="26" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle">Z</text>
-      <text x="32" y="32" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="rgba(255,255,255,0.8)" text-anchor="middle" dominant-baseline="middle">N</text>
+      <rect x="4" y="4" width="36" height="36" rx="9" fill="url(#sbHexG)"/>
+      <rect x="7" y="7" width="30" height="30" rx="6" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <text x="22" y="27" font-family="Arial Black,sans-serif" font-size="17" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle" letter-spacing="-1">AR</text>
     </svg>
     <div>
-      <div class="sb-brand">ZN <span>Enterprises</span></div>
+      <div class="sb-brand">AR <span>Computers</span></div>
       <span class="sb-sub">Admin Panel</span>
     </div>
   </div>
@@ -491,10 +490,10 @@ tr:hover td{background:rgba(99,102,241,0.03);}
   </ul>
   <div class="sb-bottom">
     <div class="sb-admin">
-      <div class="sb-avatar">ZN</div>
+      <div class="sb-avatar">AR</div>
       <div>
         <div class="sb-admin-name">Admin</div>
-        <div class="sb-admin-role">ZN Enterprises</div>
+        <div class="sb-admin-role">AR Computers</div>
       </div>
     </div>
   </div>
@@ -505,10 +504,10 @@ tr:hover td{background:rgba(99,102,241,0.03);}
   <div class="topbar">
     <div class="topbar-left">
       <span class="page-title" id="pageTitle"><i class="fas fa-gauge-high"></i> Dashboard</span>
-      <span class="page-breadcrumb" id="pageBreadcrumb">ZN Enterprises / Overview</span>
+      <span class="page-breadcrumb" id="pageBreadcrumb">AR Computers / Overview</span>
     </div>
     <div class="topbar-right" style="display:flex;align-items:center;gap:0.7rem;">
-    <button id="themeToggleBtn" onclick="toggleTheme()" style="display:flex;align-items:center;gap:6px;padding:0.42rem 0.9rem;background:rgba(99,102,241,0.1);color:var(--primary2);border:1.5px solid rgba(99,102,241,0.2);border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;"><i class="fas fa-moon" id="themeIcon"></i><span id="themeLabel">Dark</span></button>
+    <button id="themeToggleBtn" onclick="toggleTheme()" style="display:flex;align-items:center;gap:6px;padding:0.42rem 0.9rem;background:rgba(37,99,235,0.1);color:var(--primary2);border:1.5px solid rgba(37,99,235,0.2);border-radius:8px;font-size:0.75rem;font-weight:700;cursor:pointer;"><i class="fas fa-moon" id="themeIcon"></i><span id="themeLabel">Dark</span></button>
     <button class="logout-btn" onclick="doLogout()"><i class="fas fa-right-from-bracket"></i> Logout</button>
       <button class="topbar-btn btn-preview" onclick="openStore()"><i class="fas fa-eye"></i> View Store</button>
       <button class="topbar-btn btn-save" onclick="saveAllData()"><i class="fas fa-floppy-disk"></i> Save Changes</button>
@@ -579,7 +578,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       <div class="section-hdr">
         <h3><i class="fas fa-boxes-stacked"></i> Products Management</h3>
         <div class="action-btns">
-          <button class="btn-sm" style="background:rgba(99,102,241,0.1);color:var(--primary2);border:1.5px solid rgba(99,102,241,0.25);font-size:0.75rem;padding:0.35rem 0.8rem;border-radius:7px;cursor:pointer;font-weight:700;" onclick="openBulkImport()"><i class="fas fa-file-import"></i> Bulk Import CSV</button>
+          <button class="btn-sm" style="background:rgba(37,99,235,0.1);color:var(--primary2);border:1.5px solid rgba(37,99,235,0.25);font-size:0.75rem;padding:0.35rem 0.8rem;border-radius:7px;cursor:pointer;font-weight:700;" onclick="openBulkImport()"><i class="fas fa-file-import"></i> Bulk Import CSV</button>
           <div style="display:flex;align-items:center;gap:0.75rem;"><span id="productsCount" style="font-size:0.75rem;color:var(--text3);font-weight:600;"></span><button class="btn-sm btn-add-item" onclick="openEditProduct(null)"><i class="fas fa-plus"></i> Add Product</button></div>
         </div>
       </div>
@@ -718,8 +717,8 @@ tr:hover td{background:rgba(99,102,241,0.03);}
             </div>
           </div>
           <div class="form-group"><label class="form-label"><i class="fab fa-whatsapp"></i> WhatsApp Number (with country code, no +)</label><input class="form-input" id="si-whatsapp" placeholder="923433194763"><div style="font-size:0.7rem;color:var(--text3);margin-top:4px;"><i class="fas fa-circle-info"></i> Format: 923XXXXXXXXX (for wa.me links)</div></div>
-          <div class="form-group"><label class="form-label"><i class="fas fa-envelope"></i> Business Email</label><input class="form-input" id="si-email" type="email" placeholder="info@znenterprises.pk"></div>
-          <div class="form-group"><label class="form-label"><i class="fas fa-envelope-open-text"></i> Admin Email (receives order alerts)</label><input class="form-input" id="si-adminEmail" type="email" placeholder="admin@znenterprises.pk"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-envelope"></i> Business Email</label><input class="form-input" id="si-email" type="email" placeholder="info@arcomputers.pk"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-envelope-open-text"></i> Admin Email (receives order alerts)</label><input class="form-input" id="si-adminEmail" type="email" placeholder="admin@arcomputers.pk"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-location-dot"></i> Address</label><input class="form-input" id="si-address"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-clock"></i> Business Hours</label><input class="form-input" id="si-timing"></div>
         </div>
@@ -760,7 +759,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
         <!-- JazzCash -->
         <div class="settings-card">
           <h4><i class="fas fa-mobile-screen-button" style="color:#d32d2d;"></i> JazzCash Account</h4>
-          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-jc-name" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-jc-name" placeholder="AR Computers"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> JazzCash Number</label><input class="form-input" id="pay-jc-number" placeholder="0343-3194763"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-jc-instructions" placeholder="Transfer amount to this JazzCash number, then send screenshot to our WhatsApp."></textarea></div>
         </div>
@@ -768,7 +767,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
         <!-- EasyPaisa -->
         <div class="settings-card">
           <h4><i class="fas fa-mobile-screen-button" style="color:#1b9e3e;"></i> EasyPaisa Account</h4>
-          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-ep-name" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Name</label><input class="form-input" id="pay-ep-name" placeholder="AR Computers"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-phone"></i> EasyPaisa Number</label><input class="form-input" id="pay-ep-number" placeholder="0343-3194763"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-ep-instructions" placeholder="Transfer amount to this EasyPaisa number, then send screenshot to our WhatsApp."></textarea></div>
         </div>
@@ -777,14 +776,14 @@ tr:hover td{background:rgba(99,102,241,0.03);}
         <div class="settings-card">
           <h4><i class="fas fa-building-columns" style="color:#1a56db;"></i> Bank Transfer Account</h4>
           <div class="form-group"><label class="form-label"><i class="fas fa-university"></i> Bank Name</label><input class="form-input" id="pay-bank-name" placeholder="HBL Pakistan"></div>
-          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Title</label><input class="form-input" id="pay-bank-title" placeholder="ZN Enterprises"></div>
+          <div class="form-group"><label class="form-label"><i class="fas fa-user"></i> Account Title</label><input class="form-input" id="pay-bank-title" placeholder="AR Computers"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Account Number</label><input class="form-input" id="pay-bank-number" placeholder="0123-456789-001"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-code"></i> IBAN (optional)</label><input class="form-input" id="pay-bank-iban" placeholder="PK36HABB0000123456789001"></div>
           <div class="form-group"><label class="form-label"><i class="fas fa-comment-dots"></i> Customer Instructions</label><textarea class="form-textarea" id="pay-bank-instructions" placeholder="Transfer to above account and email the transaction slip."></textarea></div>
         </div>
 
         <!-- Save button card -->
-        <div class="settings-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(6,182,212,0.06));border:1px dashed var(--border2);">
+        <div class="settings-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1rem;background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(6,182,212,0.06));border:1px dashed var(--border2);">
           <i class="fas fa-wallet" style="font-size:2.5rem;color:var(--primary);opacity:0.5;"></i>
           <div style="text-align:center;">
             <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem;">Save Payment Settings</div>
@@ -871,7 +870,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       <div style="max-width:700px;">
         <div class="sheet-box">
           <h4><i class="fab fa-google"></i> Step 1: Google Sheet Setup</h4>
-          <div class="sheet-step"><div class="step-num">1</div><div class="step-text">Create a new Google Sheet and name it "ZN Orders". Add the following headers in the first row:</div></div>
+          <div class="sheet-step"><div class="step-num">1</div><div class="step-text">Create a new Google Sheet and name it "AR Orders". Add the following headers in the first row:</div></div>
           <div class="code-block">Order ID | Timestamp | Name | Phone | Email | City | Address | Payment | Items | Subtotal | Delivery | Total | Note | Status</div>
           <button class="copy-btn" onclick="copyText('Order ID\tTimestamp\tName\tPhone\tEmail\tCity\tAddress\tPayment\tItems\tSubtotal\tDelivery\tTotal\tNote\tStatus')"><i class="fas fa-copy"></i> Copy Headers</button>
         </div>
@@ -1127,7 +1126,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ec-icon" placeholder="fas fa-keyboard"></div>
-        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Color (hex)</label><input class="form-input" id="ec-color" placeholder="#6366f1"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Color (hex)</label><input class="form-input" id="ec-color" placeholder="#1d4ed8"></div>
       </div>
       <div class="form-group"><label class="form-label"><i class="fas fa-hashtag"></i> Item Count</label><input class="form-input" id="ec-count" type="number"></div>
     </div>
@@ -1165,7 +1164,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-star"></i> Stars (1–5)</label><input class="form-input" id="er-stars" type="number" min="1" max="5" value="5"></div>
-        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Avatar Color</label><input class="form-input" id="er-color" placeholder="#6366f1"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Avatar Color</label><input class="form-input" id="er-color" placeholder="#1d4ed8"></div>
       </div>
       <div class="form-group"><label class="form-label"><i class="fas fa-message"></i> Review Text</label><textarea class="form-textarea" id="er-text" style="min-height:90px;"></textarea></div>
       <div class="form-group"><label class="form-label"><i class="fas fa-id-badge"></i> Avatar Initials</label><input class="form-input" id="er-av" placeholder="AH" maxlength="2"></div>
@@ -1183,7 +1182,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
     <div class="edit-body">
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-icons"></i> FA Icon Class</label><input class="form-input" id="ef-icon" placeholder="fas fa-rocket"></div>
-        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Icon Color</label><input class="form-input" id="ef-color" placeholder="#6366f1"></div>
+        <div class="form-group"><label class="form-label"><i class="fas fa-palette"></i> Icon Color</label><input class="form-input" id="ef-color" placeholder="#1d4ed8"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label"><i class="fas fa-font"></i> Title</label><input class="form-input" id="ef-title"></div>
@@ -1217,7 +1216,7 @@ tr:hover td{background:rgba(99,102,241,0.03);}
 // ============================================================
 const DEFAULT_DATA={
   categories:[
-    {id:'keyboard',name:'Keyboards',icon:'fas fa-keyboard',color:'#6366f1',count:48},
+    {id:'keyboard',name:'Keyboards',icon:'fas fa-keyboard',color:'#1d4ed8',count:48},
     {id:'mouse',name:'Mouse & Pads',icon:'fas fa-computer-mouse',color:'#06b6d4',count:62},
     {id:'monitor',name:'Monitors',icon:'fas fa-desktop',color:'#10b981',count:35},
     {id:'headset',name:'Headsets',icon:'fas fa-headphones',color:'#f59e0b',count:44},
@@ -1286,22 +1285,22 @@ const DEFAULT_DATA={
     {name:'Anker',icon:'🔌',tag:'Authorized'},
   ],
   features:[
-    {icon:'fas fa-rocket',color:'#6366f1',bg:'rgba(99,102,241,0.1)',title:'Fast Delivery',desc:'Same-day delivery in Karachi. All other cities within 2–3 business days guaranteed.',num:'01'},
+    {icon:'fas fa-rocket',color:'#1d4ed8',bg:'rgba(37,99,235,0.1)',title:'Fast Delivery',desc:'Same-day delivery in Karachi. All other cities within 2–3 business days guaranteed.',num:'01'},
     {icon:'fas fa-shield-check',color:'#10b981',bg:'rgba(16,185,129,0.1)',title:'100% Original',desc:'100% authentic products — full refund if any item is found to be counterfeit.',num:'02'},
     {icon:'fas fa-tag',color:'#f59e0b',bg:'rgba(245,158,11,0.1)',title:'Best Prices',desc:'Found a lower price? Contact us — we will match or beat it. Price guarantee.',num:'03'},
-    {icon:'fas fa-wrench',color:'#06b6d4',bg:'rgba(6,182,212,0.1)',title:'1 Year Warranty',desc:'Har product par local warranty. ZN Enterprises after-sales support available 7 days a week.',num:'04'},
+    {icon:'fas fa-wrench',color:'#06b6d4',bg:'rgba(6,182,212,0.1)',title:'1 Year Warranty',desc:'Har product par local warranty. AR Computers after-sales support available 7 days a week.',num:'04'},
     {icon:'fas fa-credit-card',color:'#ec4899',bg:'rgba(236,72,153,0.1)',title:'Easy Payment',desc:'Cash on Delivery, EasyPaisa, JazzCash, and Bank Transfer — all payment methods accepted.',num:'05'},
-    {icon:'fas fa-rotate-left',color:'#8b5cf6',bg:'rgba(139,92,246,0.1)',title:'7-Day Returns',desc:'7-day hassle-free return window — no questions asked. ZN Enterprises return policy.',num:'06'},
+    {icon:'fas fa-rotate-left',color:'#8b5cf6',bg:'rgba(139,92,246,0.1)',title:'7-Day Returns',desc:'7-day hassle-free return window — no questions asked. AR Computers return policy.',num:'06'},
   ],
   reviews:[
-    {stars:5,text:'Ordered a Razer keyboard from ZN Enterprises — 100% original and delivered the next day. Exceptional service!',name:'Ahmed Hassan',role:'Graphic Designer, Karachi',av:'AH',color:'#6366f1'},
-    {stars:5,text:'Built my entire gaming setup through ZN Enterprises. Great pricing and every product was genuine. Highly recommended!',name:'Zain Khan',role:'Pro Gamer, Lahore',av:'ZK',color:'#06b6d4'},
-    {stars:5,text:'Ordered 15 monitors for our office through ZN. Excellent bulk discount and every unit arrived in perfect condition.',name:'Sara Rizvi',role:'IT Manager, Islamabad',av:'SR',color:'#ec4899'},
-    {stars:5,text:'First time ordering online and ZN Enterprises exceeded all expectations. Secure packaging and on-time delivery.',name:'Bilal Mehmood',role:'Student, Faisalabad',av:'BM',color:'#f59e0b'},
+    {stars:5,text:'Ordered a Razer keyboard from AR Computers — 100% original and delivered the next day. Exceptional service!',name:'Ahmed Hassan',role:'Graphic Designer, Karachi',av:'AH',color:'#1d4ed8'},
+    {stars:5,text:'Built my entire gaming setup through AR Computers. Great pricing and every product was genuine. Highly recommended!',name:'Zain Khan',role:'Pro Gamer, Lahore',av:'ZK',color:'#06b6d4'},
+    {stars:5,text:'Ordered 15 monitors for our office through AR. Excellent bulk discount and every unit arrived in perfect condition.',name:'Sara Rizvi',role:'IT Manager, Islamabad',av:'SR',color:'#ec4899'},
+    {stars:5,text:'First time ordering online and AR Computers exceeded all expectations. Secure packaging and on-time delivery.',name:'Bilal Mehmood',role:'Student, Faisalabad',av:'BM',color:'#f59e0b'},
   ],
   siteInfo:{
-    name:'ZN Enterprises',phone:'0343-3194763',email:'info@znenterprises.pk',
-    address:'Karachi, Pakistan',timing:'Mon–Sat: 10am–8pm',helpline:'0343-3194763',whatsapp:'923433194763',adminEmail:'admin@znenterprises.pk',
+    name:'AR Computers',phone:'0343-3194763',email:'info@arcomputers.pk',
+    address:'Karachi, Pakistan',timing:'Mon–Sat: 10am–8pm',helpline:'0343-3194763',whatsapp:'923433194763',adminEmail:'admin@arcomputers.pk',
     heroTitle:'YOUR TRUSTED TECH PARTNER',heroSub:'Pakistan ka #1 computer accessories store.',
     deliveryCharge:200,freeDeliveryMin:5000
   },
@@ -1310,7 +1309,7 @@ const DEFAULT_DATA={
 
 function getData(){
   try{
-    const s=localStorage.getItem('zn_store_data');
+    const s=localStorage.getItem('ar_store_data');
     if(!s) return JSON.parse(JSON.stringify(DEFAULT_DATA));
     const saved=JSON.parse(s);
     // If saved has fewer products than default, merge (use default as base)
@@ -1325,7 +1324,7 @@ function getData(){
 }
 function saveData(d){
   try{
-    localStorage.setItem('zn_store_data',JSON.stringify(d));
+    localStorage.setItem('ar_store_data',JSON.stringify(d));
     window.dispatchEvent(new Event('storage'));
   }catch(e){console.error('saveData failed',e);}
 }
@@ -1361,7 +1360,7 @@ function showPanel(name){
   panelEl.classList.add('active');
   document.querySelector(`.sb-nav a[onclick="showPanel('${name}')"]`)?.classList.add('active');
   document.getElementById('pageTitle').innerHTML=panelTitles[name]||name;
-  document.getElementById('pageBreadcrumb').textContent='ZN Enterprises / '+name.charAt(0).toUpperCase()+name.slice(1);
+  document.getElementById('pageBreadcrumb').textContent='AR Computers / '+name.charAt(0).toUpperCase()+name.slice(1);
   renderPanel(name);
   if(name==='inventory') setTimeout(()=>{ DATA=getData(); renderInventory(); },80);
 }
@@ -1390,7 +1389,7 @@ function renderDashboard(){
   document.getElementById('sbOrderBadge').textContent=newOrders;
   document.getElementById('statsRow').innerHTML=`
     <div class="stat-card">
-      <div class="stat-icon" style="background:rgba(99,102,241,0.1);"><i class="fas fa-bag-shopping" style="color:var(--primary);"></i></div>
+      <div class="stat-icon" style="background:rgba(37,99,235,0.1);"><i class="fas fa-bag-shopping" style="color:var(--primary);"></i></div>
       <div class="stat-info"><span class="stat-val">${totalOrders}</span><span class="stat-label">Total Orders</span><span class="stat-change up"><i class="fas fa-arrow-up"></i> ${newOrders} new today</span></div>
     </div>
     <div class="stat-card">
@@ -1430,7 +1429,7 @@ function renderDashboard(){
       recent.map(o=>{
         const idx=DATA.orders.indexOf(o);
         const wa=DATA.siteInfo?.whatsapp||'923433194763';
-        const waMsg=encodeURIComponent('Assalam o Alaikum '+o.name+'! Aapka order '+o.orderId+' confirm ho gaya. ZN Enterprises');
+        const waMsg=encodeURIComponent('Assalam o Alaikum '+o.name+'! Aapka order '+o.orderId+' confirm ho gaya. AR Computers');
         return `<tr>
           <td style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--primary2);">${o.orderId}</td>
           <td class="td-name">${o.name}<br><span style="font-size:0.68rem;color:var(--text3);">${o.phone||''}</span></td>
@@ -1446,7 +1445,7 @@ function renderDashboard(){
   }else{document.getElementById('recentOrdersTable').innerHTML=`<div class="empty-state"><i class="fas fa-inbox"></i><p>No orders yet</p></div>`;}
   // activity
   document.getElementById('activityList').innerHTML=`
-    <div class="act-item"><div class="act-icon" style="background:rgba(99,102,241,0.1);"><i class="fas fa-box" style="color:var(--primary);"></i></div><div class="act-text"><strong>${DATA.products.length} products</strong> listed in store</div><span class="act-time">Active</span></div>
+    <div class="act-item"><div class="act-icon" style="background:rgba(37,99,235,0.1);"><i class="fas fa-box" style="color:var(--primary);"></i></div><div class="act-text"><strong>${DATA.products.length} products</strong> listed in store</div><span class="act-time">Active</span></div>
     <div class="act-item"><div class="act-icon" style="background:rgba(16,185,129,0.1);"><i class="fas fa-check" style="color:var(--green);"></i></div><div class="act-text">Store is <strong>Live & Ready</strong></div><span class="act-time">Now</span></div>
     ${DATA.orders.slice(-3).reverse().map(o=>`<div class="act-item"><div class="act-icon" style="background:rgba(245,158,11,0.1);"><i class="fas fa-bag-shopping" style="color:var(--accent);"></i></div><div class="act-text">New order from <strong>${o.name}</strong></div><span class="act-time">${o.timestamp?.split(',')[0]||'Recent'}</span></div>`).join('')}
   `;
@@ -1471,7 +1470,7 @@ function renderDashboard(){
     const top5=[...DATA.products].sort((a,b)=>(b.rating||0)-(a.rating||0)).slice(0,5);
     topEl.innerHTML=top5.map(p=>`
       <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--border);">
-        <div style="width:36px;height:36px;border-radius:8px;background:rgba(91,84,232,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(29,78,216,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <i class="${p.icon||'fas fa-box'}" style="color:var(--primary);font-size:0.85rem;"></i>
         </div>
         <div style="flex:1;min-width:0;">
@@ -1624,7 +1623,7 @@ function viewOrder(idx){
       <button onclick="updateOrderStatus(true)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;">
         <i class="fas fa-check-circle"></i> Save & Notify Customer
       </button>
-      <button onclick="updateOrderStatus(false)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:rgba(99,102,241,0.15);color:var(--primary2);border:1px solid var(--border2);border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;">
+      <button onclick="updateOrderStatus(false)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:rgba(37,99,235,0.15);color:var(--primary2);border:1px solid var(--border2);border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;">
         <i class="fas fa-floppy-disk"></i> Save Only (No Email)
       </button>
       ${o.phone?`<a href="https://wa.me/${(DATA.siteInfo?.whatsapp||'923433194763')}" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:0.65rem;background:rgba(37,211,102,0.12);color:#25d366;border:1px solid rgba(37,211,102,0.3);border-radius:8px;font-size:0.82rem;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;min-width:140px;text-decoration:none;" onclick="openOrderWA(${idx})"><i class="fab fa-whatsapp"></i> Contact on WhatsApp</a>`:''}
@@ -1636,7 +1635,7 @@ function viewOrder(idx){
 function openOrderWA(idx){
   const o=DATA.orders[idx];
   const wa=(DATA.siteInfo?.whatsapp||'923433194763');
-  const msg=`Hi ${o.name}! This is ZN Enterprises regarding your order ${o.orderId}. `;
+  const msg=`Hi ${o.name}! This is AR Computers regarding your order ${o.orderId}. `;
   window.open('https://wa.me/'+o.phone?.replace(/^0/,'92').replace(/-/g,'')+'?text='+encodeURIComponent(msg),'_blank');
 }
 
@@ -1656,7 +1655,7 @@ function updateOrderStatus(sendEmail=false){
 
 function sendStatusEmailToCustomer(order, status){
   try{
-    const cfg=JSON.parse(localStorage.getItem('zn_emailjs')||'{}');
+    const cfg=JSON.parse(localStorage.getItem('ar_emailjs')||'{}');
     if(!cfg.serviceId||!cfg.templateCustomer||!order.email){
       showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> EmailJS not configured — no email sent');
       return;
@@ -1668,7 +1667,7 @@ function sendStatusEmailToCustomer(order, status){
         delivery_address:(order.address||'')+(order.city?', '+order.city:''),
         items:order.items,total:'Rs. '+(order.total||0).toLocaleString(),
         payment:order.payment,order_status:status,
-        store_name:DATA.siteInfo?.name||'ZN Enterprises',
+        store_name:DATA.siteInfo?.name||'AR Computers',
         store_phone:DATA.siteInfo?.helpline||'0343-3194763',
         whatsapp_link:'https://wa.me/'+(DATA.siteInfo?.whatsapp||'923433194763'),
         to_email:order.email
@@ -1690,7 +1689,7 @@ function exportOrders(){
   if(!DATA.orders.length){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> No orders to export');return;}
   const keys=['orderId','timestamp','name','phone','email','city','address','payment','items','subtotal','delivery','total','note','status'];
   const csv=[keys.join(','),...DATA.orders.map(o=>keys.map(k=>`"${(o[k]||'').toString().replace(/"/g,'""')}"`).join(','))].join('\x0a');
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='ZN_Orders_'+Date.now()+'.csv';a.click();
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='AR_Orders_'+Date.now()+'.csv';a.click();
   showToast('<i class="fas fa-download" style="color:var(--green)"></i> Orders exported!');
 }
 
@@ -1952,7 +1951,7 @@ function openEditReview(idx){
 }
 function closeEditRev(){document.getElementById('editRevOverlay').classList.remove('open');}
 function saveRev(){
-  const r={name:document.getElementById('er-name').value.trim(),role:document.getElementById('er-role').value.trim(),stars:parseInt(document.getElementById('er-stars').value)||5,color:document.getElementById('er-color').value||'#6366f1',text:document.getElementById('er-text').value.trim(),av:document.getElementById('er-av').value.toUpperCase().slice(0,2)};
+  const r={name:document.getElementById('er-name').value.trim(),role:document.getElementById('er-role').value.trim(),stars:parseInt(document.getElementById('er-stars').value)||5,color:document.getElementById('er-color').value||'#1d4ed8',text:document.getElementById('er-text').value.trim(),av:document.getElementById('er-av').value.toUpperCase().slice(0,2)};
   if(!r.name||!r.text){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Name aur review text zaroori!');return;}
   if(editRevIdx!==null)DATA.reviews[editRevIdx]=r;else DATA.reviews.push(r);
   saveData(DATA);closeEditRev();renderRevsTable();showToast(`<i class="fas fa-check-circle" style="color:var(--green)"></i> Review saved!`);
@@ -2013,7 +2012,7 @@ function testGoogleForm(){
 function testWaNumber(){
   const num=(document.getElementById('si-whatsapp').value||'').trim()||'923433194763';
   const link=document.getElementById('si-helpline-test');
-  if(link)link.href='https://wa.me/'+num+'?text=Hi+ZN+Enterprises!+Testing+helpline.';
+  if(link)link.href='https://wa.me/'+num+'?text=Hi+AR+Enterprises!+Testing+helpline.';
 }
 function saveSiteInfo(){
   const existing=DATA.siteInfo||{};
@@ -2046,14 +2045,14 @@ function loadPaymentAccounts(){
   const ep=pa.EasyPaisa||{};
   const bk=pa.Bank||{};
   const setV=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  setV('pay-jc-name',jc.accountName||'ZN Enterprises');
+  setV('pay-jc-name',jc.accountName||'AR Computers');
   setV('pay-jc-number',jc.accountNumber||DATA.siteInfo?.helpline||'0343-3194763');
   setV('pay-jc-instructions',jc.instructions||'Transfer the exact amount to this JazzCash number, then send screenshot to our WhatsApp helpline for order confirmation.');
-  setV('pay-ep-name',ep.accountName||'ZN Enterprises');
+  setV('pay-ep-name',ep.accountName||'AR Computers');
   setV('pay-ep-number',ep.accountNumber||DATA.siteInfo?.helpline||'0343-3194763');
   setV('pay-ep-instructions',ep.instructions||'Transfer the exact amount to this EasyPaisa number, then send screenshot to our WhatsApp helpline for order confirmation.');
   setV('pay-bank-name',bk.bankName||'HBL Pakistan');
-  setV('pay-bank-title',bk.accountTitle||'ZN Enterprises');
+  setV('pay-bank-title',bk.accountTitle||'AR Computers');
   setV('pay-bank-number',bk.accountNumber||'');
   setV('pay-bank-iban',bk.IBAN||'');
   setV('pay-bank-instructions',bk.instructions||'Transfer the exact amount to the bank account above and email the transaction receipt to our support email.');
@@ -2090,7 +2089,7 @@ function savePaymentAccounts(){
 // EMAIL NOTIFICATIONS (EmailJS)
 // ============================================================
 function loadEmailJS(){
-  const cfg=JSON.parse(localStorage.getItem('zn_emailjs')||'{}');
+  const cfg=JSON.parse(localStorage.getItem('ar_emailjs')||'{}');
   const setV=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
   setV('ejs-serviceId',cfg.serviceId||'');
   setV('ejs-publicKey',cfg.publicKey||'');
@@ -2118,7 +2117,7 @@ function saveEmailJS(){
     msg.innerHTML='<i class="fas fa-exclamation-circle"></i> Service ID, Public Key, and Admin Template ID are required.';
     return;
   }
-  localStorage.setItem('zn_emailjs',JSON.stringify(cfg));
+  localStorage.setItem('ar_emailjs',JSON.stringify(cfg));
   updateEJSStatus(cfg);
   const msg=document.getElementById('ejsMsg');
   msg.style.display='block';msg.style.background='rgba(16,185,129,0.1)';msg.style.border='1px solid rgba(16,185,129,0.3)';msg.style.color='var(--green)';
@@ -2131,7 +2130,7 @@ function saveEmailJS(){
 // GOOGLE SHEET
 // ============================================================
 const APPS_SCRIPT=`// ===================================================
-// ZN Enterprises — Google Apps Script (Gmail Version)
+// AR Computers — Google Apps Script (Gmail Version)
 // 1. Extensions > Apps Script > Paste this > Save
 // 2. Change ADMIN_EMAIL on line 6
 // 3. Deploy > New Deployment > Web App
@@ -2140,7 +2139,7 @@ const APPS_SCRIPT=`// ===================================================
 // ===================================================
 
 var ADMIN_EMAIL = "your-gmail@gmail.com"; // ← CHANGE THIS
-var STORE_NAME  = "ZN Enterprises";
+var STORE_NAME  = "AR Computers";
 
 function doPost(e) {
   try {
@@ -2156,7 +2155,7 @@ function doPost(e) {
 
 function doGet(e) {
   return ContentService.createTextOutput(
-    JSON.stringify({status:"ok",msg:"ZN Enterprises webhook active"})
+    JSON.stringify({status:"ok",msg:"AR Computers webhook active"})
   ).setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -2206,11 +2205,11 @@ function handleStatusUpdate(data) {
 
 function getOrCreateSheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName("ZN Orders");
+  var sheet = ss.getSheetByName("AR Orders");
   if (!sheet) {
-    sheet = ss.insertSheet("ZN Orders");
+    sheet = ss.insertSheet("AR Orders");
     sheet.appendRow(["Order ID","Timestamp","Name","Phone","Email","City","Address","Payment","Items","Subtotal","Delivery","Total","Note","Status"]);
-    sheet.getRange(1,1,1,14).setFontWeight("bold").setBackground("#5b54e8").setFontColor("#ffffff");
+    sheet.getRange(1,1,1,14).setFontWeight("bold").setBackground("#1d4ed8").setFontColor("#ffffff");
     sheet.setFrozenRows(1);
   }
   return sheet;
@@ -2218,12 +2217,12 @@ function getOrCreateSheet() {
 
 function buildAdminEmail(d) {
   return '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;background:#f5f4ff;padding:20px;border-radius:12px;">'
-   +'<div style="background:linear-gradient(135deg,#5b54e8,#7c74f0);border-radius:10px;padding:18px 22px;color:#fff;margin-bottom:14px;">'
+   +'<div style="background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:10px;padding:18px 22px;color:#fff;margin-bottom:14px;">'
    +'<h2 style="margin:0;font-size:17px;">New Order Received — '+STORE_NAME+'</h2>'
    +'<p style="margin:5px 0 0;opacity:0.8;font-size:12px;">'+new Date().toLocaleString()+'</p></div>'
    +'<div style="background:#fff;border-radius:10px;padding:18px 22px;border:1px solid #e0defa;">'
    +'<table style="width:100%;border-collapse:collapse;font-size:13px;">'
-   +r("Order ID",d.orderId,"#5b54e8")+r("Customer",d.name)+r("Phone",d.phone)
+   +r("Order ID",d.orderId,"#1d4ed8")+r("Customer",d.name)+r("Phone",d.phone)
    +r("Email",d.email||"Not provided")+r("City",d.city)+r("Address",d.address)
    +r("Payment",d.payment)+r("Items",d.items)+r("Total","Rs. "+d.total,"#059669")
    +r("Note",d.note||"—")+'</table></div></div>';
@@ -2237,14 +2236,14 @@ function buildCustomerEmail(d) {
    +'<p style="margin:5px 0 0;opacity:0.85;font-size:12px;">Thank you for shopping with '+STORE_NAME+'</p></div>'
    +'<div style="background:#fff;border-radius:10px;padding:18px 22px;border:1px solid #e0defa;">'
    +'<table style="width:100%;border-collapse:collapse;font-size:13px;">'
-   +r("Order ID",d.orderId,"#5b54e8")+r("Items",d.items)+r("Total","Rs. "+d.total,"#059669")
+   +r("Order ID",d.orderId,"#1d4ed8")+r("Items",d.items)+r("Total","Rs. "+d.total,"#059669")
    +r("Payment",d.payment)+r("Delivery To",d.address+", "+d.city)+'</table>'
-   +'<p style="font-size:12px;color:#5b54e8;margin-top:14px;padding:10px;background:#ede9ff;border-radius:8px;">Our team will confirm within 1–2 hours and share tracking once dispatched. Questions? WhatsApp: 0343-3194763</p>'
+   +'<p style="font-size:12px;color:#1d4ed8;margin-top:14px;padding:10px;background:#eff6ff;border-radius:8px;">Our team will confirm within 1–2 hours and share tracking once dispatched. Questions? WhatsApp: 0343-3194763</p>'
    +'</div></div>';
 }
 
 function buildStatusEmail(d) {
-  var c={"Confirmed":"#5b54e8","Processing":"#0891b2","Dispatched":"#d97706","Delivered":"#059669"}[d.status]||"#5b54e8";
+  var c={"Confirmed":"#1d4ed8","Processing":"#0891b2","Dispatched":"#d97706","Delivered":"#059669"}[d.status]||"#1d4ed8";
   return '<div style="font-family:Arial,sans-serif;max-width:580px;margin:0 auto;padding:20px;border-radius:12px;">'
    +'<div style="background:'+c+';border-radius:10px;padding:18px;color:#fff;text-align:center;margin-bottom:14px;">'
    +'<h2 style="margin:0;">Order '+d.status+'</h2>'
@@ -2268,7 +2267,7 @@ function err_(m)  { return ContentService.createTextOutput(JSON.stringify({statu
 
 function loadSheetPanel(){
   document.getElementById('scriptCode').textContent=APPS_SCRIPT;
-  document.getElementById('sheetUrl').value=localStorage.getItem('zn_sheet_url')||'';
+  document.getElementById('sheetUrl').value=localStorage.getItem('ar_sheet_url')||'';
 }
 function copyScript(){
   navigator.clipboard.writeText(APPS_SCRIPT).then(()=>showToast('<i class="fas fa-copy" style="color:var(--green)"></i> Script copied!'));
@@ -2277,13 +2276,13 @@ function copyText(txt){navigator.clipboard.writeText(txt).then(()=>showToast('<i
 function saveSheetUrl(){
   const url=document.getElementById('sheetUrl').value.trim();
   if(!url){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Please enter a valid URL.');return;}
-  localStorage.setItem('zn_sheet_url',url);
+  localStorage.setItem('ar_sheet_url',url);
   showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Sheet URL saved!');
 }
 function testSheet(){
-  const ZN_SHEET_HARDCODED='https://script.google.com/macros/s/AKfycbx4Q5yLV3zqHYnXYWV3UQ2TYbVGNp7StwIFCr62GMVZzIZbjzkfJrJgicVEqg6xvO2R/exec';const url=(() => {try{return localStorage.getItem('zn_sheet_url')||ZN_SHEET_HARDCODED;}catch(e){return ZN_SHEET_HARDCODED;}})();
+  const AR_SHEET_HARDCODED='https://script.google.com/macros/s/AKfycbx4Q5yLV3zqHYnXYWV3UQ2TYbVGNp7StwIFCr62GMVZzIZbjzkfJrJgicVEqg6xvO2R/exec';const url=(() => {try{return localStorage.getItem('ar_sheet_url')||AR_SHEET_HARDCODED;}catch(e){return AR_SHEET_HARDCODED;}})();
   if(!url){showToast('<i class="fas fa-exclamation" style="color:var(--red)"></i> Please save the URL first.');return;}
-  const testData={orderId:'ZN-TEST-'+Date.now(),timestamp:new Date().toLocaleString(),name:'ZN Test',phone:'03001234567',email:'test@znenterprises.pk',city:'Karachi',address:'Test Address',payment:'COD',items:'Test Item x1',subtotal:0,delivery:0,total:0,note:'TEST ORDER - IGNORE',status:'Test'};
+  const testData={orderId:'AR-TEST-'+Date.now(),timestamp:new Date().toLocaleString(),name:'AR Test',phone:'03001234567',email:'test@arcomputers.pk',city:'Karachi',address:'Test Address',payment:'COD',items:'Test Item x1',subtotal:0,delivery:0,total:0,note:'TEST ORDER - IGNORE',status:'Test'};
   fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(testData)})
     .then(()=>{
       const el=document.getElementById('sheetStatus');
@@ -2310,12 +2309,12 @@ function saveAllData(){
 // ============================================================
 function toggleTheme(){
   const isLight = document.body.classList.toggle('light-mode');
-  localStorage.setItem('zn_dash_theme', isLight ? 'light' : 'dark');
+  localStorage.setItem('ar_dash_theme', isLight ? 'light' : 'dark');
   document.getElementById('themeIcon').className = isLight ? 'fas fa-sun' : 'fas fa-moon';
   document.getElementById('themeLabel').textContent = isLight ? 'Light' : 'Dark';
 }
 function initTheme(){
-  const saved = localStorage.getItem('zn_dash_theme');
+  const saved = localStorage.getItem('ar_dash_theme');
   if(saved === 'light'){
     document.body.classList.add('light-mode');
     const ic = document.getElementById('themeIcon');
@@ -2342,7 +2341,7 @@ function exportOrders(){
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'ZN_Orders_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
+  a.href = url; a.download = 'AR_Orders_'+new Date().toISOString().slice(0,10)+'.csv'; a.click();
   URL.revokeObjectURL(url);
   showToast('<i class="fas fa-download" style="color:var(--green)"></i> Orders exported — '+DATA.orders.length+' records');
 }
@@ -2353,7 +2352,7 @@ function exportOrdersWhatsApp(){
   if(!pending.length){ showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> Koi pending order nahi'); return; }
   const wa = DATA.siteInfo?.whatsapp||'923433194763';
   const NL='\n';
-  const msg = '*📦 ZN Enterprises — Pending Orders*'+NL+NL +
+  const msg = '*📦 AR Computers — Pending Orders*'+NL+NL +
     pending.map((o,i)=>`*${i+1}. ${o.orderId}*${NL}👤 ${o.name} | 📞 ${o.phone}${NL}📍 ${o.city}${NL}🛒 ${(o.items||'').slice(0,60)}${NL}💰 Rs. ${(o.total||0).toLocaleString()}${NL}💳 ${o.payment}`).join(NL+'─────────────'+NL);
   window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank');
 }
@@ -2377,7 +2376,7 @@ function downloadImportTemplate(){
 102,Mechanical Keyboard,8999,12999,keyboard,Razer,fas fa-keyboard,new,4.7,89,5,6 Months Warranty,Tactile mechanical switches`;
   const blob = new Blob([csv],{type:'text/csv'});
   const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='ZN_Product_Import_Template.csv'; a.click();
+  a.download='AR_Product_Import_Template.csv'; a.click();
 }
 function processBulkImport(){
   const file = document.getElementById('bulkCsvInput').files[0];
@@ -2469,7 +2468,7 @@ function renderRealSalesChart(){
   html+='<div style="font-size:0.67rem;color:var(--text3);text-align:center;margin-top:6px;">7 days: Rs. '+totalRev.toLocaleString()+' · '+totalOrd+' orders</div>';
   chartEl.innerHTML=html;
 }
-function openStore(){window.open('zn-store.html','_blank');}
+function openStore(){window.open('ar-store.html','_blank');}
 function togglePassVis(inputId, btnId){
   const inp=document.getElementById(inputId);
   const btn=document.getElementById(btnId);
@@ -2543,13 +2542,13 @@ function saveAdmin(){
   resetPassFields();
 }
 function exportData(){
-  const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(DATA,null,2));a.download='ZN_Store_Backup_'+Date.now()+'.json';a.click();
+  const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(DATA,null,2));a.download='AR_Store_Backup_'+Date.now()+'.json';a.click();
   showToast('<i class="fas fa-download" style="color:var(--green)"></i> Data exported!');
 }
 function importData(){showToast('<i class="fas fa-info-circle" style="color:var(--primary2)"></i> Select a JSON backup file to import...');}
 function resetData(){
   if(confirm('Sab data reset ho jayega. Sure hain?')){
-    localStorage.removeItem('zn_store_data');DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData(DATA);
+    localStorage.removeItem('ar_store_data');DATA=JSON.parse(JSON.stringify(DEFAULT_DATA));saveData(DATA);
     showToast('<i class="fas fa-rotate-left" style="color:var(--accent)"></i> Data reset to defaults!');
     renderPanel('dashboard');
   }
@@ -2706,7 +2705,7 @@ let loginAttempts = 0;
 const MAX_ATTEMPTS = 5;
 
 function checkLoginState() {
-  const session = localStorage.getItem('zn_admin_session');
+  const session = localStorage.getItem('ar_admin_session');
   if (session === 'true') {
     document.getElementById('loginGate').style.display = 'none';
     document.body.style.overflow = '';
@@ -2750,7 +2749,7 @@ function doLogin() {
 
   setTimeout(() => {
     if (user === creds.user && pass === creds.pass) {
-      localStorage.setItem('zn_admin_session', 'true');
+      localStorage.setItem('ar_admin_session', 'true');
       loginAttempts = 0;
       document.getElementById('loginGate').style.display = 'none';
       document.body.style.overflow = '';
@@ -2762,7 +2761,7 @@ function doLogin() {
         document.getElementById('loginPass').value = '';
         errEl.classList.remove('show');
       }, 500);
-      showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Welcome to ZN Dashboard!');
+      showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Welcome to AR Computers Dashboard!');
     } else {
       loginAttempts++;
       const rem = MAX_ATTEMPTS - loginAttempts;
@@ -2794,8 +2793,8 @@ function toggleLoginEye() {
 }
 
 function doLogout() {
-  if (confirm('Confirm logout from ZN Dashboard?')) {
-    localStorage.removeItem('zn_admin_session');
+  if (confirm('Confirm logout from AR Computers Dashboard?')) {
+    localStorage.removeItem('ar_admin_session');
     checkLoginState();
     showToast('<i class="fas fa-right-from-bracket" style="color:var(--accent)"></i> Logged out successfully!');
   }
@@ -2807,7 +2806,7 @@ initTheme();
 
 // Receive orders from store window
 window.addEventListener('storage',e=>{
-  if(e.key==='zn_store_data'){DATA=getData();if(document.getElementById('panel-orders').classList.contains('active'))renderOrders();if(document.getElementById('panel-dashboard').classList.contains('active'))renderDashboard();}
+  if(e.key==='ar_store_data'){DATA=getData();if(document.getElementById('panel-orders').classList.contains('active'))renderOrders();if(document.getElementById('panel-dashboard').classList.contains('active'))renderDashboard();}
 });
 // Receive orders posted by store
 window.addEventListener('zn_new_order',e=>{DATA=getData();});
@@ -2832,12 +2831,12 @@ renderPanel('dashboard');
   <div class="login-card">
     <div class="login-logo">
       <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs><linearGradient id="lgHex" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs>
+        <defs><linearGradient id="lgHex" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1d4ed8"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs>
         <polygon points="22,5 38,13.5 38,30.5 22,39 6,30.5 6,13.5" fill="url(#lgHex)"/>
         <polygon points="22,8.5 35,16 35,28 22,35.5 9,28 9,16" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-        <text x="22" y="27" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle">ZN</text>
+        <text x="22" y="27" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="white" text-anchor="middle" dominant-baseline="middle">AR</text>
       </svg>
-      <h2>ZN <span>Enterprises</span></h2>
+      <h2>AR <span>Enterprises</span></h2>
       <p>Admin Dashboard</p>
     </div>
     <div class="login-error" id="loginError">
@@ -2877,7 +2876,7 @@ renderPanel('dashboard');
       <button onclick="closeBulkImport()" style="background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;"><i class="fas fa-xmark"></i></button>
     </div>
     <div style="padding:1.5rem;">
-      <div style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.2);border-radius:10px;padding:1rem;margin-bottom:1.25rem;">
+      <div style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.2);border-radius:10px;padding:1rem;margin-bottom:1.25rem;">
         <div style="font-size:0.8rem;font-weight:700;color:var(--primary2);margin-bottom:0.5rem;"><i class="fas fa-info-circle"></i> CSV Format Guide</div>
         <div style="font-size:0.73rem;color:var(--text2);line-height:1.7;">
           Required columns: <code style="background:var(--bg3);padding:1px 5px;border-radius:4px;">id, name, price</code><br>

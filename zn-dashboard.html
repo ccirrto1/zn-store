@@ -2979,14 +2979,16 @@ function openTeamForm(idx){
     selectTeamColor('linear-gradient(135deg,#1d4ed8,#3b82f6)');
   }
   const overlay=document.getElementById('teamFormOverlay');
-  if(overlay){ overlay.classList.add('open'); overlay.style.display='flex'; }
+  if(overlay){
+    overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  }
   document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('tmName').focus(),150);
 }
 
 function closeTeamForm(){
   const overlay=document.getElementById('teamFormOverlay');
-  if(overlay){ overlay.classList.remove('open'); overlay.style.display=''; }
+  if(overlay){ overlay.style.cssText=''; }
   document.body.style.overflow='';
 }
 
@@ -3170,25 +3172,26 @@ function openDealForm(idx, type){
   const deals = getFlashDeals();
   const d = (idx!==null && idx>=0 && deals[idx]) ? deals[idx] : {};
   
-  // Populate static form fields
-  document.getElementById('dfTitle').value   = d.title    || '';
-  document.getElementById('dfSubtitle').value= d.subtitle || '';
-  document.getElementById('dfDiscount').value= d.discount || '';
-  document.getElementById('dfExpiry').value  = d.expiry   || '';
-  document.getElementById('dfPrice').value   = d.price    || '';
-  document.getElementById('dfBtnAction').value = d.btnAction || "filterAndGo('gaming')";
-  document.getElementById('dfActive').checked = d.active!==false;
-
-  const title = document.getElementById('dfFormTitle');
-  if(title) title.textContent = (idx!==null && idx>=0) ? 'Edit Flash Deal' : 'Add Flash Deal';
+  const setVal = (id, val) => { const el=document.getElementById(id); if(el) el.value=val||''; };
+  setVal('dfTitle',    d.title);
+  setVal('dfSubtitle', d.subtitle);
+  setVal('dfDiscount', d.discount||'');
+  setVal('dfExpiry',   d.expiry);
+  setVal('dfPrice',    d.price);
+  setVal('dfBtnAction', d.btnAction||"filterAndGo('gaming')");
+  const chk=document.getElementById('dfActive'); if(chk) chk.checked=(d.active!==false);
+  const ttl=document.getElementById('dfFormTitle');
+  if(ttl) ttl.innerHTML='<i class="fas fa-fire" style="color:#ef4444;margin-right:6px;"></i> '+((idx!==null&&idx>=0)?'Edit Flash Deal':'Add Flash Deal');
 
   const overlay = document.getElementById('dealFormOverlay');
-  if(overlay){ overlay.classList.add('open'); overlay.style.display='flex'; }
+  if(overlay){
+    overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  }
   document.body.style.overflow='hidden';
 }
 function closeDealForm(){
   const overlay = document.getElementById('dealFormOverlay');
-  if(overlay){ overlay.classList.remove('open'); overlay.style.display=''; }
+  if(overlay){ overlay.style.cssText=''; overlay.classList.remove('open'); }
   document.body.style.overflow='';
 }
 function saveDealForm(){
@@ -3236,12 +3239,14 @@ function getSlides(){
 function openBannerEditor(){
   renderBannerSlidesList();
   const ov=document.getElementById('bannerEditorOverlay');
-  if(ov){ov.classList.add('open');ov.style.display='flex';}
+  if(ov){
+    ov.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  }
   document.body.style.overflow='hidden';
 }
 function closeBannerEditor(){
   const ov=document.getElementById('bannerEditorOverlay');
-  if(ov){ov.classList.remove('open');ov.style.display='';}
+  if(ov){ ov.style.cssText=''; }
   document.body.style.overflow='';
 }
 function renderBannerSlidesList(){
@@ -3297,11 +3302,13 @@ function openSlideEdit(idx){
   const t=document.getElementById('slideEditTitle');
   if(t) t.innerHTML='<i class="fas fa-image" style="color:var(--primary2);margin-right:6px;"></i> '+(idx!==null&&idx>=0?'Edit':'Add')+' Slide';
   const ov=document.getElementById('slideEditOverlay');
-  if(ov){ov.classList.add('open');ov.style.display='flex';}
+  if(ov){
+    ov.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px);';
+  }
 }
 function closeSlideEdit(){
   const ov=document.getElementById('slideEditOverlay');
-  if(ov){ov.classList.remove('open');ov.style.display='';}
+  if(ov){ ov.style.cssText=''; }
 }
 function saveSlideEdit(){
   const title=document.getElementById('seTitle').value.trim();

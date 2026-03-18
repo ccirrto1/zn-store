@@ -2371,6 +2371,16 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
       <div class="fg">
         <label class="flbl"><i class="fas fa-note-sticky"></i> Special Instructions (Optional)</label>
         <textarea class="ftextarea" id="oNote" placeholder="Any special instructions or queries..." style="min-height:58px;"></textarea>
+
+        <!-- PROMO CODE AT CHECKOUT -->
+        <div style="background:rgba(29,78,216,0.06);border:1.5px solid rgba(29,78,216,0.18);border-radius:10px;padding:0.85rem 1rem;margin-top:0.25rem;">
+          <div style="font-size:0.73rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:6px;"><i class="fas fa-tag" style="color:#1d4ed8;"></i> Promo / Voucher Code</div>
+          <div id="oPromoApplied" style="display:none;margin-bottom:0.5rem;padding:0.4rem 0.7rem;background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);border-radius:7px;font-size:0.75rem;color:#059669;font-weight:700;"></div>
+          <div style="display:flex;gap:0.5rem;">
+            <input class="finput" id="oPromoInput" placeholder="Enter code (e.g. AR10)" style="flex:1;font-family:'JetBrains Mono',monospace;text-transform:uppercase;font-size:0.8rem;" oninput="this.value=this.value.toUpperCase()">
+            <button type="button" onclick="applyOrderPromo()" style="padding:0.5rem 1rem;background:#1d4ed8;color:#fff;border:none;border-radius:8px;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;"><i class="fas fa-tag"></i> Apply</button>
+          </div>
+        </div>
       </div>
       <div class="o-summary" id="oSummary"></div>
       <div class="order-wa-wrap">
@@ -3089,8 +3099,30 @@ updateWLBadge();
 function applyPromo(){
   const code=document.getElementById('promoInput').value.trim().toUpperCase();
   if(!code){showToast('!','Please enter a promo code','red');return;}
-  if(PROMODES[code]){promoDiscount=PROMODES[code];appliedPromo=code;showToast('✓',`Code "${code}" applied! ${promoDiscount}% discount added`,'green');document.getElementById('promoInput').style.borderColor='var(--green)';}
+  const codes=getActiveCodes();
+  if(codes[code]){promoDiscount=codes[code];appliedPromo=code;showToast('✓',`Code "${code}" applied! ${promoDiscount}% off`,'green');document.getElementById('promoInput').style.borderColor='var(--green)';}
   else{showToast('✕','Invalid promo code — please try again','red');document.getElementById('promoInput').style.borderColor='var(--red)';}
+}
+function applyOrderPromo(){
+  const code=(document.getElementById('oPromoInput').value||'').trim().toUpperCase();
+  if(!code){showToast('!','Code enter karo','red');return;}
+  const codes=getActiveCodes();
+  if(codes[code]){
+    promoDiscount=codes[code];appliedPromo=code;
+    const el=document.getElementById('oPromoApplied');
+    if(el){el.style.display='block';el.innerHTML='<i class="fas fa-check-circle"></i> "'+code+'" applied — '+promoDiscount+'% discount!';}
+    document.getElementById('oPromoInput').style.borderColor='var(--green)';
+    document.getElementById('oPromoInput').disabled=true;
+    // Refresh order preview to show updated total
+    if(typeof updateOrderPreview==='function') updateOrderPreview();
+    showToast('✓','Code "'+code+'" applied! '+promoDiscount+'% discount added','green');
+    // Refresh order summary to show discount
+    if(typeof currentOrderItems!=='undefined'&&currentOrderItems) buildOrderSummary(currentOrderItems);
+    else if(typeof orderCartItems!=='undefined'&&orderCartItems) buildOrderSummary(orderCartItems);
+  } else {
+    document.getElementById('oPromoInput').style.borderColor='var(--red)';
+    showToast('✕','Invalid code — please check and try again','red');
+  }
 }
 
 // ============================================================
@@ -3719,6 +3751,11 @@ function openOrderModal(product,qty=1,cartItems=null){
   document.getElementById('successScreen').classList.remove('show');
   ['oName','oPhone','oEmail','oAddress','oNote'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('err');});
   document.getElementById('oCity').value='';document.getElementById('oPayment').value='COD';
+  // Reset promo in order form
+  const oPromoEl=document.getElementById('oPromoInput');
+  if(oPromoEl){oPromoEl.value='';oPromoEl.style.borderColor='';oPromoEl.disabled=false;}
+  const oPromoApplied=document.getElementById('oPromoApplied');
+  if(oPromoApplied){oPromoApplied.style.display='none';oPromoApplied.innerHTML='';}
   document.getElementById('paymentInfoBox').classList.remove('show');
   ['oNameErr','oPhoneErr','oEmailErr','oAddressErr','oCityErr'].forEach(id=>document.getElementById(id).classList.remove('show'));
   const items=cartItems||[{...product,qty:qty||1}];
@@ -3736,6 +3773,12 @@ function openOrderModal(product,qty=1,cartItems=null){
 }
 function buildOrderSummary(items){
   const sub=items.reduce((s,i)=>s+i.price*i.qty,0);
+  // Re-sync promo from order form if typed there
+  const oPromoF=document.getElementById('oPromoInput');
+  if(oPromoF&&oPromoF.value&&!appliedPromo){
+    const codes=getActiveCodes();const cd=oPromoF.value.trim().toUpperCase();
+    if(codes[cd]){promoDiscount=codes[cd];appliedPromo=cd;}
+  }
   const promo=Math.round(sub*promoDiscount/100);
   const afterP=sub-promo;
   const si=getSI();
@@ -3765,6 +3808,13 @@ function placeOrder(){
   ve('oAddress','oAddressErr',address.length<10);
   ve('oCity','oCityErr',!city);
   if(!valid){showToast('!','Please fill in all required fields correctly!','red');return;}
+  // Read promo from order form if not already applied globally
+  const orderPromoInput=document.getElementById('oPromoInput');
+  if(orderPromoInput&&orderPromoInput.value&&!appliedPromo){
+    const codes=getActiveCodes();
+    const cd=orderPromoInput.value.trim().toUpperCase();
+    if(codes[cd]){promoDiscount=codes[cd];appliedPromo=cd;}
+  }
   const btn=document.getElementById('confirmBtn');
   btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Processing your order...';
   const orderId='AR-'+Date.now().toString().slice(-6);

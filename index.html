@@ -2521,6 +2521,7 @@ if(saved && saved.siteInfo && !saved.siteInfo.paymentAccounts){
   saved.siteInfo.paymentAccounts = DEFAULT_PAY_ACCOUNTS;
 }
 const DATA = saved || {
+  siteInfo:{name:'AR Computers',phone:'0343-3194763',email:'info@arcomputers.pk',address:'Shop FA-06A, 1st Floor, Techno City Mall, I.I. Chundrigar Road, Karachi',timing:'Mon–Sat: 10am–8pm',whatsapp:'923433194763',helpline:'0343-3194763',deliveryCharge:200,freeDeliveryMin:5000,team:[{initials:'AR',name:'Ahmad Raza',role:'Founder & CEO',desc:'Tech enthusiast, 10+ saal ka experience hardware industry mein.',color:'linear-gradient(135deg,#1d4ed8,#3b82f6)'},{initials:'SK',name:'Sara Khan',role:'Head of Operations',desc:'Logistics aur customer satisfaction ki guardian.',color:'linear-gradient(135deg,#059669,#10b981)'},{initials:'MH',name:'Muneeb Hassan',role:'Tech Specialist',desc:'Hardware expert. Aapke kisi bhi technical sawal ka jawab.',color:'linear-gradient(135deg,#7c3aed,#8b5cf6)'}]},
   categories:[
     {id:'monitor',name:'Monitors',icon:'fas fa-desktop',color:'#059669',count:35},
     {id:'mouse',name:'Mouse & Pads',icon:'fas fa-computer-mouse',color:'#0891b2',count:62},
@@ -2711,7 +2712,15 @@ function updateHelplineUI(){
 // ============================================================
 // HERO SLIDESHOW BANNER
 // ============================================================
-const SLIDES = [
+// Load slides from dashboard siteInfo if available
+function getSlidesData(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ar_store_data')||'{}');
+    if(d.siteInfo&&d.siteInfo.slides&&d.siteInfo.slides.length) return d.siteInfo.slides;
+  }catch(e){}
+  return null;
+}
+const SLIDES_DEFAULT = [
   {
     tag:'🎮 Gaming Gear — Flash Sale',
     title:'Ultimate Gaming\n<span>Mouse</span> Experience',
@@ -2773,6 +2782,8 @@ const SLIDES = [
     cat:'hub',fallback:'🛒'
   }
 ];
+const SLIDES = getSlidesData() || SLIDES_DEFAULT;
+
 let curSlide=0,slideTimer,slideProgressInterval,slideProgressW=0;
 
 function buildBanner(){
@@ -2914,7 +2925,8 @@ function renderFilters(){
   html += `<select class="sort-sel" onchange="sortProds(this.value)"><option value="">Sort By</option><option value="low">Price: Low → High</option><option value="high">Price: High → Low</option><option value="rating">Best Rated</option><option value="popular">Most Popular</option></select>`;
   document.getElementById('filterBar').innerHTML=html;
 }
-let activeFilter='All',sortMode='';
+let activeFilter='All',sortMode='',prodsPage=1;
+const PRODS_PER_PAGE=12;
 function stockBadge(p){
   if(p.stock==null) return '';
   const s=p.stock;

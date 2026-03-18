@@ -2426,7 +2426,15 @@ document.getElementById('footerLogo').src = LOGO;
 // ============================================================
 // STORE DATA
 // ============================================================
-const PROMODES = { 'AR10': 10, 'WELCOME': 15, 'SAVE20': 20, 'ARCOMP': 12 };
+const DEFAULT_PROMODES = { 'AR10': 10, 'WELCOME': 15, 'SAVE20': 20, 'ARCOMP': 12 };
+function getActiveCodes(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ar_store_data')||'{}');
+    return (d.siteInfo&&d.siteInfo.promos&&Object.keys(d.siteInfo.promos).length)
+      ? d.siteInfo.promos : DEFAULT_PROMODES;
+  }catch(e){ return DEFAULT_PROMODES; }
+}
+const PROMODES = getActiveCodes();
 let promoDiscount = 0, appliedPromo = '';
 
 function getSaved() { try { return JSON.parse(localStorage.getItem('ar_store_data')) || null; } catch(e) { return null; } }
@@ -2918,18 +2926,25 @@ function filterProds(cat,btn){activeFilter=cat;document.querySelectorAll('.f-pil
 function filterAndGo(cat){activeFilter=cat;document.querySelectorAll('.f-pill').forEach(b=>b.classList.toggle('active',b.dataset&&b.dataset.cat===cat));renderProducts();scrollTo0('products');}
 function sortProds(v){sortMode=v;renderProducts();}
 function renderProducts(){
+  prodsPage=1;
   let list=activeFilter==='All'?[...DATA.products]:DATA.products.filter(p=>p.cat===activeFilter);
   if(sortMode==='low')list.sort((a,b)=>a.price-b.price);
   else if(sortMode==='high')list.sort((a,b)=>b.price-a.price);
   else if(sortMode==='rating')list.sort((a,b)=>b.rating-a.rating);
   else if(sortMode==='popular')list.sort((a,b)=>b.reviews-a.reviews);
-  displayProds(list);
+  prodsPage=1; displayProds(list);
 }
-function displayProds(list){
+function displayProds(list, append=false){
   const g=document.getElementById('prodsGrid');
+  // Remove old load-more button
+  const oldBtn=document.getElementById('loadMoreBtn');if(oldBtn)oldBtn.remove();
   if(!list.length){g.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text3);"><i class="fas fa-box-open" style="font-size:3rem;display:block;margin-bottom:1rem;color:var(--border);"></i><p>No products found</p></div>`;return;}
+  const visible=list.slice(0,prodsPage*PRODS_PER_PAGE);
+  const hasMore=list.length>visible.length;
   const disc=p=>p.old?Math.round((1-p.price/p.old)*100):0;
-  g.innerHTML=list.map(p=>{
+  // Store full list for load-more
+  g._fullList=list;
+  g.innerHTML=visible.map(p=>{
     const img=prodImg(p.id);
     const wished=wishlist.includes(p.id);
     return `<div class="pcard" onclick="openProduct(${p.id})" style="cursor:pointer;">
@@ -2957,6 +2972,26 @@ function displayProds(list){
       </div>
     </div>`;
   }).join('');
+  // Load More button
+  if(hasMore){
+    const wrap=document.createElement('div');
+    wrap.id='loadMoreBtn';
+    wrap.style.cssText='grid-column:1/-1;text-align:center;padding:1.5rem 0 0.5rem;';
+    wrap.innerHTML=`<button onclick="loadMoreProds()" style="padding:0.75rem 2.5rem;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:0.85rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(29,78,216,0.3);"><i class="fas fa-chevron-down"></i> Load More (${list.length-visible.length} remaining)</button>`;
+    g.appendChild(wrap);
+  }
+  // Product count
+  const cnt=document.getElementById('productCount');
+  if(cnt) cnt.textContent=`${list.length} products`;
+}
+function loadMoreProds(){
+  const g=document.getElementById('prodsGrid');
+  if(!g._fullList) return;
+  prodsPage++;
+  displayProds(g._fullList);
+  // Scroll to new products smoothly
+  const btn=document.getElementById('loadMoreBtn');
+  if(btn) btn.scrollIntoView({behavior:'smooth',block:'center'});
 }
 
 // ============================================================

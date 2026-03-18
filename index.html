@@ -44,6 +44,7 @@
   "email": "info@arcomputers.pk",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "Shop FA-06A, 1st Floor, Techno City Mall, I.I. Chundrigar Road",
     "addressLocality": "Karachi",
     "addressRegion": "Sindh",
     "addressCountry": "PK"
@@ -62,7 +63,7 @@
   "priceRange": "Rs. 2,999 – Rs. 99,999",
   "currenciesAccepted": "PKR",
   "paymentAccepted": "Cash, JazzCash, EasyPaisa, Bank Transfer",
-  "hasMap": "https://maps.google.com/?q=Karachi,Pakistan",
+  "hasMap": "https://maps.google.com/?q=Techno+City+Mall+II+Chundrigar+Road+Karachi",
   "sameAs": [
     "https://wa.me/923433194763"
   ]
@@ -682,6 +683,54 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 .wa-send-btn:hover{transform:scale(1.1);}
 .wa-send-btn:disabled{background:var(--border2);cursor:not-allowed;transform:none;}
 /* Footer */
+.about-hero{background:linear-gradient(135deg,#1d4ed8 0%,#1e40af 50%,#1e3a8a 100%);padding:2.5rem;text-align:center;border-radius:0 0 20px 20px;position:relative;overflow:hidden;}
+.about-hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='rgba(255,255,255,0.08)'/%3E%3C/svg%3E");}
+.about-hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:4px 14px;font-size:0.72rem;font-weight:700;color:#bfdbfe;letter-spacing:1px;margin-bottom:1rem;}
+.about-hero h2{font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:0.4rem;}
+.about-hero p{font-size:0.84rem;color:#bfdbfe;max-width:420px;margin:0 auto;}
+.about-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:14px;overflow:hidden;margin:1.4rem 0;}
+.about-stat{background:var(--bg2);padding:1.1rem 0.5rem;text-align:center;}
+.about-stat-num{font-size:1.5rem;font-weight:900;color:#1d4ed8;line-height:1;}
+.about-stat-lbl{font-size:0.65rem;color:var(--text3);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+.about-section{margin-bottom:1.6rem;}
+.about-section h3{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:0.85rem;display:flex;align-items:center;gap:8px;}
+.about-section h3 i{width:28px;height:28px;background:rgba(29,78,216,0.1);color:#1d4ed8;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0;}
+.about-story-text{font-size:0.82rem;color:var(--text2);line-height:1.75;}
+.about-story-text strong{color:var(--text);}
+.about-why-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;}
+.about-why-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:0.85rem;transition:border-color 0.2s;}
+.about-why-card:hover{border-color:#1d4ed8;}
+.about-why-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:0.82rem;margin-bottom:0.5rem;}
+.about-why-title{font-size:0.78rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+.about-why-desc{font-size:0.69rem;color:var(--text3);line-height:1.5;}
+.about-team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
+.about-team-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:14px;padding:1rem 0.75rem;text-align:center;}
+.about-team-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:#fff;margin:0 auto 0.6rem;letter-spacing:-1px;}
+.about-team-name{font-size:0.78rem;font-weight:800;color:var(--text);}
+.about-team-role{font-size:0.67rem;color:#1d4ed8;font-weight:600;margin-top:1px;}
+.about-team-desc{font-size:0.65rem;color:var(--text3);margin-top:5px;line-height:1.4;}
+.about-timeline{display:flex;flex-direction:column;gap:0;}
+.about-tl-item{display:flex;gap:1rem;padding-bottom:1.2rem;position:relative;}
+.about-tl-item:not(:last-child)::before{content:'';position:absolute;left:16px;top:32px;bottom:0;width:2px;background:linear-gradient(to bottom,#1d4ed8,var(--border));opacity:0.3;}
+.about-tl-dot{width:32px;height:32px;border-radius:50%;background:rgba(29,78,216,0.1);border:2px solid #1d4ed8;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;color:#1d4ed8;flex-shrink:0;margin-top:2px;}
+.about-tl-year{font-size:0.7rem;font-weight:800;color:#1d4ed8;}
+.about-tl-title{font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+.about-tl-desc{font-size:0.71rem;color:var(--text3);line-height:1.5;}
+.about-cta{background:linear-gradient(135deg,rgba(29,78,216,0.08),rgba(37,99,235,0.04));border:1.5px solid rgba(29,78,216,0.18);border-radius:14px;padding:1.25rem;text-align:center;}
+.about-cta h4{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:0.3rem;}
+.about-cta p{font-size:0.76rem;color:var(--text3);margin-bottom:0.9rem;}
+.about-cta-btns{display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;}
+.about-cta-btn{display:inline-flex;align-items:center;gap:6px;padding:0.55rem 1.1rem;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;border:none;transition:all 0.2s;}
+.about-cta-btn.primary{background:#1d4ed8;color:#fff;}
+.about-cta-btn.primary:hover{background:#1e40af;}
+.about-cta-btn.ghost{background:transparent;color:#1d4ed8;border:1.5px solid rgba(29,78,216,0.35);}
+.about-cta-btn.ghost:hover{background:rgba(29,78,216,0.08);}
+@media(max-width:600px){
+  .about-team-grid{grid-template-columns:1fr 1fr;}
+  .about-why-grid{grid-template-columns:1fr;}
+  .about-hero{padding:1.6rem 1.2rem;}
+  .about-hero h2{font-size:1.25rem;}
+}
 .wa-chat-footer{padding:0.45rem 1rem;text-align:center;font-size:0.63rem;color:var(--text3);background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:8px;flex-shrink:0;}
 .wa-chat-footer a{color:#25d366;text-decoration:none;font-weight:700;}
 .wa-action-btn{
@@ -1154,7 +1203,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     <div class="hb-item"><i class="fas fa-phone"></i> <span id="hbPhone">0343-3194763</span></div>
     <div class="hb-item"><i class="fas fa-envelope"></i> <span id="hbEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1c8cfc7cee1dbcfc4cfd5c4d3d1d3c8d2c4d28fd1ca">[email&#160;protected]</a></span></div>
     <div class="hb-item"><i class="fas fa-clock"></i> Mon–Sat: 10am–8pm</div>
-    <div class="hb-item"><i class="fas fa-location-dot"></i> Karachi, Pakistan</div>
+    <div class="hb-item"><i class="fas fa-location-dot"></i> Techno City Mall, Karachi</div>
   </div>
   <div class="hb-right">
     <span style="font-size:0.72rem;color:var(--text3);">24/7 Support via:</span>
@@ -1285,6 +1334,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 
     <li><a onclick="scrollTo0('deals')" href="javascript:void(0)"><i class="fas fa-fire"></i> Deals</a></li>
     <li><a onclick="scrollTo0('brands')" href="javascript:void(0)"><i class="fas fa-star"></i> Brands</a></li>
+    <li><a onclick="openSupport('aboutModal')" href="javascript:void(0)" style="font-weight:700;"><i class="fas fa-building"></i> About Us</a></li>
     <li><a onclick="openWishlistPanel()" href="javascript:void(0)"><i class="fas fa-heart"></i> Wishlist <span id="wlBadge" style="display:none;background:var(--red);color:#fff;border-radius:100px;font-size:0.6rem;padding:0.08rem 0.38rem;margin-left:2px;"></span></a></li>
   </ul>
   <div class="nav-right">
@@ -1462,6 +1512,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     <div class="fcol">
       <h4>Support</h4>
       <ul>
+        <li><a onclick="openSupport('aboutModal')" style="cursor:pointer;"><i class="fas fa-building"></i> About AR Computers</a></li>
         <li><a onclick="openSupport('trackModal')" style="cursor:pointer;"><i class="fas fa-truck"></i> Track Order</a></li>
         <li><a onclick="openSupport('returnModal')" style="cursor:pointer;"><i class="fas fa-rotate-left"></i> Return Policy</a></li>
         <li><a onclick="openSupport('warrantyModal')" style="cursor:pointer;"><i class="fas fa-shield"></i> Warranty Claims</a></li>
@@ -1472,7 +1523,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     <div class="fcol">
       <h4>Contact AR</h4>
       <ul>
-        <li><a href="https://maps.google.com/?q=Karachi+Pakistan" target="_blank"><i class="fas fa-location-dot"></i> Karachi, Pakistan</a></li>
+        <li><a href="https://maps.google.com/?q=Techno+City+Mall+II+Chundrigar+Road+Karachi" target="_blank"><i class="fas fa-location-dot"></i> Techno City Mall, I.I. Chundrigar Rd, Karachi</a></li>
         <li><a id="footerPhone" href="tel:03433194763"><i class="fas fa-phone"></i> 0343-3194763</a></li>
         <li><a href="/cdn-cgi/l/email-protection#f891969e97b882969d968c9d8a888a918b9d8bd68893"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="96fff8f0f9d6ecf8f3f8e2f3e4e6e4ffe5f3e5b8e6fd">[email&#160;protected]</span></a></li>
         <li><a style="cursor:default;"><i class="fas fa-clock"></i> Mon–Sat: 10am–8pm</a></li>
@@ -1481,7 +1532,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     </div>
   </div>
   <div class="f-bottom">
-    <span class="f-copy">© 2025 AR Computers. All Rights Reserved. Karachi, Pakistan</span>
+    <span class="f-copy">© 2025 AR Computers. All Rights Reserved. Techno City Mall, I.I. Chundrigar Road, Karachi</span>
     <div class="f-pays">
       <div class="f-pay"><i class="fas fa-money-bill"></i> COD</div>
       <div class="f-pay"><i class="fas fa-mobile"></i> JazzCash</div>
@@ -1491,6 +1542,163 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
   </div>
 </footer>
 
+
+<!-- ===== ABOUT US MODAL ===== -->
+<div class="support-overlay" id="aboutModal" onclick="if(event.target===this)closeSupport('aboutModal')">
+  <div class="support-modal" style="max-width:700px;">
+    <div class="support-modal-hdr">
+      <div class="support-modal-icon" style="background:rgba(29,78,216,0.12);color:#1d4ed8;"><i class="fas fa-building"></i></div>
+      <div class="support-modal-title"><h3>About AR Computers</h3><p>Pakistan ka trusted tech partner since 2020</p></div>
+      <button class="support-close" onclick="closeSupport('aboutModal')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="support-modal-body">
+
+      <!-- HERO -->
+      <div class="about-hero">
+        <div class="about-hero-badge"><i class="fas fa-shield-check"></i> AUTHORIZED RESELLER</div>
+        <h2>AR Computers</h2>
+        <p>Premium computer accessories — original products, karachi se poore Pakistan tak delivery</p>
+      </div>
+
+      <!-- STATS -->
+      <div class="about-stats-row">
+        <div class="about-stat">
+          <div class="about-stat-num">5000+</div>
+          <div class="about-stat-lbl">Happy Customers</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">50+</div>
+          <div class="about-stat-lbl">Premium Brands</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">4.8★</div>
+          <div class="about-stat-lbl">Avg. Rating</div>
+        </div>
+      </div>
+
+      <!-- OUR STORY -->
+      <div class="about-section">
+        <h3><i class="fas fa-book-open"></i> Hamari Kahani</h3>
+        <p class="about-story-text">
+          AR Computers ki shuruaat <strong>2020 mein Karachi</strong> se hui, jab humne dekha ke Pakistan mein genuiine computer accessories milna mushkil tha — ya toh quality nahi hoti, ya price bahut zyada hota tha.<br><br>
+          Humara mission simple tha: <strong>100% original products</strong> seedha brand-authorized channels se, aur woh bhi aise prices pe jo genuinely competitive hon. Aaj hum Logitech, Razer, HyperX, Corsair, ASUS ROG, Samsung aur doosre top brands ke authorized reseller hain.<br><br>
+          Sirf Karachi nahi — hum <strong>poore Pakistan mein deliver</strong> karte hain. Lahore ho ya Islamabad, Peshawar ho ya Quetta — har jagah Cash on Delivery available hai.
+        </p>
+      </div>
+
+      <!-- WHY CHOOSE US -->
+      <div class="about-section">
+        <h3><i class="fas fa-star"></i> Hum Kyon Behtareen Hain</h3>
+        <div class="about-why-grid">
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(29,78,216,0.1);color:#1d4ed8;"><i class="fas fa-certificate"></i></div>
+            <div class="about-why-title">100% Original Products</div>
+            <div class="about-why-desc">Sirf brand-authorized channels se sourcing. Fake product milne pe full refund guaranteed.</div>
+          </div>
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(5,150,105,0.1);color:#059669;"><i class="fas fa-truck-fast"></i></div>
+            <div class="about-why-title">Nationwide Delivery</div>
+            <div class="about-why-desc">Karachi mein same/next day. Baaki Pakistan mein 2–5 business days. COD available.</div>
+          </div>
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(245,158,11,0.1);color:#d97706;"><i class="fas fa-shield-halved"></i></div>
+            <div class="about-why-title">Warranty Support</div>
+            <div class="about-why-desc">Har product pe genuine warranty. Claim karne mein hum khud help karte hain — aapko brand service center nahi jaana.</div>
+          </div>
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(139,92,246,0.1);color:#7c3aed;"><i class="fas fa-headset"></i></div>
+            <div class="about-why-title">Expert Support</div>
+            <div class="about-why-desc">Technical queries? Setup help? Humari team WhatsApp pe available hai — real humans, not bots.</div>
+          </div>
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(239,68,68,0.1);color:#dc2626;"><i class="fas fa-tags"></i></div>
+            <div class="about-why-title">Best Prices</div>
+            <div class="about-why-desc">Market competitive pricing. Regular flash sales aur bundle deals. Price match guarantee pe contact karein.</div>
+          </div>
+          <div class="about-why-card">
+            <div class="about-why-icon" style="background:rgba(37,211,102,0.1);color:#25d366;"><i class="fab fa-whatsapp"></i></div>
+            <div class="about-why-title">WhatsApp First</div>
+            <div class="about-why-desc">Order track karo, queries poochho, returns initiate karo — sab kuch WhatsApp pe. No complicated process.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOURNEY / TIMELINE -->
+      <div class="about-section">
+        <h3><i class="fas fa-timeline"></i> Hamara Safar</h3>
+        <div class="about-timeline">
+          <div class="about-tl-item">
+            <div class="about-tl-dot">20</div>
+            <div>
+              <div class="about-tl-year">2020</div>
+              <div class="about-tl-title">Shuruaat — Karachi se</div>
+              <div class="about-tl-desc">Chhoti si team ke saath shuraat ki — sirf gaming peripherals se. First 100 customers Karachi ke the.</div>
+            </div>
+          </div>
+          <div class="about-tl-item">
+            <div class="about-tl-dot">21</div>
+            <div>
+              <div class="about-tl-year">2021</div>
+              <div class="about-tl-title">Nationwide Expansion</div>
+              <div class="about-tl-desc">COD se poore Pakistan mein delivery shuru ki. Lahore aur Islamabad mein customer base grow hua.</div>
+            </div>
+          </div>
+          <div class="about-tl-item">
+            <div class="about-tl-dot">22</div>
+            <div>
+              <div class="about-tl-year">2022</div>
+              <div class="about-tl-title">Authorized Reseller Status</div>
+              <div class="about-tl-desc">Logitech, HyperX aur Corsair ke authorized reseller ban gaye. 1000+ happy customers milestone.</div>
+            </div>
+          </div>
+          <div class="about-tl-item">
+            <div class="about-tl-dot">23</div>
+            <div>
+              <div class="about-tl-year">2023</div>
+              <div class="about-tl-title">Category Expansion</div>
+              <div class="about-tl-desc">Gaming se age badh ke monitors, storage, laptops aur office accessories bhi add kiye. 3000+ customers.</div>
+            </div>
+          </div>
+          <div class="about-tl-item">
+            <div class="about-tl-dot">24</div>
+            <div>
+              <div class="about-tl-year">2024</div>
+              <div class="about-tl-title">Online Store Launch</div>
+              <div class="about-tl-desc">Full online store launch. AI-powered customer support. 5000+ customers. Razer aur ASUS ROG partnership.</div>
+            </div>
+          </div>
+          <div class="about-tl-item" style="padding-bottom:0;">
+            <div class="about-tl-dot" style="background:#1d4ed8;color:#fff;">25</div>
+            <div>
+              <div class="about-tl-year" style="color:#059669;">2025 — Aaj</div>
+              <div class="about-tl-title">AR Computers — Pakistan ka #1 Tech Store</div>
+              <div class="about-tl-desc">50+ brands, 500+ products, next-day Karachi delivery. Aapka trust hamari sabse bari achievement hai.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEAM -->
+      <div class="about-section">
+        <h3><i class="fas fa-users"></i> Hamari Team</h3>
+        <div class="about-team-grid" id="aboutTeamGrid">
+          <!-- Rendered by renderAboutTeam() -->
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="about-cta">
+        <h4>AR Computers ke saath shopping shuru karein</h4>
+        <p>Hum se kuch bhi poochhein — WhatsApp pe instant reply milta hai</p>
+        <div class="about-cta-btns">
+          <button class="about-cta-btn primary" onclick="closeSupport('aboutModal');scrollTo0('products');"><i class="fas fa-bag-shopping"></i> Products Dekhein</button>
+          <button class="about-cta-btn ghost" onclick="closeSupport('aboutModal');openWaPopup();"><i class="fab fa-whatsapp"></i> WhatsApp Karein</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ===== TRACK ORDER MODAL ===== -->
 <div class="support-overlay" id="trackModal" onclick="if(event.target===this)closeSupport('trackModal')">
@@ -1798,7 +2006,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
         <h3><i class="fas fa-bag-shopping"></i> Place Your Order</h3>
         <button class="close-x" onclick="closeOrderModal()"><i class="fas fa-xmark"></i></button>
       </div>
-      <p class="order-sub"><i class="fas fa-location-dot" style="color:var(--primary);margin-right:4px;"></i> AR Computers — Karachi | Cash on Delivery Available Nationwide</p>
+      <p class="order-sub"><i class="fas fa-location-dot" style="color:var(--primary);margin-right:4px;"></i> AR Computers — Techno City Mall, I.I. Chundrigar Rd, Karachi | COD Available Nationwide</p>
       <div class="order-preview" id="orderPreview"></div>
       <div class="f2">
         <div class="fg">
@@ -2092,7 +2300,7 @@ const DATA = saved || {
   orders:[],
   siteInfo:{
     name:'AR Computers',phone:'0343-3194763',email:'info@arcomputers.pk',
-    address:'Karachi, Pakistan',timing:'Mon–Sat: 10am–8pm',
+    address:'Shop FA-06A, 1st Floor, Techno City Mall, I.I. Chundrigar Road, Karachi',timing:'Mon–Sat: 10am–8pm',
     whatsapp:'923433194763',helpline:'0343-3194763',
     deliveryCharge:200,freeDeliveryMin:5000,
     adminEmail:'admin@arcomputers.pk',
@@ -2136,7 +2344,12 @@ if(!Array.isArray(DATA.categories)||!DATA.categories.length) DATA.categories=[
   {id:'hub',name:'Hubs & Cables',icon:'fas fa-plug',color:'#dc2626',count:80},
   {id:'cooling',name:'Cooling',icon:'fas fa-snowflake',color:'#0284c7',count:28}
 ];
-if(!DATA.siteInfo) DATA.siteInfo={name:'AR Computers',phone:'0343-3194763',email:'info@arcomputers.pk',address:'Karachi, Pakistan',timing:'Mon–Sat: 10am–8pm',whatsapp:'923433194763',helpline:'0343-3194763',deliveryCharge:200,freeDeliveryMin:5000};
+if(!DATA.siteInfo) DATA.siteInfo={name:'AR Computers',phone:'0343-3194763',email:'info@arcomputers.pk',address:'Shop FA-06A, 1st Floor, Techno City Mall, I.I. Chundrigar Road, Karachi',timing:'Mon–Sat: 10am–8pm',whatsapp:'923433194763',helpline:'0343-3194763',deliveryCharge:200,freeDeliveryMin:5000};
+if(!DATA.siteInfo.team) DATA.siteInfo.team=[
+  {initials:'AR',name:'Ahmad Raza',role:'Founder & CEO',desc:'Tech enthusiast, 10+ saal ka experience hardware industry mein.',color:'linear-gradient(135deg,#1d4ed8,#3b82f6)'},
+  {initials:'SK',name:'Sara Khan',role:'Head of Operations',desc:'Logistics aur customer satisfaction ki guardian. Har order personally track karti hain.',color:'linear-gradient(135deg,#059669,#10b981)'},
+  {initials:'MH',name:'Muneeb Hassan',role:'Tech Specialist',desc:'Hardware expert. Aapke kisi bhi technical sawal ka jawab inke paas hai.',color:'linear-gradient(135deg,#7c3aed,#8b5cf6)'}
+];
 if(!DATA.siteInfo.paymentAccounts) DATA.siteInfo.paymentAccounts=DEFAULT_PAY_ACCOUNTS;
 if(!Array.isArray(DATA.orders)) DATA.orders=[];
 
@@ -2531,7 +2744,7 @@ const AI_MAX_QUESTIONS=3; // 3 questions per session
 const AI_SYSTEM_PROMPT = `You are AR AI, a friendly and helpful customer support assistant for AR Computers — Pakistan's trusted computer accessories store based in Karachi.
 
 STORE INFO:
-- Store: AR Computers, Karachi, Pakistan
+- Store: AR Computers, Shop FA-06A, 1st Floor, Techno City Mall, I.I. Chundrigar Road, Karachi
 - WhatsApp/Helpline: 0343-3194763
 - Email: info@arcomputers.pk
 - Hours: Mon-Sat 10am-8pm
@@ -3518,11 +3731,25 @@ const FAQ_DATA = [
 ];
 let faqActiveCat = 'All';
 
+function renderAboutTeam(){
+  const grid = document.getElementById('aboutTeamGrid');
+  if(!grid) return;
+  const team = (DATA.siteInfo && DATA.siteInfo.team) || [];
+  if(!team.length){ grid.innerHTML='<div style="color:var(--text3);font-size:0.8rem;text-align:center;padding:1rem;">Koi team member nahi mila.</div>'; return; }
+  grid.innerHTML = team.map(m=>`
+    <div class="about-team-card">
+      <div class="about-team-av" style="background:${m.color||'linear-gradient(135deg,#1d4ed8,#3b82f6)'};">${(m.initials||m.name.split(' ').map(w=>w[0]).join('').slice(0,2)).toUpperCase()}</div>
+      <div class="about-team-name">${m.name}</div>
+      <div class="about-team-role">${m.role}</div>
+      <div class="about-team-desc">${m.desc}</div>
+    </div>`).join('');
+}
 function openSupport(id){
   document.getElementById(id).classList.add('open');
   document.body.style.overflow='hidden';
   if(id==='faqModal') buildFAQ();
   if(id==='trackModal') document.getElementById('trackInput').focus();
+  if(id==='aboutModal'){ DATA=getData(); renderAboutTeam(); }
 }
 function closeSupport(id){
   document.getElementById(id).classList.remove('open');

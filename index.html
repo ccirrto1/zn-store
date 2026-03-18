@@ -1335,6 +1335,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     <li><a onclick="scrollTo0('deals')" href="javascript:void(0)"><i class="fas fa-fire"></i> Deals</a></li>
     <li><a onclick="scrollTo0('brands')" href="javascript:void(0)"><i class="fas fa-star"></i> Brands</a></li>
     <li><a onclick="openSupport('aboutModal')" href="javascript:void(0)" style="font-weight:700;"><i class="fas fa-building"></i> About Us</a></li>
+    <li><a onclick="openSupport('privacyModal')" href="javascript:void(0)"><i class="fas fa-shield-halved"></i> Privacy</a></li>
     <li><a onclick="openWishlistPanel()" href="javascript:void(0)"><i class="fas fa-heart"></i> Wishlist <span id="wlBadge" style="display:none;background:var(--red);color:#fff;border-radius:100px;font-size:0.6rem;padding:0.08rem 0.38rem;margin-left:2px;"></span></a></li>
   </ul>
   <div class="nav-right">
@@ -1518,6 +1519,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
         <li><a onclick="openSupport('warrantyModal')" style="cursor:pointer;"><i class="fas fa-shield"></i> Warranty Claims</a></li>
         <li><a onclick="openSupport('corporateModal')" style="cursor:pointer;"><i class="fas fa-building"></i> Corporate Orders</a></li>
         <li><a onclick="openSupport('faqModal')" style="cursor:pointer;"><i class="fas fa-circle-question"></i> FAQ</a></li>
+        <li><a onclick="openSupport('privacyModal')" style="cursor:pointer;"><i class="fas fa-shield-halved"></i> Privacy Policy</a></li>
       </ul>
     </div>
     <div class="fcol">
@@ -1532,7 +1534,9 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
     </div>
   </div>
   <div class="f-bottom">
-    <span class="f-copy">© 2025 AR Computers. All Rights Reserved. Techno City Mall, I.I. Chundrigar Road, Karachi</span>
+    <span class="f-copy">© 2025 AR Computers. All Rights Reserved. Techno City Mall, I.I. Chundrigar Road, Karachi &nbsp;·&nbsp;
+      <a onclick="openSupport('privacyModal')" href="javascript:void(0)" style="color:rgba(255,255,255,0.35);text-decoration:none;cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='#93c5fd'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Privacy Policy</a>
+    </span>
     <div class="f-pays">
       <div class="f-pay"><i class="fas fa-money-bill"></i> COD</div>
       <div class="f-pay"><i class="fas fa-mobile"></i> JazzCash</div>
@@ -1542,6 +1546,209 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
   </div>
 </footer>
 
+
+<!-- ===== PRIVACY POLICY MODAL ===== -->
+<div class="support-overlay" id="privacyModal" onclick="if(event.target===this)closeSupport('privacyModal')">
+  <div class="support-modal" style="max-width:720px;">
+    <div class="support-modal-hdr">
+      <div class="support-modal-icon" style="background:rgba(29,78,216,0.1);color:#1d4ed8;"><i class="fas fa-shield-halved"></i></div>
+      <div class="support-modal-title">
+        <h3>Privacy Policy</h3>
+        <p>Last updated: March 2025 &nbsp;·&nbsp; AR Computers, Karachi, Pakistan</p>
+      </div>
+      <button class="support-close" onclick="closeSupport('privacyModal')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="support-modal-body" style="font-size:0.82rem;color:var(--text2);line-height:1.75;">
+
+      <!-- INTRO BANNER -->
+      <div style="background:rgba(29,78,216,0.06);border:1.5px solid rgba(29,78,216,0.15);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1.5rem;display:flex;gap:0.75rem;align-items:flex-start;">
+        <i class="fas fa-circle-info" style="color:#1d4ed8;margin-top:2px;flex-shrink:0;"></i>
+        <div>
+          <strong style="color:var(--text);">Aapki privacy hamari zimmedari hai.</strong>
+          Yeh policy explain karti hai ke AR Computers aapka data kaise collect, use, aur protect karta hai jab aap hamare website pe visit karte hain ya order place karte hain.
+        </div>
+      </div>
+
+      <!-- SECTION 1 -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">1</span>
+          Hum Kya Data Collect Karte Hain
+        </h4>
+        <p style="margin-bottom:0.6rem;">Jab aap AR Computers se order karte hain ya hum se rabta karte hain, hum yeh information collect karte hain:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:0.7rem 0.85rem;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-user" style="color:#1d4ed8;margin-right:5px;"></i>Personal Info</div>
+            <div style="font-size:0.72rem;color:var(--text3);">Naam, phone number, email address, delivery address, city</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:0.7rem 0.85rem;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-bag-shopping" style="color:#059669;margin-right:5px;"></i>Order Info</div>
+            <div style="font-size:0.72rem;color:var(--text3);">Products ordered, quantities, payment method, order ID, timestamp</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:0.7rem 0.85rem;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-globe" style="color:#7c3aed;margin-right:5px;"></i>Technical Data</div>
+            <div style="font-size:0.72rem;color:var(--text3);">Browser type, IP address, pages visited, time spent — via analytics</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:0.7rem 0.85rem;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fab fa-whatsapp" style="color:#25d366;margin-right:5px;"></i>Communication</div>
+            <div style="font-size:0.72rem;color:var(--text3);">Messages aap hum se WhatsApp ya email pe share karte hain</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 2 -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">2</span>
+          Hum Aapka Data Kyon Use Karte Hain
+        </h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.45rem;">
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Order fulfillment:</strong> Aapka order process karne, package karne aur deliver karne ke liye</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Order updates:</strong> Aapko SMS, WhatsApp ya email se order status btane ke liye</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Customer support:</strong> Aapke sawalaat, returns, aur warranty claims handle karne ke liye</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Fraud prevention:</strong> Fraudulent orders aur suspicious activity detect karne ke liye</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Improvement:</strong> Apni website aur services ko behtar banane ke liye (anonymized analytics)</span></li>
+          <li style="display:flex;gap:8px;align-items:flex-start;"><i class="fas fa-check-circle" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span><strong>Legal compliance:</strong> Pakistani law ke tehat required records maintain karne ke liye</span></li>
+        </ul>
+      </div>
+
+      <!-- SECTION 3 -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">3</span>
+          Hum Aapka Data Kiske Saath Share Karte Hain
+        </h4>
+        <p style="margin-bottom:0.7rem;"><strong style="color:var(--text);">AR Computers aapka personal data kabhi bhi sell nahi karta.</strong> Hum sirf yeh trusted parties ke saath share karte hain:</p>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;">
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:0.65rem 0.85rem;background:var(--bg2);border:1px solid var(--border);border-radius:9px;">
+            <i class="fas fa-truck" style="color:#d97706;margin-top:2px;flex-shrink:0;"></i>
+            <div><strong style="color:var(--text);font-size:0.78rem;">Courier Companies</strong><br><span style="font-size:0.71rem;color:var(--text3);">TCS, Leopards, Trax — sirf delivery ke liye naam, phone, address share hota hai</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:0.65rem 0.85rem;background:var(--bg2);border:1px solid var(--border);border-radius:9px;">
+            <i class="fab fa-google" style="color:#4285f4;margin-top:2px;flex-shrink:0;"></i>
+            <div><strong style="color:var(--text);font-size:0.78rem;">Google (Analytics only)</strong><br><span style="font-size:0.71rem;color:var(--text3);">Anonymous usage data — koi personal info nahi, sirf website traffic analyze karne ke liye</span></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;padding:0.65rem 0.85rem;background:var(--bg2);border:1px solid var(--border);border-radius:9px;">
+            <i class="fas fa-file-invoice" style="color:#7c3aed;margin-top:2px;flex-shrink:0;"></i>
+            <div><strong style="color:var(--text);font-size:0.78rem;">Google Sheets (Orders)</strong><br><span style="font-size:0.71rem;color:var(--text3);">Order records hamare internal system mein store hote hain order management ke liye</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4 -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">4</span>
+          Cookies aur Local Storage
+        </h4>
+        <p>Hamari website aapke browser ka <strong>local storage</strong> use karti hai — yeh sirf aapki apni device pe rehta hai:</p>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:0.65rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;padding:0.5rem 0.85rem;background:var(--bg3);font-size:0.71rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">
+            <span>Storage Key</span><span>Purpose</span><span>Expires</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;padding:0.5rem 0.85rem;font-size:0.72rem;border-bottom:1px solid var(--border);color:var(--text2);">
+            <code style="font-size:0.68rem;color:#1d4ed8;">ar_store_data</code><span>Products, cart, wishlist, orders</span><span>Tab band hone par clear</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;padding:0.5rem 0.85rem;font-size:0.72rem;border-bottom:1px solid var(--border);color:var(--text2);">
+            <code style="font-size:0.68rem;color:#1d4ed8;">ar_cart</code><span>Aapka shopping cart</span><span>Order place hone par clear</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;padding:0.5rem 0.85rem;font-size:0.72rem;border-bottom:1px solid var(--border);color:var(--text2);">
+            <code style="font-size:0.68rem;color:#1d4ed8;">ar_wishlist</code><span>Saved products</span><span>Aap delete karein tab</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1.5fr;padding:0.5rem 0.85rem;font-size:0.72rem;color:var(--text2);">
+            <code style="font-size:0.68rem;color:#1d4ed8;">ar_reviews_*</code><span>Aapke product reviews</span><span>Aap delete karein tab</span>
+          </div>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.78rem;">Browser settings se aap kabhi bhi local storage clear kar sakte hain. Isse cart aur wishlist reset ho jaegi lekin koi personal data delete nahi hoga kyunki woh hamare server pe store nahi hota.</p>
+      </div>
+
+      <!-- SECTION 5 -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">5</span>
+          Aapka Data Kitne Arsa Rakhte Hain
+        </h4>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.4rem;">
+          <li style="display:flex;gap:8px;"><i class="fas fa-clock" style="color:#1d4ed8;margin-top:3px;flex-shrink:0;"></i><span><strong>Order records:</strong> 3 saal — accounting aur warranty ke liye</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-clock" style="color:#1d4ed8;margin-top:3px;flex-shrink:0;"></i><span><strong>Customer communications:</strong> 1 saal — support history ke liye</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-clock" style="color:#1d4ed8;margin-top:3px;flex-shrink:0;"></i><span><strong>Analytics data:</strong> 26 mahine — Google Analytics default</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-clock" style="color:#1d4ed8;margin-top:3px;flex-shrink:0;"></i><span><strong>Browser local storage:</strong> Aap khud control karte hain — clear whenever you want</span></li>
+        </ul>
+      </div>
+
+      <!-- SECTION 6 — YOUR RIGHTS -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">6</span>
+          Aapke Rights
+        </h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+          <div style="padding:0.7rem 0.85rem;background:rgba(29,78,216,0.05);border:1px solid rgba(29,78,216,0.15);border-radius:9px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-eye" style="color:#1d4ed8;margin-right:5px;"></i>Access</div>
+            <div style="font-size:0.71rem;color:var(--text3);">Puchh sakte hain ke hum aapke baare mein kya data rakhte hain</div>
+          </div>
+          <div style="padding:0.7rem 0.85rem;background:rgba(29,78,216,0.05);border:1px solid rgba(29,78,216,0.15);border-radius:9px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-pen" style="color:#1d4ed8;margin-right:5px;"></i>Correction</div>
+            <div style="font-size:0.71rem;color:var(--text3);">Galat information correct karwa sakte hain</div>
+          </div>
+          <div style="padding:0.7rem 0.85rem;background:rgba(29,78,216,0.05);border:1px solid rgba(29,78,216,0.15);border-radius:9px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-trash" style="color:#dc2626;margin-right:5px;"></i>Deletion</div>
+            <div style="font-size:0.71rem;color:var(--text3);">Apna data delete karwane ki request kar sakte hain (legal obligations ke siwa)</div>
+          </div>
+          <div style="padding:0.7rem 0.85rem;background:rgba(29,78,216,0.05);border:1px solid rgba(29,78,216,0.15);border-radius:9px;">
+            <div style="font-size:0.75rem;font-weight:700;color:var(--text);margin-bottom:3px;"><i class="fas fa-hand" style="color:#d97706;margin-right:5px;"></i>Objection</div>
+            <div style="font-size:0.71rem;color:var(--text3);">Marketing ke liye data use hone se rok sakte hain</div>
+          </div>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.78rem;">Kisi bhi right ko exercise karne ke liye WhatsApp ya email se rabta karein.</p>
+      </div>
+
+      <!-- SECTION 7 — SECURITY -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">7</span>
+          Data Security
+        </h4>
+        <p>Hum industry-standard measures use karte hain aapka data protect karne ke liye:</p>
+        <ul style="list-style:none;padding:0;margin:0.5rem 0 0;display:flex;flex-direction:column;gap:0.35rem;">
+          <li style="display:flex;gap:8px;"><i class="fas fa-lock" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span>HTTPS encryption — sab data encrypted transfer hota hai</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-lock" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span>Limited access — sirf authorized staff order data dekh sakta hai</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-lock" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span>No card storage — hum koi payment card details store nahi karte</span></li>
+          <li style="display:flex;gap:8px;"><i class="fas fa-lock" style="color:#059669;margin-top:3px;flex-shrink:0;"></i><span>COD first — hamare default payment method mein koi sensitive financial data share nahi hota</span></li>
+        </ul>
+      </div>
+
+      <!-- SECTION 8 — CHILDREN -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">8</span>
+          Children's Privacy
+        </h4>
+        <p>Hamari services 16 saal se kam umar ke bachchon ke liye nahi hain. Hum janboojh kar 16 se kam umar ke users ka data collect nahi karte. Agar aap samajhte hain ke kisi minor ka data hamare paas hai, toh foran contact karein — hum use delete kar denge.</p>
+      </div>
+
+      <!-- SECTION 9 — CHANGES -->
+      <div style="margin-bottom:1.4rem;">
+        <h4 style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px;">
+          <span style="width:24px;height:24px;background:#1d4ed8;color:#fff;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:900;flex-shrink:0;">9</span>
+          Policy Mein Changes
+        </h4>
+        <p>Hum waqt waqt par yeh policy update kar sakte hain. Changes ke baad "Last Updated" date change ho jaegi. Material changes ke liye hum WhatsApp ya email pe notification bhejtay hain.</p>
+      </div>
+
+      <!-- CONTACT CTA -->
+      <div style="background:linear-gradient(135deg,rgba(29,78,216,0.07),rgba(37,99,235,0.03));border:1.5px solid rgba(29,78,216,0.15);border-radius:14px;padding:1.1rem 1.2rem;text-align:center;">
+        <div style="font-size:0.85rem;font-weight:800;color:var(--text);margin-bottom:0.3rem;"><i class="fas fa-envelope" style="color:#1d4ed8;margin-right:6px;"></i>Privacy ke baare mein koi sawal?</div>
+        <div style="font-size:0.76rem;color:var(--text3);margin-bottom:0.85rem;">Hum se WhatsApp ya email pe seedha rabta karein — hum 24 ghante ke andar jawab dete hain.</div>
+        <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="closeSupport('privacyModal');openWaPopup();" style="display:inline-flex;align-items:center;gap:6px;padding:0.52rem 1.1rem;background:#25d366;color:#fff;border:none;border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <a href="mailto:info@arcomputers.pk" style="display:inline-flex;align-items:center;gap:6px;padding:0.52rem 1.1rem;background:transparent;color:#1d4ed8;border:1.5px solid rgba(29,78,216,0.3);border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;text-decoration:none;"><i class="fas fa-envelope"></i> info@arcomputers.pk</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- ===== ABOUT US MODAL ===== -->
 <div class="support-overlay" id="aboutModal" onclick="if(event.target===this)closeSupport('aboutModal')">
@@ -1815,6 +2022,114 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
         <textarea id="corpReq" placeholder="List the products and quantities you need (e.g. 10× Logitech G Pro Mouse, 5× Mechanical Keyboard...)"></textarea>
         <button onclick="sendCorporateEnquiry()" style="width:100%;padding:0.8rem;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;"><i class="fas fa-paper-plane"></i> Send Enquiry via WhatsApp</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRIVACY POLICY MODAL ===== -->
+<div class="support-overlay" id="privacyModal" onclick="if(event.target===this)closeSupport('privacyModal')">
+  <div class="support-modal" style="max-width:680px;">
+    <div class="support-modal-hdr">
+      <div class="support-modal-icon" style="background:rgba(29,78,216,0.12);color:#1d4ed8;"><i class="fas fa-shield-halved"></i></div>
+      <div class="support-modal-title"><h3>Privacy Policy</h3><p>Aapki privacy hamari zimmedari hai — Last updated: January 2025</p></div>
+      <button class="support-close" onclick="closeSupport('privacyModal')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="support-modal-body" style="font-size:0.82rem;line-height:1.75;color:var(--text2);">
+
+      <div style="background:rgba(29,78,216,0.06);border-left:3px solid #1d4ed8;border-radius:0 10px 10px 0;padding:0.85rem 1rem;margin-bottom:1.5rem;">
+        <strong style="color:var(--text1);">AR Computers</strong> aapki personal information ko seriously leta hai.
+        Yeh Privacy Policy explain karti hai ke hum kaunsa data collect karte hain, kaise use karte hain, aur aapke kya rights hain.
+      </div>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-database" style="color:#1d4ed8;font-size:0.8rem;"></i> 1. Hum Kya Data Collect Karte Hain</h4>
+      <p style="margin-bottom:0.5rem;">Jab aap order place karte hain ya humse contact karte hain, hum yeh information collect karte hain:</p>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:4px;">
+        <li><strong>Personal info:</strong> Naam, phone number, email address</li>
+        <li><strong>Delivery info:</strong> Ghar/office address, city</li>
+        <li><strong>Order info:</strong> Products, quantities, payment method</li>
+        <li><strong>Technical data:</strong> Browser type, device info (anonymous)</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-gear" style="color:#1d4ed8;font-size:0.8rem;"></i> 2. Data Ka Istemaal</h4>
+      <p style="margin-bottom:0.5rem;">Aapka data sirf in maqsad ke liye use hota hai:</p>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:4px;">
+        <li>Order process karna aur delivery arrange karna</li>
+        <li>Order status updates aur customer support provide karna</li>
+        <li>Warranty claims process karna</li>
+        <li>Fraud prevention aur order verification</li>
+        <li>WhatsApp pe order confirmation bhejnay ke liye</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-share-nodes" style="color:#1d4ed8;font-size:0.8rem;"></i> 3. Data Sharing</h4>
+      <div style="background:rgba(5,150,105,0.06);border:1.5px solid rgba(5,150,105,0.2);border-radius:10px;padding:0.75rem 1rem;margin-bottom:1rem;">
+        <strong style="color:#059669;">✓ Hum aapka data KABHI bhi sell nahi karte</strong> — third-party advertisers ko nahi, kisi ko nahi.
+      </div>
+      <p style="margin-bottom:0.5rem;">Hum sirf in parties ke saath limited data share karte hain:</p>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:4px;">
+        <li><strong>Courier companies</strong> (TCS, Leopards, M&P) — delivery ke liye naam aur address</li>
+        <li><strong>Payment processors</strong> (JazzCash, EasyPaisa) — sirf transaction confirmation</li>
+        <li><strong>Brand partners</strong> — warranty claims ke liye (aapki permission se)</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-clock-rotate-left" style="color:#1d4ed8;font-size:0.8rem;"></i> 4. Data Retention</h4>
+      <p style="margin-bottom:1.2rem;">
+        Order data hum <strong>2 saal tak</strong> rakhte hain — warranty claims aur return requests ke liye.
+        Aap kabhi bhi apna data delete karwane ki request kar sakte hain — hum 7 business days mein process karenge.
+      </p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-lock" style="color:#1d4ed8;font-size:0.8rem;"></i> 5. Data Security</h4>
+      <p style="margin-bottom:1.2rem;">
+        Aapka data <strong>HTTPS encryption</strong> ke zariye transmit hota hai. Hum payment card details store nahi karte.
+        Phone numbers aur addresses sirf order fulfillment ke liye use hote hain aur secured systems mein store hote hain.
+      </p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-cookie-bite" style="color:#1d4ed8;font-size:0.8rem;"></i> 6. Cookies & Local Storage</h4>
+      <p style="margin-bottom:1.2rem;">
+        Hamari website <strong>browser localStorage</strong> use karti hai aapki cart, wishlist aur preferences save karne ke liye.
+        Yeh data sirf aapke device pe rehta hai aur hum tak nahi aata. Aap browser settings se kisi bhi waqt clear kar sakte hain.
+      </p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-user-check" style="color:#1d4ed8;font-size:0.8rem;"></i> 7. Aapke Rights</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:1.2rem;">
+        <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:0.7rem 0.85rem;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text1);margin-bottom:3px;"><i class="fas fa-eye" style="color:#1d4ed8;margin-right:5px;"></i> Access</div>
+          <div style="font-size:0.7rem;color:var(--text3);">Apna stored data dekhne ki request kar sakte hain</div>
+        </div>
+        <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:0.7rem 0.85rem;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text1);margin-bottom:3px;"><i class="fas fa-pen" style="color:#1d4ed8;margin-right:5px;"></i> Correction</div>
+          <div style="font-size:0.7rem;color:var(--text3);">Galat information correct karwane ki request</div>
+        </div>
+        <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:0.7rem 0.85rem;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text1);margin-bottom:3px;"><i class="fas fa-trash" style="color:#dc2626;margin-right:5px;"></i> Deletion</div>
+          <div style="font-size:0.7rem;color:var(--text3);">Apna data delete karwane ki request (legal limits ke saath)</div>
+        </div>
+        <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:0.7rem 0.85rem;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text1);margin-bottom:3px;"><i class="fas fa-ban" style="color:#d97706;margin-right:5px;"></i> Opt-Out</div>
+          <div style="font-size:0.7rem;color:var(--text3);">Marketing communications se unsubscribe karna</div>
+        </div>
+      </div>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-child" style="color:#1d4ed8;font-size:0.8rem;"></i> 8. Children's Privacy</h4>
+      <p style="margin-bottom:1.2rem;">
+        Hamari services 18 saal se kam umra ke bacchon ke liye nahi hain.
+        Hum jaante bujhte bachchon ka data collect nahi karte.
+      </p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-rotate" style="color:#1d4ed8;font-size:0.8rem;"></i> 9. Policy Updates</h4>
+      <p style="margin-bottom:1.5rem;">
+        Yeh policy kabhi bhi update ho sakti hai. Significant changes ke baare mein hum WhatsApp ya email se notify karte hain.
+        Continued use of our store means aap updated policy se agree karte hain.
+      </p>
+
+      <div style="background:rgba(29,78,216,0.06);border:1.5px solid rgba(29,78,216,0.18);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text1);margin-bottom:0.4rem;">Privacy se related koi sawaal?</div>
+        <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.75rem;">Humse directly contact karein — hum 24 hours mein jawab denge</div>
+        <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="closeSupport('privacyModal');openWaPopup();" style="display:inline-flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:#25d366;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:700;cursor:pointer;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <a href="mailto:info@arcomputers.pk" style="display:inline-flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:rgba(29,78,216,0.1);color:#1d4ed8;border:1.5px solid rgba(29,78,216,0.25);border-radius:9px;font-size:0.78rem;font-weight:700;text-decoration:none;"><i class="fas fa-envelope"></i> Email Us</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

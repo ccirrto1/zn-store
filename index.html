@@ -3104,24 +3104,23 @@ function applyPromo(){
   else{showToast('✕','Invalid promo code — please try again','red');document.getElementById('promoInput').style.borderColor='var(--red)';}
 }
 function applyOrderPromo(){
-  const code=(document.getElementById('oPromoInput').value||'').trim().toUpperCase();
+  const inp=document.getElementById('oPromoInput');
+  const code=(inp?inp.value:'').trim().toUpperCase();
   if(!code){showToast('!','Code enter karo','red');return;}
   const codes=getActiveCodes();
   if(codes[code]){
-    promoDiscount=codes[code];appliedPromo=code;
+    promoDiscount=codes[code];
+    appliedPromo=code;
     const el=document.getElementById('oPromoApplied');
     if(el){el.style.display='block';el.innerHTML='<i class="fas fa-check-circle"></i> "'+code+'" applied — '+promoDiscount+'% discount!';}
-    document.getElementById('oPromoInput').style.borderColor='var(--green)';
-    document.getElementById('oPromoInput').disabled=true;
-    // Refresh order preview to show updated total
-    if(typeof updateOrderPreview==='function') updateOrderPreview();
-    showToast('✓','Code "'+code+'" applied! '+promoDiscount+'% discount added','green');
-    // Refresh order summary to show discount
-    if(typeof currentOrderItems!=='undefined'&&currentOrderItems) buildOrderSummary(currentOrderItems);
-    else if(typeof orderCartItems!=='undefined'&&orderCartItems) buildOrderSummary(orderCartItems);
+    if(inp){inp.style.borderColor='var(--green)';inp.disabled=true;}
+    // Rebuild summary with discount applied using current order items
+    const items = (typeof orderCartItems!=='undefined'&&orderCartItems) ? orderCartItems : (typeof orderProd!=='undefined'&&orderProd ? [{...orderProd,qty:1}] : []);
+    if(items.length) buildOrderSummary(items);
+    showToast('✓','"'+code+'" applied! '+promoDiscount+'% off','green');
   } else {
-    document.getElementById('oPromoInput').style.borderColor='var(--red)';
-    showToast('✕','Invalid code — please check and try again','red');
+    if(inp) inp.style.borderColor='var(--red)';
+    showToast('✕','Invalid code — try AR10 or WELCOME','red');
   }
 }
 
@@ -3752,6 +3751,7 @@ function openOrderModal(product,qty=1,cartItems=null){
   ['oName','oPhone','oEmail','oAddress','oNote'].forEach(id=>{document.getElementById(id).value='';document.getElementById(id).classList.remove('err');});
   document.getElementById('oCity').value='';document.getElementById('oPayment').value='COD';
   // Reset promo in order form
+  promoDiscount=0;appliedPromo='';
   const oPromoEl=document.getElementById('oPromoInput');
   if(oPromoEl){oPromoEl.value='';oPromoEl.style.borderColor='';oPromoEl.disabled=false;}
   const oPromoApplied=document.getElementById('oPromoApplied');
@@ -3773,12 +3773,6 @@ function openOrderModal(product,qty=1,cartItems=null){
 }
 function buildOrderSummary(items){
   const sub=items.reduce((s,i)=>s+i.price*i.qty,0);
-  // Re-sync promo from order form if typed there
-  const oPromoF=document.getElementById('oPromoInput');
-  if(oPromoF&&oPromoF.value&&!appliedPromo){
-    const codes=getActiveCodes();const cd=oPromoF.value.trim().toUpperCase();
-    if(codes[cd]){promoDiscount=codes[cd];appliedPromo=cd;}
-  }
   const promo=Math.round(sub*promoDiscount/100);
   const afterP=sub-promo;
   const si=getSI();

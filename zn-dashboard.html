@@ -487,6 +487,7 @@ tr:hover td{background:rgba(37,99,235,0.03);}
     <li><a onclick="showPanel('reviews')"><i class="fas fa-comments"></i> Reviews</a></li>
     <li><a onclick="showPanel('features')"><i class="fas fa-shield-check"></i> Features</a></li>
     <li><a onclick="showPanel('deals')"><i class="fas fa-bolt"></i> Deals & Vouchers <span class="sb-badge" style="background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);">New</span></a></li>
+    <li><a onclick="showPanel('deals');setTimeout(openBannerEditor,300)"><i class="fas fa-images"></i> Banner Slides</a></li>
     <div class="sb-section">Config</div>
     <li><a onclick="showPanel('siteinfo')"><i class="fas fa-circle-info"></i> Site Info</a></li>
     <li><a onclick="showPanel('payments')"><i class="fas fa-wallet"></i> Payment Accounts</a></li>
@@ -708,6 +709,7 @@ tr:hover td{background:rgba(37,99,235,0.03);}
         <div style="display:flex;gap:0.5rem;">
           <button class="btn-sm btn-add-item" onclick="openDealForm(null,'flash')"><i class="fas fa-fire"></i> Flash Deal</button>
           <button class="btn-sm btn-add-item" onclick="openDealForm(null,'voucher')" style="background:rgba(5,150,105,0.15);color:var(--green);border-color:rgba(5,150,105,0.3);"><i class="fas fa-ticket"></i> Voucher</button>
+          <button class="btn-sm" onclick="openBannerEditor()" style="background:rgba(99,102,241,0.12);color:var(--primary2);border:1.5px solid rgba(99,102,241,0.3);font-size:0.75rem;padding:0.35rem 0.8rem;border-radius:7px;cursor:pointer;font-weight:700;"><i class="fas fa-images"></i> Banner Slides</button>
         </div>
       </div>
 
@@ -3163,53 +3165,31 @@ function applyProductBadge(){
 
 // Deal Form (Flash Deal add/edit)
 let editingDealIdx=null;
-function openDealForm(idx,type){
-  editingDealIdx=idx;
-  const deals=getFlashDeals();
-  const d=idx!==null&&idx>=0?deals[idx]:{};
-  const html=`
-    <div style="position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;padding:20px;" id="dealFormBg" onclick="if(event.target.id==='dealFormBg')closeDealForm()">
-      <div style="background:var(--card);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:500px;max-height:88vh;overflow-y:auto;">
-        <div style="padding:1rem 1.3rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
-          <h3 style="margin:0;font-size:0.95rem;"><i class="fas fa-fire" style="color:#ef4444;"></i> ${idx!==null?'Edit':'Add'} Flash Deal</h3>
-          <button onclick="closeDealForm()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.1rem;"><i class="fas fa-xmark"></i></button>
-        </div>
-        <div style="padding:1.2rem 1.3rem;display:flex;flex-direction:column;gap:0.75rem;">
-          <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Deal Title *</label>
-            <input class="form-input" id="dfTitle" value="${d.title||''}" placeholder="e.g. Eid Special — 30% Off Gaming Gear"></div>
-          <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Subtitle</label>
-            <input class="form-input" id="dfSubtitle" value="${d.subtitle||''}" placeholder="e.g. Limited time offer"></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
-            <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Discount %</label>
-              <input class="form-input" id="dfDiscount" type="number" value="${d.discount||''}" placeholder="e.g. 25"></div>
-            <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Expiry Date</label>
-              <input class="form-input" id="dfExpiry" type="date" value="${d.expiry||''}"></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
-            <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Price Text</label>
-              <input class="form-input" id="dfPrice" value="${d.price||''}" placeholder="e.g. Starting Rs. 2,999"></div>
-            <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Button Action</label>
-              <input class="form-input" id="dfBtnAction" value="${d.btnAction||"filterAndGo('gaming')"}" placeholder="filterAndGo('gaming')"></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;padding:0.6rem;background:var(--bg3);border-radius:8px;">
-            <input type="checkbox" id="dfActive" ${d.active!==false?'checked':''} style="width:16px;height:16px;accent-color:var(--primary);">
-            <label for="dfActive" style="font-size:0.8rem;font-weight:600;color:var(--text2);cursor:pointer;">Active — Show on store banner</label>
-          </div>
-          <div style="display:flex;gap:0.6rem;margin-top:0.25rem;">
-            <button onclick="closeDealForm()" style="flex:1;padding:0.55rem;border:1.5px solid var(--border);border-radius:9px;background:var(--bg2);color:var(--text2);font-size:0.8rem;font-weight:600;cursor:pointer;">Cancel</button>
-            <button onclick="saveDealForm()" style="flex:2;padding:0.55rem;border:none;border-radius:9px;background:var(--primary);color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;"><i class="fas fa-floppy-disk"></i> Save Deal</button>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  const div=document.createElement('div');
-  div.id='dealFormMount';
-  div.innerHTML=html;
-  document.body.appendChild(div);
+function openDealForm(idx, type){
+  editingDealIdx = (idx===null||idx===undefined) ? -1 : idx;
+  const deals = getFlashDeals();
+  const d = (idx!==null && idx>=0 && deals[idx]) ? deals[idx] : {};
+  
+  // Populate static form fields
+  document.getElementById('dfTitle').value   = d.title    || '';
+  document.getElementById('dfSubtitle').value= d.subtitle || '';
+  document.getElementById('dfDiscount').value= d.discount || '';
+  document.getElementById('dfExpiry').value  = d.expiry   || '';
+  document.getElementById('dfPrice').value   = d.price    || '';
+  document.getElementById('dfBtnAction').value = d.btnAction || "filterAndGo('gaming')";
+  document.getElementById('dfActive').checked = d.active!==false;
+
+  const title = document.getElementById('dfFormTitle');
+  if(title) title.textContent = (idx!==null && idx>=0) ? 'Edit Flash Deal' : 'Add Flash Deal';
+
+  const overlay = document.getElementById('dealFormOverlay');
+  if(overlay){ overlay.classList.add('open'); overlay.style.display='flex'; }
+  document.body.style.overflow='hidden';
 }
 function closeDealForm(){
-  const m=document.getElementById('dealFormMount');
-  if(m) m.remove();
+  const overlay = document.getElementById('dealFormOverlay');
+  if(overlay){ overlay.classList.remove('open'); overlay.style.display=''; }
+  document.body.style.overflow='';
 }
 function saveDealForm(){
   const title=(document.getElementById('dfTitle').value||'').trim();
@@ -3231,6 +3211,123 @@ function saveDealForm(){
   closeDealForm();
   renderFlashDealsList();
   showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Deal "'+(deal.title.slice(0,25))+'" save ho gayi!');
+}
+
+
+// ============================================================
+// FLASH BANNER EDITOR
+// ============================================================
+const DEFAULT_SLIDES = [
+  {tag:'🎮 Gaming Gear — Flash Sale',title:'Ultimate Gaming\n<span>Mouse</span> Experience',desc:'Logitech G Pro X Superlight 2 — 60g ultra-lightweight, HERO 2 25K sensor.',price:'Rs. 12,999',oldPrice:'Rs. 18,999',disc:'32% OFF',img:'https://images.unsplash.com/photo-1527814050087-3793815479db?w=500&q=80',bg:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1400&q=70',btnText:'Order Now',btnAction:'dealOrder()',cat:'mouse',fallback:'🖱️'},
+  {tag:'⌨️ Keyboards — New Arrivals',title:'Type Faster,\nGame <span>Harder</span>',desc:'Razer BlackWidow V4 Pro — Razer Yellow V3 switches and Chroma RGB.',price:'Rs. 22,999',oldPrice:'Rs. 27,999',disc:'18% OFF',img:'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500&q=80',bg:'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=1400&q=70',btnText:'Shop Keyboards',btnAction:"filterAndGo('keyboard')",cat:'keyboard',fallback:'⌨️'},
+  {tag:'🖥️ Monitors — 4K Display',title:'See Every\nDetail in <span>4K</span>',desc:'ASUS ROG Swift 27" — 4K UHD, 144Hz. Immersive gaming at its finest.',price:'Rs. 89,999',oldPrice:'Rs. 99,999',disc:'10% OFF',img:'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500&q=80',bg:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1400&q=70',btnText:'Shop Monitors',btnAction:"filterAndGo('monitor')",cat:'monitor',fallback:'🖥️'},
+  {tag:'🎧 Audio — Premium Sound',title:'Hear Every\n<span>Footstep</span> Clearly',desc:'SteelSeries Arctis Nova Pro — Active noise cancellation, Hi-Res audio.',price:'Rs. 31,999',oldPrice:'Rs. 36,999',disc:'14% OFF',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',bg:'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&q=70',btnText:'Shop Headsets',btnAction:"filterAndGo('headset')",cat:'headset',fallback:'🎧'},
+  {tag:'💾 Storage — PCIe 4.0 Speed',title:'Blazing Fast\n<span>NVMe</span> Storage',desc:'Samsung 980 Pro — PCIe 4.0 NVMe up to 7,000 MB/s read speed.',price:'Rs. 16,999',oldPrice:'Rs. 19,999',disc:'15% OFF',img:'https://images.unsplash.com/photo-1600348759200-5b94a428b6d4?w=500&q=80',bg:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=70',btnText:'Shop Storage',btnAction:"filterAndGo('storage')",cat:'storage',fallback:'💾'},
+  {tag:'📦 AR Computers — Pakistan',title:"Pakistan's #1\n<span>Tech Store</span>",desc:'500+ products, 100% original guarantee. Fast delivery nationwide.',price:'Free Delivery',oldPrice:'on Rs. 5,000+',disc:'COD',img:'https://images.unsplash.com/photo-1625842268584-8f3296236761?w=500&q=80',bg:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1400&q=70',btnText:'Shop All Products',btnAction:"scrollTo0('products')",cat:'hub',fallback:'🛒'}
+];
+
+function getSlides(){
+  DATA=getData();
+  if(!DATA.siteInfo) DATA.siteInfo={};
+  if(!DATA.siteInfo.slides||!DATA.siteInfo.slides.length) DATA.siteInfo.slides=JSON.parse(JSON.stringify(DEFAULT_SLIDES));
+  return DATA.siteInfo.slides;
+}
+
+function openBannerEditor(){
+  renderBannerSlidesList();
+  const ov=document.getElementById('bannerEditorOverlay');
+  if(ov){ov.classList.add('open');ov.style.display='flex';}
+  document.body.style.overflow='hidden';
+}
+function closeBannerEditor(){
+  const ov=document.getElementById('bannerEditorOverlay');
+  if(ov){ov.classList.remove('open');ov.style.display='';}
+  document.body.style.overflow='';
+}
+function renderBannerSlidesList(){
+  const slides=getSlides();
+  const el=document.getElementById('bannerSlidesList');
+  if(!el) return;
+  el.innerHTML=slides.map((s,i)=>`
+    <div style="display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.85rem;background:var(--bg3);border:1.5px solid var(--border);border-radius:11px;">
+      <div style="width:52px;height:40px;border-radius:7px;overflow:hidden;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;">
+        ${s.img?`<img src="${s.img}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">`:`<span style="font-size:1.3rem;">${s.fallback||'🖼️'}</span>`}
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:0.79rem;font-weight:700;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.tag||'Slide '+(i+1)}</div>
+        <div style="font-size:0.68rem;color:var(--text3);margin-top:1px;">${(s.price||'')} ${s.disc?'· '+s.disc:''}</div>
+      </div>
+      <div style="display:flex;gap:4px;flex-shrink:0;">
+        ${i>0?`<button onclick="moveSlide(${i},-1)" title="Up" style="padding:3px 7px;background:rgba(99,102,241,0.08);color:var(--primary2);border:1px solid rgba(99,102,241,0.2);border-radius:5px;cursor:pointer;font-size:0.65rem;"><i class="fas fa-arrow-up"></i></button>`:'<div style="width:27px;"></div>'}
+        ${i<slides.length-1?`<button onclick="moveSlide(${i},1)" title="Down" style="padding:3px 7px;background:rgba(99,102,241,0.08);color:var(--primary2);border:1px solid rgba(99,102,241,0.2);border-radius:5px;cursor:pointer;font-size:0.65rem;"><i class="fas fa-arrow-down"></i></button>`:'<div style="width:27px;"></div>'}
+        <button onclick="openSlideEdit(${i})" style="padding:3px 8px;background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.25);border-radius:5px;cursor:pointer;font-size:0.68rem;"><i class="fas fa-pen"></i></button>
+        <button onclick="deleteSlide(${i})" style="padding:3px 8px;background:rgba(239,68,68,0.08);color:var(--red);border:1px solid rgba(239,68,68,0.2);border-radius:5px;cursor:pointer;font-size:0.68rem;"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`).join('');
+}
+
+function addBannerSlide(){
+  openSlideEdit(null);
+}
+function moveSlide(i,dir){
+  DATA=getData();const sl=DATA.siteInfo.slides;
+  const ni=i+dir;if(ni<0||ni>=sl.length)return;
+  [sl[i],sl[ni]]=[sl[ni],sl[i]];
+  saveData(DATA);renderBannerSlidesList();
+}
+function deleteSlide(i){
+  if(!confirm('Is slide ko delete karein?'))return;
+  DATA=getData();DATA.siteInfo.slides.splice(i,1);
+  saveData(DATA);renderBannerSlidesList();
+  showToast('<i class="fas fa-trash" style="color:var(--red)"></i> Slide deleted');
+}
+function openSlideEdit(idx){
+  const slides=getSlides();
+  const s=(idx!==null&&idx>=0&&slides[idx])?slides[idx]:{};
+  document.getElementById('seIdx').value=idx!==null?idx:-1;
+  document.getElementById('seTag').value=s.tag||'';
+  document.getElementById('seTitle').value=(s.title||'').replace(/<span>|<\/span>/g,'').replace(/\n/g,' ');
+  document.getElementById('seDesc').value=s.desc||'';
+  document.getElementById('sePrice').value=s.price||'';
+  document.getElementById('seOldPrice').value=s.oldPrice||'';
+  document.getElementById('seDisc').value=s.disc||'';
+  document.getElementById('seBtnText').value=s.btnText||'Shop Now';
+  document.getElementById('seBtnAction').value=s.btnAction||"filterAndGo('products')";
+  document.getElementById('seImg').value=s.img||'';
+  const t=document.getElementById('slideEditTitle');
+  if(t) t.innerHTML='<i class="fas fa-image" style="color:var(--primary2);margin-right:6px;"></i> '+(idx!==null&&idx>=0?'Edit':'Add')+' Slide';
+  const ov=document.getElementById('slideEditOverlay');
+  if(ov){ov.classList.add('open');ov.style.display='flex';}
+}
+function closeSlideEdit(){
+  const ov=document.getElementById('slideEditOverlay');
+  if(ov){ov.classList.remove('open');ov.style.display='';}
+}
+function saveSlideEdit(){
+  const title=document.getElementById('seTitle').value.trim();
+  if(!title){showToast('<i class="fas fa-exclamation" style="color:orange"></i> Title zaroori hai');return;}
+  const slide={
+    tag:document.getElementById('seTag').value.trim(),
+    title:title,
+    desc:document.getElementById('seDesc').value.trim(),
+    price:document.getElementById('sePrice').value.trim(),
+    oldPrice:document.getElementById('seOldPrice').value.trim(),
+    disc:document.getElementById('seDisc').value.trim(),
+    btnText:document.getElementById('seBtnText').value.trim()||'Shop Now',
+    btnAction:document.getElementById('seBtnAction').value.trim()||"filterAndGo('products')",
+    img:document.getElementById('seImg').value.trim(),
+    bg:document.getElementById('seImg').value.trim()||'',
+    fallback:'🛒',cat:'misc'
+  };
+  DATA=getData();
+  if(!DATA.siteInfo.slides) DATA.siteInfo.slides=JSON.parse(JSON.stringify(DEFAULT_SLIDES));
+  const idx=parseInt(document.getElementById('seIdx').value);
+  if(idx>=0) DATA.siteInfo.slides[idx]=slide;
+  else DATA.siteInfo.slides.push(slide);
+  saveData(DATA);
+  closeSlideEdit();
+  renderBannerSlidesList();
+  showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Slide saved! Upload new store file to see changes.');
 }
 
 </script>
@@ -3353,6 +3450,107 @@ function saveDealForm(){
       <div style="display:flex;gap:0.6rem;">
         <button onclick="closeTeamForm()" style="flex:1;padding:0.55rem;border:1.5px solid var(--border);border-radius:9px;background:var(--bg2);color:var(--text2);font-size:0.8rem;font-weight:600;cursor:pointer;">Cancel</button>
         <button onclick="saveTeamMember()" style="flex:2;padding:0.55rem;border:none;border-radius:9px;background:var(--primary);color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;"><i class="fas fa-floppy-disk"></i> Save Member</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEAL FORM MODAL (Static) -->
+<div class="edit-overlay" id="dealFormOverlay" style="z-index:1200;" onclick="if(event.target===this)closeDealForm();">
+  <div class="edit-box" style="max-width:500px;">
+    <div class="edit-hdr">
+      <h3 id="dfFormTitle" style="margin:0;font-size:0.95rem;"><i class="fas fa-fire" style="color:#ef4444;margin-right:6px;"></i> Add Flash Deal</h3>
+      <button class="edit-close" onclick="closeDealForm()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div style="padding:1.2rem;display:flex;flex-direction:column;gap:0.75rem;">
+      <div>
+        <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Deal Title *</label>
+        <input class="form-input" id="dfTitle" placeholder="e.g. Eid Special — 30% Off Gaming Gear">
+      </div>
+      <div>
+        <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Subtitle</label>
+        <input class="form-input" id="dfSubtitle" placeholder="e.g. Limited time offer — Grab it fast!">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
+        <div>
+          <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Discount %</label>
+          <input class="form-input" id="dfDiscount" type="number" min="1" max="90" placeholder="e.g. 25">
+        </div>
+        <div>
+          <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Expiry Date</label>
+          <input class="form-input" id="dfExpiry" type="date">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
+        <div>
+          <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Starting Price Text</label>
+          <input class="form-input" id="dfPrice" placeholder="e.g. Starting Rs. 2,999">
+        </div>
+        <div>
+          <label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Button Action (JS)</label>
+          <input class="form-input" id="dfBtnAction" placeholder="filterAndGo('gaming')">
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:0.6rem 0.75rem;background:var(--bg3);border-radius:8px;cursor:pointer;" onclick="document.getElementById('dfActive').click()">
+        <input type="checkbox" id="dfActive" style="width:16px;height:16px;accent-color:var(--primary);cursor:pointer;">
+        <label style="font-size:0.8rem;font-weight:600;color:var(--text2);cursor:pointer;">Active — Show on store banner immediately</label>
+      </div>
+      <div style="display:flex;gap:0.6rem;margin-top:0.25rem;">
+        <button onclick="closeDealForm()" style="flex:1;padding:0.6rem;border:1.5px solid var(--border);border-radius:9px;background:var(--bg2);color:var(--text2);font-size:0.8rem;font-weight:600;cursor:pointer;">Cancel</button>
+        <button onclick="saveDealForm()" style="flex:2;padding:0.6rem;border:none;border-radius:9px;background:var(--primary);color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;"><i class="fas fa-floppy-disk"></i> Save Deal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLASH BANNER EDITOR MODAL -->
+<div class="edit-overlay" id="bannerEditorOverlay" style="z-index:1200;" onclick="if(event.target===this)closeBannerEditor();">
+  <div class="edit-box" style="max-width:600px;">
+    <div class="edit-hdr">
+      <h3 style="margin:0;font-size:0.95rem;"><i class="fas fa-images" style="color:var(--primary2);margin-right:6px;"></i> Flash Banner Slides Editor</h3>
+      <button class="edit-close" onclick="closeBannerEditor()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div style="padding:1.2rem;">
+      <div id="bannerSlidesList" style="display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1rem;max-height:400px;overflow-y:auto;"></div>
+      <button onclick="addBannerSlide()" style="width:100%;padding:0.55rem;border:1.5px dashed var(--border);border-radius:10px;background:transparent;color:var(--text3);font-size:0.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="fas fa-plus"></i> Add New Slide</button>
+    </div>
+  </div>
+</div>
+
+<!-- BANNER SLIDE EDIT MODAL -->
+<div class="edit-overlay" id="slideEditOverlay" style="z-index:1300;" onclick="if(event.target===this)closeSlideEdit();">
+  <div class="edit-box" style="max-width:520px;">
+    <div class="edit-hdr">
+      <h3 id="slideEditTitle" style="margin:0;font-size:0.95rem;"><i class="fas fa-image" style="color:var(--primary2);margin-right:6px;"></i> Edit Slide</h3>
+      <button class="edit-close" onclick="closeSlideEdit()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div style="padding:1.2rem;display:flex;flex-direction:column;gap:0.7rem;">
+      <input type="hidden" id="seIdx">
+      <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Slide Tag / Label</label>
+        <input class="form-input" id="seTag" placeholder="e.g. GAMING SPECIAL"></div>
+      <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Main Title</label>
+        <input class="form-input" id="seTitle" placeholder="e.g. Razer BlackWidow V4 Pro"></div>
+      <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Description</label>
+        <input class="form-input" id="seDesc" placeholder="Short tagline..."></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
+        <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Price</label>
+          <input class="form-input" id="sePrice" placeholder="Rs. 22,999"></div>
+        <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Old Price</label>
+          <input class="form-input" id="seOldPrice" placeholder="Rs. 27,999"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;">
+        <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Discount Label</label>
+          <input class="form-input" id="seDisc" placeholder="-18% OFF"></div>
+        <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Button Text</label>
+          <input class="form-input" id="seBtnText" placeholder="Shop Now"></div>
+      </div>
+      <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Button Action (JS function)</label>
+        <input class="form-input" id="seBtnAction" placeholder="filterAndGo('keyboard')"></div>
+      <div><label style="font-size:0.72rem;font-weight:700;color:var(--text2);display:block;margin-bottom:3px;">Product Image URL</label>
+        <input class="form-input" id="seImg" placeholder="https://images.unsplash.com/..."></div>
+      <div style="display:flex;gap:0.6rem;margin-top:0.25rem;">
+        <button onclick="closeSlideEdit()" style="flex:1;padding:0.6rem;border:1.5px solid var(--border);border-radius:9px;background:var(--bg2);color:var(--text2);font-size:0.8rem;font-weight:600;cursor:pointer;">Cancel</button>
+        <button onclick="saveSlideEdit()" style="flex:2;padding:0.6rem;border:none;border-radius:9px;background:var(--primary);color:#fff;font-size:0.8rem;font-weight:700;cursor:pointer;"><i class="fas fa-floppy-disk"></i> Save Slide</button>
       </div>
     </div>
   </div>

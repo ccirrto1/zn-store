@@ -1221,7 +1221,7 @@ const DEFAULT_DATA={
     {id:'monitor',name:'Monitors',icon:'fas fa-desktop',color:'#10b981',count:35},
     {id:'headset',name:'Headsets',icon:'fas fa-headphones',color:'#f59e0b',count:44},
     {id:'webcam',name:'Webcams',icon:'fas fa-camera',color:'#ec4899',count:22},
-    {id:'storage',name:'Storage',icon:'fas fa-hard-drive',color:'#8b5cf6',count:56},
+    {id:'storage',name:'Storage',icon:'fas fa-hard-drive',color:'#2563eb',count:56},
     {id:'hub',name:'Hubs & Cables',icon:'fas fa-plug',color:'#ef4444',count:80},
     {id:'cooling',name:'Cooling',icon:'fas fa-snowflake',color:'#0ea5e9',count:28},
   ],
@@ -1290,7 +1290,7 @@ const DEFAULT_DATA={
     {icon:'fas fa-tag',color:'#f59e0b',bg:'rgba(245,158,11,0.1)',title:'Best Prices',desc:'Found a lower price? Contact us — we will match or beat it. Price guarantee.',num:'03'},
     {icon:'fas fa-wrench',color:'#06b6d4',bg:'rgba(6,182,212,0.1)',title:'1 Year Warranty',desc:'Har product par local warranty. AR Computers after-sales support available 7 days a week.',num:'04'},
     {icon:'fas fa-credit-card',color:'#ec4899',bg:'rgba(236,72,153,0.1)',title:'Easy Payment',desc:'Cash on Delivery, EasyPaisa, JazzCash, and Bank Transfer — all payment methods accepted.',num:'05'},
-    {icon:'fas fa-rotate-left',color:'#8b5cf6',bg:'rgba(139,92,246,0.1)',title:'7-Day Returns',desc:'7-day hassle-free return window — no questions asked. AR Computers return policy.',num:'06'},
+    {icon:'fas fa-rotate-left',color:'#2563eb',bg:'rgba(37,99,235,0.1)',title:'7-Day Returns',desc:'7-day hassle-free return window — no questions asked. AR Computers return policy.',num:'06'},
   ],
   reviews:[
     {stars:5,text:'Ordered a Razer keyboard from AR Computers — 100% original and delivered the next day. Exceptional service!',name:'Ahmed Hassan',role:'Graphic Designer, Karachi',av:'AH',color:'#1d4ed8'},
@@ -1614,7 +1614,7 @@ function viewOrder(idx){
     </div>
     <div class="form-group" style="margin-bottom:1rem;">
       <label class="form-label"><i class="fas fa-circle-dot"></i> Update Order Status</label>
-      <select class="form-select" id="orderStatusSelect">
+      <select class="form-select" id="orderStatusSelect2">
         ${statuses.map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}
       </select>
       <div style="font-size:0.72rem;color:var(--text3);margin-top:5px;"><i class="fas fa-circle-info"></i> Selecting "Confirmed" will trigger an email notification to the customer (if EmailJS is configured).</div>
@@ -1673,7 +1673,7 @@ function sendStatusEmailToCustomer(order, status){
         to_email:order.email
       };
       try{window.emailjs.send(cfg.serviceId,cfg.templateCustomer,params);}
-      catch(e){console.log('EmailJS send error',e);}
+      catch(e){console.warn('EmailJS send error',e);}
     };
     if(!window.emailjs){
       const sc=document.createElement('script');
@@ -1681,7 +1681,7 @@ function sendStatusEmailToCustomer(order, status){
       sc.onload=()=>{window.emailjs.init(cfg.publicKey||'');loadEmailJS();};
       document.head.appendChild(sc);
     }else{loadEmailJS();}
-  }catch(e){console.log('Email error',e);}
+  }catch(e){console.warn('Email error',e);}
 }
 function delOrder(idx){if(confirm('Are you sure you want to delete this order?')){DATA.orders.splice(idx,1);saveData(DATA);renderOrders();showToast('<i class="fas fa-trash" style="color:var(--red)"></i> Order deleted');}}
 function clearOrders(){if(confirm('Delete ALL orders? This action cannot be undone.')){DATA.orders=[];saveData(DATA);renderOrders();showToast('<i class="fas fa-trash" style="color:var(--red)"></i> All orders cleared');}}
@@ -2507,7 +2507,7 @@ function saveAdmin(){
   const confirmPass=document.getElementById('confirmPass').value;
 
   // Load saved credentials
-  const savedCreds=JSON.parse(localStorage.getItem('zn_admin_creds')||'{"user":"admin","pass":"admin123"}');
+  const savedCreds=JSON.parse(localStorage.getItem('ar_admin_creds')||'{"user":"admin","pass":"admin123"}');
 
   // If user wants to change password
   if(newPass || currentPass){
@@ -2537,7 +2537,7 @@ function saveAdmin(){
     if(disp)disp.textContent=newUser;
   }
 
-  localStorage.setItem('zn_admin_creds',JSON.stringify(savedCreds));
+  localStorage.setItem('ar_admin_creds',JSON.stringify(savedCreds));
   if(!newPass && !currentPass)showToast('<i class="fas fa-check-circle" style="color:var(--green)"></i> Admin credentials updated!');
   resetPassFields();
 }
@@ -2722,7 +2722,7 @@ function checkLoginState() {
 function doLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
-  const creds = JSON.parse(localStorage.getItem('zn_admin_creds') || '{"user":"admin","pass":"admin123"}');
+  const creds = JSON.parse(localStorage.getItem('ar_admin_creds') || '{"user":"admin","pass":"admin123"}');
   const btn = document.getElementById('loginBtn');
   const errEl = document.getElementById('loginError');
   const errMsg = document.getElementById('loginErrorMsg');

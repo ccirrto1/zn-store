@@ -2240,7 +2240,7 @@ const SLIDES = [
 let curSlide=0,slideTimer,slideProgressInterval,slideProgressW=0;
 
 function buildBanner(){
-  const banner=document.getElementById('heroBanner');
+  const banner=document.getElementById('flashBanner');
   // Remove old slides
   banner.querySelectorAll('.slide').forEach(s=>s.remove());
   SLIDES.forEach((s,i)=>{
@@ -2271,7 +2271,7 @@ function buildBanner(){
     banner.insertBefore(el,banner.querySelector('.banner-prev'));
   });
   // Dots
-  const dots=document.getElementById('bannerDots');
+  const dots=document.getElementById('fbDots');
   dots.innerHTML=SLIDES.map((_,i)=>`<button class="bn-dot${i===0?' active':''}" onclick="goSlide(${i})"></button>`).join('');
   startSlideTimer();
 }
@@ -2288,7 +2288,7 @@ function bannerPrev(){goSlide(curSlide-1);}
 function startSlideTimer(){
   clearInterval(slideTimer);clearInterval(slideProgressInterval);
   slideProgressW=0;
-  const prog=document.getElementById('slideProgress');
+  const prog=document.getElementById('fbProgress');
   if(prog)prog.style.width='0%';
   slideProgressInterval=setInterval(()=>{
     slideProgressW+=100/50;
@@ -2908,7 +2908,7 @@ function openProduct(id){
     document.querySelectorAll('#modalRelatedSection').forEach(el=>el.remove());
     const specsEl = document.getElementById('mSpecs');
     if(!specsEl) return;
-    if(!related.length){ specsEl.insertAdjacentHTML('afterend','<div id="modalRelatedSection"></div>'); return; }
+    if(!related.length){ specsEl.insertAdjacentHTML('afterend','<div id="modalRelatedSection" style="display:none;"></div>'); return; }
     const relatedHtml = `<div id="modalRelatedSection" style="margin-top:1rem;padding-top:0.75rem;border-top:1.5px solid var(--border);">
       <div style="font-size:0.72rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.65rem;">You may also like</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;">
@@ -3257,7 +3257,7 @@ function sendOrderEmails(order){
         note:order.note||'',status:order.status||'New Order'
       })
     });
-  }catch(e){console.log('Sheet/email error:',e);}
+  }catch(e){console.warn('Sheet/email error:',e);}
 }
 function doSendEmails(){}
 
@@ -3323,7 +3323,7 @@ function showToast(ico,msg,type='green'){const colors={green:'var(--green)',red:
   });
 })();
 
-function scrollTo0(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+function scrollTo0(id){if(id==='home'){window.scrollTo({top:0,behavior:'smooth'});return;}const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
 document.getElementById('productModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.getElementById('orderModal').addEventListener('click',function(e){if(e.target===this)closeOrderModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeOrderModal();if(document.getElementById('cartOverlay').classList.contains('open'))toggleCart();}});

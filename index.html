@@ -12,6 +12,18 @@
 <meta name="author" content="AR Computers">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="google-site-verification" content="6fTCRE6MfUkpgt7MgyCUqRqVu4vkiQEpDhAU8vpnUEA" />
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G7GXPMYY0X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G7GXPMYY0X', {
+    page_title: 'AR Computers — Premium Computer Accessories Pakistan',
+    page_location: window.location.href,
+    send_page_view: true
+  });
+</script>
 <meta name="theme-color" content="#1d4ed8">
 <link rel="canonical" href="https://ccirrto1.github.io/ar-store/">
 
@@ -2888,6 +2900,8 @@ function handleSearch(q){
   q=q.trim().toLowerCase();
   const drop=document.getElementById('searchDrop');
   if(!q){drop.classList.remove('show');return;}
+  // GA4: search event
+  if(q.length>2 && typeof gtag!=='undefined') gtag('event','search',{search_term:q});
   const results=DATA.products.filter(p=>
     p.name.toLowerCase().includes(q)||p.cat.includes(q)||(p.brand||'').toLowerCase().includes(q)
   ).slice(0,6);
@@ -3415,6 +3429,10 @@ function addToCart(id){
   if(ex)ex.qty++;else{const p=DATA.products.find(x=>x.id===id);if(p)cart.push({...p,qty:1});}
   saveCart();updateCartBadge();renderCartBody();
   const p=DATA.products.find(x=>x.id===id);
+  if(p && typeof gtag!=='undefined'){
+    gtag('event','add_to_cart',{currency:'PKR',value:p.price,
+      items:[{item_id:p.id,item_name:p.name,item_category:p.cat,item_brand:p.brand||'',price:p.price,quantity:1}]});
+  }
   showToast('✓',(p?.name||'Product').slice(0,28)+'... added to cart!','green');
 }
 function updateCartBadge(){document.getElementById('cartBadge').textContent=cart.reduce((s,i)=>s+i.qty,0);}
@@ -3535,6 +3553,15 @@ function openProduct(id){
   document.getElementById('modalThumbs').innerHTML=thumb+`<div class="m-thumb" style="opacity:0.4;"><i class="${p.icon}" style="color:#bbb;"></i></div>`;
   document.getElementById('productModal').classList.add('open');
   document.body.style.overflow='hidden';
+
+  // GA4: track product view
+  if(typeof gtag!=='undefined'){
+    gtag('event','view_item',{
+      currency:'PKR',
+      value:p.price,
+      items:[{item_id:p.id,item_name:p.name,item_category:p.cat,item_brand:p.brand||'',price:p.price}]
+    });
+  }
 
   // Mobile: scroll modal to top
   const mbox = document.querySelector('#productModal .modal-box');
@@ -3844,6 +3871,16 @@ function placeOrder(){
     document.getElementById('successScreen').classList.add('show');
     document.getElementById('successId').textContent='Order ID: '+orderId;
     btn.disabled=false;btn.innerHTML='<i class="fas fa-check-circle"></i> Confirm Order';
+    // GA4: purchase event
+    if(typeof gtag!=='undefined'){
+      gtag('event','purchase',{
+        transaction_id:orderId,
+        currency:'PKR',
+        value:total,
+        coupon:appliedPromo||'',
+        items:(orderCartItems||[{...orderProd,qty:1}]).map(i=>({item_id:i.id,item_name:i.name,item_category:i.cat||'',price:i.price,quantity:i.qty||1}))
+      });
+    }
     cart=[];updateCartBadge();renderCartBody();
     promoDiscount=0;appliedPromo='';
   },1600);

@@ -25,6 +25,9 @@
   });
 </script>
 <meta name="theme-color" content="#1d4ed8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231d4ed8'/><text x='16' y='22' font-family='Arial Black' font-size='14' font-weight='900' fill='white' text-anchor='middle'>AR</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%231d4ed8'/><text x='90' y='125' font-family='Arial Black' font-size='80' font-weight='900' fill='white' text-anchor='middle'>AR</text></svg>">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22AR%20Computers%22%2C%22short_name%22%3A%22AR%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230f172a%22%2C%22theme_color%22%3A%22%231d4ed8%22%2C%22description%22%3A%22Premium%20Computer%20Accessories%20Pakistan%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22og-image.jpg%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fjpeg%22%7D%5D%7D">
 <link rel="canonical" href="https://ccirrto1.github.io/ar-store/">
 
 <!-- ===== OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ===== -->
@@ -306,6 +309,16 @@ nav{position:sticky;top:0;z-index:500;display:flex;align-items:center;gap:1rem;p
 .nav-menu a i{font-size:0.7rem;color:var(--primary);}
 .nav-menu li{position:relative;}
 .nav-menu li:hover > a{background:var(--primary3);color:var(--primary);}
+
+/* ===== RECENTLY VIEWED ===== */
+#recentlyViewedSec{background:var(--bg3);padding:2.5rem 5%;}
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;margin-top:1rem;}
+.rv-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:0.7rem;text-align:center;cursor:pointer;transition:all 0.18s;}
+.rv-card:hover{border-color:var(--primary);transform:translateY(-2px);}
+.rv-card .rv-img{height:60px;display:flex;align-items:center;justify-content:center;margin-bottom:0.4rem;}
+.rv-card .rv-name{font-size:0.67rem;font-weight:600;color:var(--text2);line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.rv-card .rv-price{font-size:0.72rem;font-weight:800;color:var(--primary);margin-top:3px;}
+@media(max-width:600px){#recentlyViewedSec{padding:1.5rem 1rem;}.rv-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:0.5rem;}}
 
 /* ===== PRODUCT REVIEWS ===== */
 .prod-review-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:0.9rem 1rem;}
@@ -625,6 +638,10 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 /* ===== WHATSAPP POPUP ===== */
 
 /* ===== WHATSAPP FLOATING BUTTON ===== */
+.btt-btn{position:fixed;bottom:90px;right:1.2rem;width:42px;height:42px;background:#1d4ed8;color:#fff;border:none;border-radius:50%;font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:900;box-shadow:0 4px 16px rgba(29,78,216,0.4);transition:all 0.2s;opacity:0;}
+.btt-btn.show{display:flex;opacity:1;}
+.btt-btn:hover{background:#1e40af;transform:translateY(-3px);}
+@media(max-width:600px){.btt-btn{bottom:80px;right:0.8rem;width:38px;height:38px;font-size:0.85rem;}}
 .wa-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:0.6rem;}
 .wa-float-btn{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.7rem;cursor:pointer;border:none;box-shadow:0 5px 22px rgba(37,211,102,0.45);transition:all 0.3s;position:relative;animation:waPulse 2.5s ease-in-out infinite;}
 @keyframes waPulse{0%,100%{box-shadow:0 5px 22px rgba(37,211,102,0.45),0 0 0 0 rgba(37,211,102,0.3);}60%{box-shadow:0 5px 22px rgba(37,211,102,0.5),0 0 0 14px rgba(37,211,102,0);}}
@@ -1468,6 +1485,15 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 </section>
 
 <!-- FEATURES -->
+<!-- RECENTLY VIEWED -->
+<section id="recentlyViewedSec" style="display:none;">
+  <div class="sec-center">
+    <div class="eyebrow2"><i class="fas fa-clock-rotate-left"></i> Recently Viewed</div>
+    <h2 class="sec-h">Your <span>History</span></h2>
+    <div class="rv-grid" id="rvGrid"></div>
+  </div>
+</section>
+
 <section id="features" style="background:var(--bg3);">
   <div class="sec-center">
     <div class="eyebrow2"><i class="fas fa-shield-check"></i> Why Choose Us</div>
@@ -1486,6 +1512,20 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 </section>
 
 <!-- NEWSLETTER -->
+<!-- DEAL ALERTS / NEWSLETTER -->
+<section style="background:linear-gradient(135deg,#0f172a,#1e3a8a);padding:3rem 5%;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;">
+    <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:4px 14px;font-size:0.72rem;font-weight:700;color:#93c5fd;letter-spacing:1px;margin-bottom:1rem;"><i class="fab fa-whatsapp" style="color:#25d366;"></i> DEAL ALERTS</div>
+    <h2 style="font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:0.5rem;">Deals & Sales ka <span style="color:#60a5fa;">Pehla Update</span> Pao</h2>
+    <p style="font-size:0.85rem;color:#93c5fd;margin-bottom:1.5rem;">WhatsApp pe seedha deals, flash sales, aur naye arrivals. Koi spam nahi.</p>
+    <div style="display:flex;gap:0.6rem;max-width:420px;margin:0 auto;">
+      <input id="newsletterPhone" type="tel" placeholder="03XX-XXXXXXX" style="flex:1;padding:0.65rem 1rem;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;background:rgba(255,255,255,0.08);color:#fff;font-size:0.85rem;outline:none;" oninput="this.style.borderColor='rgba(255,255,255,0.3)'">
+      <button onclick="subscribeDeals()" style="padding:0.65rem 1.2rem;background:#25d366;color:#fff;border:none;border-radius:10px;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;"><i class="fab fa-whatsapp"></i> Subscribe</button>
+    </div>
+    <p style="font-size:0.68rem;color:#475569;margin-top:0.75rem;"><i class="fas fa-lock"></i> Aapka number safe hai — sirf deals bhejenge, kabhi share nahi karenge</p>
+  </div>
+</section>
+
 <section style="background:linear-gradient(135deg,var(--primary3),#eff6ff);border-top:1.5px solid var(--border);">
   <div class="nl-box">
     <span class="nl-ico">📬</span>
@@ -1533,6 +1573,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
         <li><a onclick="openSupport('corporateModal')" style="cursor:pointer;"><i class="fas fa-building"></i> Corporate Orders</a></li>
         <li><a onclick="openSupport('faqModal')" style="cursor:pointer;"><i class="fas fa-circle-question"></i> FAQ</a></li>
         <li><a onclick="openSupport('privacyModal')" style="cursor:pointer;"><i class="fas fa-shield-halved"></i> Privacy Policy</a></li>
+        <li><a onclick="openSupport('termsModal')" style="cursor:pointer;"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
       </ul>
     </div>
     <div class="fcol">
@@ -1559,6 +1600,76 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
   </div>
 </footer>
 
+
+<!-- ===== TERMS & CONDITIONS MODAL ===== -->
+<div class="support-overlay" id="termsModal" onclick="if(event.target===this)closeSupport('termsModal')">
+  <div class="support-modal" style="max-width:680px;">
+    <div class="support-modal-hdr">
+      <div class="support-modal-icon" style="background:rgba(29,78,216,0.12);color:#1d4ed8;"><i class="fas fa-file-contract"></i></div>
+      <div class="support-modal-title"><h3>Terms & Conditions</h3><p>Please read carefully before using AR Computers — Last updated: March 2026</p></div>
+      <button class="support-close" onclick="closeSupport('termsModal')"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="support-modal-body" style="font-size:0.82rem;line-height:1.75;color:var(--text2);">
+
+      <div style="background:rgba(29,78,216,0.06);border-left:3px solid #1d4ed8;border-radius:0 10px 10px 0;padding:0.85rem 1rem;margin-bottom:1.5rem;">
+        <strong style="color:var(--text1);">AR Computers</strong> ki services use karke aap yeh Terms & Conditions accept karte hain. Agar aap agree nahi karte to please services use mat karein.
+      </div>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-store" style="color:#1d4ed8;font-size:0.8rem;"></i> 1. Services</h4>
+      <p style="margin-bottom:1.2rem;">AR Computers ek online computer accessories store hai jo Pakistan mein operate karta hai. Hum premium brands ke authorized reseller hain. Sab products 100% original aur brand new hain.</p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-shopping-cart" style="color:#1d4ed8;font-size:0.8rem;"></i> 2. Orders & Payments</h4>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:5px;">
+        <li>Order place karne ke baad hum 2-4 hours mein confirmation call/WhatsApp karenge</li>
+        <li>Cash on Delivery (COD) available hai poore Pakistan mein</li>
+        <li>JazzCash, EasyPaisa, aur Bank Transfer bhi accepted hain</li>
+        <li>Prices change ho sakti hain bina notice ke — order time ki price apply hogi</li>
+        <li>Order cancel karna dispatch se pehle possible hai — WhatsApp pe contact karein</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-truck" style="color:#1d4ed8;font-size:0.8rem;"></i> 3. Delivery</h4>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:5px;">
+        <li>Karachi: 1-2 business days | Lahore/Islamabad: 2-3 days | Other cities: 3-5 days</li>
+        <li>Delivery charges: Rs. 200 (free on orders above Rs. 5,000)</li>
+        <li>Courier delays hamari zimmedari nahi hain</li>
+        <li>Delivery address mein ghalti hone pe aap zimmedar honge</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-rotate-left" style="color:#1d4ed8;font-size:0.8rem;"></i> 4. Returns & Refunds</h4>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:5px;">
+        <li>7-day return policy for defective or wrong products</li>
+        <li>Product original packaging mein hona zaroori hai</li>
+        <li>Used, damaged, ya tampered products return nahi honge</li>
+        <li>Refund 3-5 business days mein process hoga</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-shield-halved" style="color:#1d4ed8;font-size:0.8rem;"></i> 5. Warranty</h4>
+      <p style="margin-bottom:1.2rem;">Har product pe manufacturer warranty available hai. Warranty claims ke liye hamse contact karein — aapko brand service center khud nahi jaana. Self-repair karne se warranty void ho jaati hai.</p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-ban" style="color:#1d4ed8;font-size:0.8rem;"></i> 6. Prohibited Uses</h4>
+      <ul style="margin:0 0 1.2rem 1.2rem;display:flex;flex-direction:column;gap:5px;">
+        <li>Fake orders place karna — legal action liya ja sakta hai</li>
+        <li>Repeatedly order cancel karna</li>
+        <li>Website content copy karna bina permission ke</li>
+        <li>Abusive behavior towards our team</li>
+      </ul>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-scale-balanced" style="color:#1d4ed8;font-size:0.8rem;"></i> 7. Limitation of Liability</h4>
+      <p style="margin-bottom:1.2rem;">AR Computers kisi bhi indirect, incidental, ya consequential damages ke liye liable nahi hoga. Hamari maximum liability ordered product ki price tak limited hai.</p>
+
+      <h4 style="font-size:0.87rem;font-weight:800;color:var(--text1);margin:0 0 0.6rem 0;display:flex;align-items:center;gap:7px;"><i class="fas fa-gavel" style="color:#1d4ed8;font-size:0.8rem;"></i> 8. Governing Law</h4>
+      <p style="margin-bottom:1.5rem;">Yeh terms Pakistan ke laws ke mutabiq govern honge. Disputes ke liye Karachi courts ki jurisdiction hogi.</p>
+
+      <div style="background:rgba(29,78,216,0.06);border:1.5px solid rgba(29,78,216,0.18);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text1);margin-bottom:0.4rem;">Koi sawal?</div>
+        <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-top:0.75rem;">
+          <button onclick="closeSupport('termsModal');openWaPopup();" style="display:inline-flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:#25d366;color:#fff;border:none;border-radius:9px;font-size:0.78rem;font-weight:700;cursor:pointer;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <a href="mailto:info@arcomputers.pk" style="display:inline-flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:rgba(29,78,216,0.1);color:#1d4ed8;border:1.5px solid rgba(29,78,216,0.25);border-radius:9px;font-size:0.78rem;font-weight:700;text-decoration:none;"><i class="fas fa-envelope"></i> Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ===== PRIVACY POLICY MODAL ===== -->
 <div class="support-overlay" id="privacyModal" onclick="if(event.target===this)closeSupport('privacyModal')">
@@ -2260,6 +2371,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
           <button class="btn-order-now" onclick="orderFromModal()"><i class="fas fa-bag-shopping"></i> Order Now</button>
           <button class="btn-cart-m" onclick="cartFromModal()"><i class="fas fa-cart-plus"></i> Add to Cart</button>
         </div>
+        <button onclick="shareProductWA()" style="width:100%;margin-top:0.5rem;padding:0.55rem;background:rgba(37,211,102,0.1);color:#25d366;border:1.5px solid rgba(37,211,102,0.3);border-radius:10px;font-size:0.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="fab fa-whatsapp"></i> Share on WhatsApp</button>
       </div>
     </div>
 
@@ -2437,6 +2549,7 @@ footer{background:#110f36;color:#fff;padding:52px 5% 24px;}
 </div>
 
 <div class="toast" id="toast"></div>
+<button class="btt-btn" id="bttBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top"><i class="fas fa-chevron-up"></i></button>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
@@ -2988,7 +3101,7 @@ function displayProds(list, append=false){
       <div class="pimg" style="background:linear-gradient(135deg,${cb(p.cat)},#f4f3ff);">
         ${p.badge?`<span class="pbadge b-${p.badge}"><i class="fas fa-${p.badge==='new'?'sparkles':p.badge==='hot'?'fire':p.badge==='sale'?'tag':'trophy'}"></i> ${p.badge.toUpperCase()}</span>`:''}
         <span class="pwish${wished?' wishlisted':''}" onclick="event.stopPropagation();toggleWish(${p.id},'${p.name.replace(/'/g,'&#39;')}')" id="wish${p.id}"><i class="fas fa-heart"></i></span>
-        ${img?`<img src="${img}" alt="${p.name}" onerror="this.outerHTML='<i class=\\'${p.icon} pimg-icon\\' style=\\'color:${cc(p.cat)};font-size:4.5rem;\\'></i>'">`:
+        ${img?`<img src="${img}" alt="${p.name}" loading="lazy" onerror="this.outerHTML='<i class=\\'${p.icon} pimg-icon\\' style=\\'color:${cc(p.cat)};font-size:4.5rem;\\'></i>'">`:
           `<i class="${p.icon} pimg-icon" style="color:${cc(p.cat)};font-size:4.5rem;"></i>`}
       </div>
       <div class="pinfo">
@@ -3567,6 +3680,10 @@ function openProduct(id){
   const mbox = document.querySelector('#productModal .modal-box');
   if(mbox) mbox.scrollTop=0;
 
+  // Track recently viewed
+  currentModalProductId = id;
+  addToRecentlyViewed(id);
+
   // Load reviews for this product
   currentReviewProductId = id;
   setTimeout(()=>renderModalReviews(id), 50);
@@ -3595,6 +3712,7 @@ document.addEventListener('click', e=>{
 // PRODUCT REVIEWS SYSTEM
 // ============================================================
 let currentReviewProductId = null;
+let currentModalProductId = null;
 let selectedReviewStars = 0;
 const REVIEW_COLORS = ['#1d4ed8','#0891b2','#059669','#d97706','#db2777','#7c3aed','#dc2626','#0284c7'];
 
@@ -3989,6 +4107,7 @@ window.addEventListener('storage',()=>{
   if(s){
     Object.assign(DATA,s);
     renderTicker();renderCategories();renderFilters();renderProducts();
+  renderRecentlyViewed();
     renderBrands();renderFeatures();renderReviews();updateHelplineUI();
   }
 });
@@ -4347,6 +4466,81 @@ Please provide bulk pricing and availability. Thank you!`;
   setTimeout(()=>{const lb=document.getElementById('waFloatLabel');if(lb)lb.style.display='none';},4000);
 })();
 
+
+// Back to top
+window.addEventListener('scroll',()=>{
+  const btn=document.getElementById('bttBtn');
+  if(btn) btn.classList.toggle('show', window.scrollY > 400);
+},{ passive:true });
+
+// ============================================================
+// RECENTLY VIEWED
+// ============================================================
+const MAX_RV = 8;
+function addToRecentlyViewed(id){
+  try{
+    let rv = JSON.parse(localStorage.getItem('ar_recently_viewed')||'[]');
+    rv = [id, ...rv.filter(x=>x!==id)].slice(0, MAX_RV);
+    localStorage.setItem('ar_recently_viewed', JSON.stringify(rv));
+    renderRecentlyViewed();
+  }catch(e){}
+}
+function renderRecentlyViewed(){
+  try{
+    const rv = JSON.parse(localStorage.getItem('ar_recently_viewed')||'[]');
+    const sec = document.getElementById('recentlyViewedSec');
+    const grid = document.getElementById('rvGrid');
+    if(!sec||!grid) return;
+    const prods = rv.map(id=>DATA.products.find(p=>p.id===id)).filter(Boolean);
+    if(prods.length < 2){ sec.style.display='none'; return; }
+    sec.style.display='block';
+    grid.innerHTML = prods.map(p=>{
+      const img = prodImg(p.id);
+      return `<div class="rv-card" onclick="openProduct(${p.id})">
+        <div class="rv-img">${img?`<img src="${img}" style="max-height:55px;max-width:100%;object-fit:contain;" loading="lazy" onerror="this.style.display='none'">`:`<i class="${p.icon}" style="font-size:2rem;color:${cc(p.cat)};"></i>`}</div>
+        <div class="rv-name">${p.name}</div>
+        <div class="rv-price">Rs. ${p.price.toLocaleString()}</div>
+      </div>`;
+    }).join('');
+  }catch(e){}
+}
+
+// ============================================================
+// WHATSAPP PRODUCT SHARE
+// ============================================================
+function shareProductWA(){
+  const p = DATA.products.find(x=>x.id===currentModalProductId||x.id===currentReviewProductId);
+  if(!p) return;
+  const wa = (DATA.siteInfo&&DATA.siteInfo.whatsapp)||'923433194763';
+  const url = 'https://ccirrto1.github.io/zn-store/';
+  const msg = `*${p.name}*%0A%0A` +
+    `💰 Price: Rs. ${p.price.toLocaleString()}%0A` +
+    `${p.old?'~~Rs. '+p.old.toLocaleString()+'~~%0A':''}` +
+    `⭐ Rating: ${p.rating}/5 (${p.reviews} reviews)%0A%0A` +
+    `🛒 Order karo: ${url}%0A` +
+    `📞 AR Computers: 0343-3194763`;
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+  if(typeof gtag!=='undefined') gtag('event','share',{method:'whatsapp',content_type:'product',item_id:p.id});
+}
+
+// ============================================================
+// NEWSLETTER / DEAL ALERTS
+// ============================================================
+function subscribeDeals(){
+  const ph = (document.getElementById('newsletterPhone').value||'').trim();
+  if(!ph||!/^(\+92|0)3\d{9}$/.test(ph.replace(/[-\s]/g,''))){
+    document.getElementById('newsletterPhone').style.borderColor='#ef4444';
+    showToast('!','Valid Pakistani number enter karo','red');
+    return;
+  }
+  const wa = (DATA.siteInfo&&DATA.siteInfo.whatsapp)||'923433194763';
+  const msg = encodeURIComponent('Hi AR Computers! Mujhe deals aur sales ke WhatsApp alerts subscribe karne hain. Mera number: '+ph);
+  window.open('https://wa.me/'+wa+'?text='+msg, '_blank');
+  document.getElementById('newsletterPhone').value='';
+  document.getElementById('newsletterPhone').style.borderColor='rgba(255,255,255,0.3)';
+  showToast('✓','Subscribe request send! Hum aapko add kar denge','green');
+  if(typeof gtag!=='undefined') gtag('event','generate_lead',{currency:'PKR',value:0});
+}
 </script>
 </body>
 </html>

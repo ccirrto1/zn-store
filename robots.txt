@@ -1,0 +1,48 @@
+# ============================================
+# robots.txt — AR Computers
+# Site: https://ccirrto1.github.io/zn-store/
+# ============================================
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Block dashboard (admin panel - not for public indexing)
+Disallow: /zn-store/zn-dashboard.html
+Disallow: /zn-dashboard.html
+
+# Block any backup or temp files
+Disallow: /*.json$
+Disallow: /*.txt$
+
+# Sitemap location
+Sitemap: https://ccirrto1.github.io/zn-store/sitemap.xml
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 10
+
+# ============================================
+# Specific bots
+# ============================================
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /zn-dashboard.html
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /zn-dashboard.html
+
+# Facebook (for Open Graph / link previews)
+User-agent: facebookexternalhit
+Allow: /
+
+# WhatsApp link preview
+User-agent: WhatsApp
+Allow: /
+
+# Twitter/X card previews
+User-agent: Twitterbot
+Allow: /
